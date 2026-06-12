@@ -1,5 +1,153 @@
 # Changelog
 
+## [1.6.1] - 2026-06-12
+
+### Spec-level breaking changes ⚠️
+- Base URL / servers changed
+- Security schemes removed: BearerAuth
+
+### Removed (63 paths) ⚠️ Breaking
+- `/audience/v1/userlists`
+- `/auth-code/v1/auth-code`
+- `/auth-code/v1/client-authorization`
+- `/bankingservices/v2/fis/{di_fiid}/fiCustomers/{di_ficustomer}/accounts`
+- `/bankingservices/v2/fis/{fiId}/fiCustomers/{fiCustomerId}`
+- `/data-apis/v1/banking-activities`
+- `/db-accounts/v1/accounts`
+- `/db-accounts/v1/accounts/{accountId}`
+- `/db-alerts-delivery/v1/alert-history`
+- `/db-alerts-delivery/v1/alert-history-content`
+- `/db-alerts-management/v1/alert-templates`
+- `/db-alerts-management/v1/alert-templates/{id}`
+- `/db-alerts-management/v1/alert-types`
+- `/db-alerts-management/v1/alert-types/{id}`
+- `/db-alerts-management/v1/institution-alert-types`
+- `/db-alerts-management/v1/institution-alert-types/{id}`
+- `/db-alerts-preferences/v1/alert-preferences`
+- `/db-alerts-preferences/v1/alert-preferences/{alertPreferenceId}`
+- `/db-alerts-preferences/v1/institution-alert-preferences`
+- `/db-alerts-preferences/v1/institution-alert-preferences/{institutionAlertPreferenceId}`
+- … and 43 more
+
+### Breaking changes (9 paths)
+- `/mx/download/{institution_id}/{date}/transactions/created`
+- `/mx/users`
+- `/mx/{institution_id}/users/{user_id}`
+- `/mx/{institution_id}/users/{user_id}/urls/mini_budgets_widget`
+- `/oauth2/v1/revoke`
+- `/oauth2/v1/token`
+- `/pss/v1/fis/{fiId}/audiences/userListJobs`
+- `/pss/v1/fis/{fiId}/audiences/userListJobs/{jobId}`
+- `/v1/oauth/token`
+
+### Schemas removed (25) ⚠️ Breaking
+- `Account2`
+- `AccountCategory2`
+- `AccountCategory3`
+- `AccountEvent`
+- `AccountStatus3`
+- `AccountType3`
+- `Account_Nickname`
+- `Actions1`
+- `DIAccountType4`
+- `EStatementPreferencesResponse`
+- `Error6`
+- `ImageType2`
+- `Map`
+- `NonSubscriptionEvent`
+- `Notification`
+- `NotificationEvent`
+- `PhoneNumber`
+- `PostalAddress1`
+- `Term1`
+- `TermType2`
+- … and 5 more
+
+### Schemas — breaking changes (29)
+- `Account`
+- `Account1`
+- `AccountStatus`
+- `AccountStatus1`
+- `AccountStatus2`
+- `AccountType1`
+- `Actions`
+- `AuthorizationCodeRequest`
+- `AuthorizationCodeResponse`
+- `ClientCredentialsRequest`
+- `ClientCredentialsResponse`
+- `CurrencyCode1`
+- `CurrencyCode6`
+- `DIAccountType3`
+- `Error4`
+- `ErrorInfo`
+- `ErrorInfo1`
+- `ErrorInfo10`
+- `ErrorInfo13`
+- `ErrorInfo15`
+- … and 9 more
+
+### Added (63 paths)
+- `/v1/accounts`
+- `/v1/accounts/{accountId}`
+- `/v1/ach-payments`
+- `/v1/ach-payments/{paymentId}`
+- `/v1/alert-history`
+- `/v1/alert-history-content`
+- `/v1/alert-preferences`
+- `/v1/alert-preferences/{alertPreferenceId}`
+- `/v1/alert-templates`
+- `/v1/alert-templates/{id}`
+- `/v1/alert-types`
+- `/v1/alert-types/{id}`
+- `/v1/auth-code`
+- `/v1/banking-activities`
+- `/v1/banking-images`
+- `/v1/banking-images/{bankingImageId}`
+- `/v1/business-details`
+- `/v1/business-entitlements-limits`
+- `/v1/business-registration-configs`
+- `/v1/business-registrations`
+- … and 43 more
+
+### Schemas added (14)
+- `AccessTokenRequest`
+- `AccessTokenRequest1`
+- `AccessTokenResponse`
+- `AccessTokenResponse1`
+- `ClientCredentialsGrantRequest`
+- `ClientCredentialsGrantResponse`
+- `ErrorInfo19`
+- `ErrorInfo20`
+- `PasswordGrantRequest`
+- `PasswordGrantResponse`
+- `TokenRequestBase`
+- `TokenRequestBase1`
+- `TokenResponseBase`
+- `TokenResponseBase1`
+
+### Schemas updated (28)
+- `AccountTransaction`
+- `AccountType`
+- `AccountsResponse`
+- `AchTransaction`
+- `Balance1`
+- `BankingImage`
+- `CustomerInformation`
+- `DIAccountType`
+- `DIAccountType1`
+- `DIAccountType2`
+- `DepositAccount`
+- `DomesticWireTransaction`
+- `ErrorInfo11`
+- `ImageType`
+- `InternationalWireTransaction`
+- `LoanAccount`
+- `Money1`
+- `Money2`
+- `Money3`
+- `Money4`
+- … and 8 more
+
 ## [1.5.0] - 2026-05-21
 
 ### Spec-level breaking changes ⚠️
