@@ -1,5 +1,104 @@
 # Changelog
 
+## [1.6.0] - 2026-06-12
+
+### Spec-level breaking changes ⚠️
+- Security schemes removed: ClientAuthBasic
+
+### Breaking changes (37 paths)
+- `/oauth2/v1/revoke`
+- `/oauth2/v1/token`
+- `/v1/alert-history`
+- `/v1/alert-history-content`
+- `/v1/alert-preferences`
+- `/v1/alert-preferences/{alertPreferenceId}`
+- `/v1/alert-templates`
+- `/v1/alert-templates/{id}`
+- `/v1/alert-types`
+- `/v1/alert-types/{id}`
+- `/v1/auth-code`
+- `/v1/banking-activities`
+- `/v1/business-details`
+- `/v1/business-entitlements-limits`
+- `/v1/business-registration-configs`
+- `/v1/business-registrations`
+- `/v1/business-registrations/{registrationId}`
+- `/v1/client-authorization`
+- `/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/events`
+- `/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/subscriptions`
+- `/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/subscriptions/{subscription_id}`
+- `/v1/fis/{di_fiid}/subscriptions`
+- `/v1/institution-alert-preferences`
+- `/v1/institution-alert-preferences/{institutionAlertPreferenceId}`
+- `/v1/institution-alert-types`
+- `/v1/institution-alert-types/{id}`
+- `/v1/institution-user-disclosures`
+- `/v1/institution-users/{institutionUserId}`
+- `/v1/oauth/token`
+- `/v1/realtime-events`
+- … and 7 more
+
+### Schemas removed (14) ⚠️ Breaking
+- `AccessTokenRequest`
+- `AccessTokenRequest1`
+- `AccessTokenResponse`
+- `AccessTokenResponse1`
+- `ClientCredentialsGrantRequest`
+- `ClientCredentialsGrantResponse`
+- `ErrorInfo19`
+- `ErrorInfo20`
+- `PasswordGrantRequest`
+- `PasswordGrantResponse`
+- `TokenRequestBase`
+- `TokenRequestBase1`
+- `TokenResponseBase`
+- `TokenResponseBase1`
+
+### Schemas — breaking changes (19)
+- `AccountType1`
+- `AccountType2`
+- `AuthorizationCodeRequest`
+- `AuthorizationCodeResponse`
+- `ClientCredentialsRequest`
+- `ClientCredentialsResponse`
+- `CurrencyCode1`
+- `CurrencyCode6`
+- `Error4`
+- `ErrorInfo`
+- `ErrorInfo10`
+- `ErrorInfo11`
+- `ErrorInfo13`
+- `ErrorInfo15`
+- `ErrorInfo8`
+- `PasswordRequest`
+- `PasswordResponse`
+- `RefreshTokenRequest`
+- `RefreshTokenResponse`
+
+### Schemas added (2)
+- `Error6`
+- `Token`
+
+### Schemas updated (18)
+- `AccountTransaction`
+- `AchTransaction`
+- `Balance1`
+- `BankingImage`
+- `DomesticWireTransaction`
+- `ErrorInfo1`
+- `InternationalWireTransaction`
+- `Money1`
+- `Money2`
+- `Money3`
+- `Money4`
+- `Money5`
+- `RevokeAccessTokenRequest`
+- `Status`
+- `Status1`
+- `Status3`
+- `Transaction`
+- `UXAccount`
+
 ## [1.6.1] - 2026-06-12
 
 ### Spec-level breaking changes ⚠️
