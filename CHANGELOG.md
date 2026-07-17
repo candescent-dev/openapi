@@ -1,5 +1,127 @@
 # Changelog
 
+## [1.7.0] - 2026-07-17
+
+### Spec-level breaking changes ⚠️
+- Security schemes removed: BearerAuth
+
+### Removed (4 paths) ⚠️ Breaking
+- `/mx/download/{institution_id}/{date}/transactions/created`
+- `/mx/users`
+- `/mx/{institution_id}/users/{user_id}`
+- `/mx/{institution_id}/users/{user_id}/urls/mini_budgets_widget`
+
+### Breaking changes (68 paths)
+- `/oauth2/v1/revoke`
+- `/oauth2/v1/token`
+- `/pss/v1/fis/{fiId}/audiences/userListJobs`
+- `/pss/v1/fis/{fiId}/audiences/userListJobs/{jobId}`
+- `/v1/accounts`
+- `/v1/accounts/{accountId}`
+- `/v1/ach-payments`
+- `/v1/ach-payments/{paymentId}`
+- `/v1/alert-history`
+- `/v1/alert-history-content`
+- `/v1/alert-preferences`
+- `/v1/alert-preferences/{alertPreferenceId}`
+- `/v1/alert-templates`
+- `/v1/alert-templates/{id}`
+- `/v1/alert-types`
+- `/v1/alert-types/{id}`
+- `/v1/auth-code`
+- `/v1/banking-activities`
+- `/v1/banking-images`
+- `/v1/banking-images/{bankingImageId}`
+- `/v1/business-details`
+- `/v1/business-entitlements-limits`
+- `/v1/business-registration-configs`
+- `/v1/business-registrations`
+- `/v1/business-registrations/{registrationId}`
+- `/v1/client-authorization`
+- `/v1/customers/{customerId}`
+- `/v1/customers/{customerId}/contact-methods`
+- `/v1/customers/{customerId}:accounts`
+- `/v1/customers/{customerId}:contact-info`
+- … and 38 more
+
+### Schemas removed (13) ⚠️ Breaking
+- `AuthCode`
+- `ClientAuth`
+- `ClientCredentialsRequest`
+- `ClientCredentialsResponse`
+- `Error6`
+- `PasswordRequest`
+- `PasswordResponse`
+- `RefreshTokenRequest`
+- `RefreshTokenResponse`
+- `RevokeAccessTokenRequest`
+- `Token`
+- `User`
+- `UsersList`
+
+### Schemas — breaking changes (14)
+- `AccountType1`
+- `AccountType2`
+- `AuthorizationCodeRequest`
+- `AuthorizationCodeResponse`
+- `CurrencyCode1`
+- `CurrencyCode6`
+- `Error4`
+- `ErrorInfo`
+- `ErrorInfo1`
+- `ErrorInfo10`
+- `ErrorInfo13`
+- `ErrorInfo2`
+- `ErrorInfo8`
+- `Status`
+
+### Added (4 paths)
+- `/mx/{institutionId}/{mxRealTimeResourcePath}`
+- `/mx/{institutionId}/{mxSsoResourcePath}`
+- `/mx/{mxPlatformResourcePath}`
+- `/mx/{mxReportingResourcePath}`
+
+### Schemas added (33)
+- `AccessTokenRequestV1`
+- `AccessTokenRequestV2`
+- `AccessTokenResponseV1`
+- `AccessTokenResponseV2`
+- `AuthorizationCodeGrantRequestV2`
+- `AuthorizationCodeGrantResponseV2`
+- `AuthorizeClientRequest`
+- `AuthorizeClientResponse`
+- `ClientCredentialsGrantRequestV1`
+- `ClientCredentialsGrantRequestV2`
+- `ClientCredentialsGrantResponseV1`
+- `ClientCredentialsGrantResponseV2`
+- `ErrorInfo19`
+- `ErrorInfo20`
+- `ErrorInfo21`
+- `ErrorInfo22`
+- `ErrorInfo23`
+- `ErrorInfo24`
+- `MxPlatformError`
+- `MxRealTimeError`
+- … and 13 more
+
+### Schemas updated (16)
+- `AccountTransaction`
+- `AchTransaction`
+- `Balance1`
+- `BankingImage`
+- `DomesticWireTransaction`
+- `ErrorInfo11`
+- `InternationalWireTransaction`
+- `Money1`
+- `Money2`
+- `Money3`
+- `Money4`
+- `Money5`
+- `Status1`
+- `Status3`
+- `Transaction`
+- `UXAccount`
+
 ## [1.6.0] - 2026-06-12
 
 ### Spec-level breaking changes ⚠️
