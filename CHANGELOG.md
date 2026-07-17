@@ -1,5 +1,140 @@
 # Changelog
 
+## [1.8.0] - 2026-07-17
+
+### Removed (8 paths) ⚠️ Breaking
+- `/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/events`
+- `/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/subscriptions`
+- `/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/subscriptions/{subscription_id}`
+- `/v1/fis/{di_fiid}/subscriptions`
+- `/v1/user-status/{userId}`
+- `/v2/fis/{di_fiid}/fiCustomers/{di_ficustomer}/accounts`
+- `/v2/fis/{fiId}/fiCustomers/{fiCustomerId}`
+- `/v4/fis/{di_fiid}/fiCustomers`
+
+### Breaking changes (55 paths)
+- `/pss/v1/fis/{fiId}/audiences/userListJobs`
+- `/pss/v1/fis/{fiId}/audiences/userListJobs/{jobId}`
+- `/v1/accounts`
+- `/v1/accounts/{accountId}`
+- `/v1/ach-payments`
+- `/v1/ach-payments/{paymentId}`
+- `/v1/alert-history`
+- `/v1/alert-history-content`
+- `/v1/alert-preferences`
+- `/v1/alert-preferences/{alertPreferenceId}`
+- `/v1/alert-templates`
+- `/v1/alert-templates/{id}`
+- `/v1/alert-types`
+- `/v1/alert-types/{id}`
+- `/v1/auth-code`
+- `/v1/banking-activities`
+- `/v1/banking-images`
+- `/v1/banking-images/{bankingImageId}`
+- `/v1/business-details`
+- `/v1/business-entitlements-limits`
+- `/v1/business-registration-configs`
+- `/v1/business-registrations`
+- `/v1/business-registrations/{registrationId}`
+- `/v1/client-authorization`
+- `/v1/customers/{customerId}`
+- `/v1/customers/{customerId}/contact-methods`
+- `/v1/customers/{customerId}:accounts`
+- `/v1/customers/{customerId}:contact-info`
+- `/v1/customers/{customerId}:reset-password`
+- `/v1/customers/{customerId}:unlock-user`
+- … and 25 more
+
+### Schemas removed (46) ⚠️ Breaking
+- `Active`
+- `Approved`
+- `CurrencyCode3`
+- `CurrencyCode4`
+- `CurrencyCode5`
+- `CurrencyCode6`
+- `Error4`
+- `Error5`
+- `ErrorInfo1`
+- `ErrorInfo10`
+- `ErrorInfo11`
+- `ErrorInfo12`
+- `ErrorInfo13`
+- `ErrorInfo14`
+- `ErrorInfo15`
+- `ErrorInfo16`
+- `ErrorInfo17`
+- `ErrorInfo18`
+- `ErrorInfo19`
+- `ErrorInfo2`
+- … and 26 more
+
+### Schemas — breaking changes (18)
+- `AccountStatus1`
+- `AccountStatus2`
+- `Balance`
+- `Balance1`
+- `DIAccountType1`
+- `Error1`
+- `Error2`
+- `Error3`
+- `Event`
+- `Event1`
+- `InstitutionCustomer`
+- `InstitutionUser`
+- `MapItem`
+- `Money`
+- `RegDLimits`
+- `SubUserStatus`
+- `UserStatus1`
+- `UserStatus2`
+
+### Added (9 paths)
+- `/bankingservices/v2/fis/{di_fiid}/fiCustomers/{di_ficustomer}/accounts`
+- `/bankingservices/v2/fis/{fiId}/fiCustomers/{fiCustomerId}`
+- `/registration/v4/fis/{di_fiid}/fiCustomers`
+- `/subscriptions/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/events`
+- `/subscriptions/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/subscriptions`
+- `/subscriptions/v1/fis/{di_fiid}/fiCustomers/{di_ficustomer}/subscriptions/{subscription_id}`
+- `/subscriptions/v1/fis/{di_fiid}/subscriptions`
+- `/v1/user-status/{institutionUserId}`
+- `/v2/institution-users/{institutionUserId}`
+
+### Schemas added (9)
+- `ContactMethod2`
+- `ErrorResponse`
+- `IdentificationDocument`
+- `InstitutionUserStatus`
+- `InstitutionUserSubUser`
+- `InstitutionUserV2`
+- `PostalAddress1`
+- `RequestTraceId`
+- `UserStatusAdditionalInfo`
+
+### Schemas updated (27)
+- `Account`
+- `Account1`
+- `AccountTransaction`
+- `AccountType`
+- `AccountType1`
+- `BankingImage`
+- `BusinessUser`
+- `ChannelInfo`
+- `ContactMethod1`
+- `DIAccountType`
+- `DIAccountType3`
+- `DepositAccount`
+- `Error`
+- `Events`
+- `HostPromotion`
+- `InvestmentAccount`
+- `LoanAccount`
+- `Money1`
+- `Money2`
+- `Money3`
+- … and 7 more
+
+- Documentation updates on 5 paths
+
 ## [1.7.0] - 2026-07-17
 
 ### Spec-level breaking changes ⚠️
