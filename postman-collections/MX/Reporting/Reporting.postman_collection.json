@@ -1,0 +1,182 @@
+{
+  "info": {
+    "_postman_id": "9e24b0e7-8983-439d-b803-451d53c39851",
+    "name": "MX - Reporting",
+    "description": "This Postman collection supports API testing of the MX Proxy – Reporting endpoints. It is intended for validating reporting-related APIs and passthrough data retrieval via the MX Proxy.\n\n# Quick Links\n\n- [Passthrough Read](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-de9f9030-5648-49e1-8a52-0e0801dc4cdd?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-9e24b0e7-8983-439d-b803-451d53c39851?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Passthrough Read",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Passthrough Read",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_reporting_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.mx.logs.v1+avro",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_reporting_resource_path}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_reporting_resource_path}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX Reporting Passthrough Read Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Passthrough Read | Send a GET request through the proxy, mapping to the corresponding MX Platform API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\",",
+          "    \"mx_reporting_host\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

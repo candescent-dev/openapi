@@ -1,0 +1,532 @@
+{
+  "info": {
+    "_postman_id": "d175533f-e5de-46b0-aae9-be7f657143d1",
+    "name": "MX - SSO",
+    "description": "This Postman collection supports API testing of the MX Proxy – SSO endpoints. It is intended for validating SSO-related APIs and passthrough data retrieval via the MX Proxy.\n\n# Quick Links\n\n- [Passthrough Create](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-21b99194-a6ce-4216-bc28-7ab948fad540?action=share&source=copy-link&creator=8321995)\n    \n- [Passthrough Read](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-acb5b463-6aa3-4d8a-830d-83948f810168?action=share&source=copy-link&creator=8321995)\n    \n- [Passthrough Delete](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-df24edb0-fbcf-4afa-9b25-6014991ac994?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-d175533f-e5de-46b0-aae9-be7f657143d1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Passthrough Create",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Passthrough Create",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_sso_resource_path\").replace(/\\/$/, \"\");",
+                  "const userId = pm.environment.get(\"user_id\");",
+                  "",
+                  "pm.environment.set(\"mx_sso_resource_path_post\", `${path}/${userId}/urls`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_sso_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "{{mx_content_type}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"url\": {\n        \"is_mobile_webview\": false,\n        \"style\": {\n            \"font_name\": \"Roboto\"\n        },\n        \"type\": \"connect_widget\",\n        \"use_cases\": [\n            \"PFM\"\n        ],\n        \"ui_message_version\": 4\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{institution_id}}/{{mx_sso_resource_path_post}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{institution_id}}",
+                "{{mx_sso_resource_path_post}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX SSO Passthrough Create Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Passthrough Create | Send a POST request through the proxy, mapping to the corresponding MX SSO API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Passthrough Read",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Passthrough Read",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_sso_resource_path\").replace(/\\/$/, \"\");",
+                  "const userId = pm.environment.get(\"user_id\");",
+                  "",
+                  "pm.environment.set(\"mx_sso_resource_path_get\", `${path}/${userId}/urls/mini_budgets_widget`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_sso_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{institution_id}}/{{mx_sso_resource_path_get}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{institution_id}}",
+                "{{mx_sso_resource_path_get}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX SSO Passthrough Read Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Passthrough Read | Send a GET request through the proxy, mapping to the corresponding MX SSO API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Passthrough Delete",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Passthrough Delete",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_sso_resource_path\").replace(/\\/$/, \"\");",
+                  "const userId = pm.environment.get(\"user_id\");",
+                  "",
+                  "pm.environment.set(\"mx_sso_resource_path_delete\", `${path}/${userId}/sessions`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_sso_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{institution_id}}/{{mx_sso_resource_path_delete}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{institution_id}}",
+                "{{mx_sso_resource_path_delete}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX SSO Passthrough Delete Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Passthrough Delete | Send a DELETE request through the proxy, mapping to the corresponding MX SSO API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\",",
+          "    \"mx_sso_host\",",
+          "    \"mx_accept\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

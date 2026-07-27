@@ -1,0 +1,2455 @@
+{
+  "info": {
+    "_postman_id": "0138d7f2-cd17-4b5d-af73-0770cd6b7e4c",
+    "name": "Customer Management - Profile and Status",
+    "description": "This Postman collection supports API testing of the profile and status operations involving Retail and Business users.\n\n# Quick Links\n\n👤 Retail User\n\n- [Get Institution User V1](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-bf103dca-e7da-4a16-be4a-15c408e312c7?action=share&source=copy-link&creator=8321995)\n    \n- [Get Institution User V2](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-284c3c3d-f87a-44c7-839f-a03d030f2cbb?action=share&source=copy-link&creator=8321995)\n    \n- [Get User Status](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-9846f08f-1263-4d3b-965e-ef4a7b6435f5?action=share&source=copy-link&creator=8321995)\n    \n\n🏢 Business User\n\n- [Get Institution User V1](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-1f9e2f55-514d-4329-966f-1432f42ab970?action=share&source=copy-link&creator=8321995)\n    \n- [Get Institution User V2](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-7f2b8f23-212e-40a2-8504-9cb5aa3e3d8e?action=share&source=copy-link&creator=8321995)\n    \n- [Get User Status](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-072fc553-e292-4dc6-b937-e591dfea6d30?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-0138d7f2-cd17-4b5d-af73-0770cd6b7e4c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "👤 Retail User",
+      "item": [
+        {
+          "name": "🔗 Get Institution User V1",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2a. [Option 1] Get Institution User V1 - INSTITUTION_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2b. [Option 2] Get Institution User V1 - HOST_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_host_user_id}}?userIdType=HOST_USER_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_host_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "HOST_USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2c. [Option 3] Get Institution User V1 - LOGIN_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_login_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LOGIN_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2d. [Option 4] Get Institution User V1 - LEGACY_USER_GUID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_legacy_user_guid}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LEGACY_USER_GUID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2e. [Option 5] Get Institution User V1 - USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2f. [Option 6] Get Institution User V1 - contactMethods",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2g. [Option 7] Get Institution User V1 - postalAddresses",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_institution_user_id}}?$expand=postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "postalAddresses"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2h. [Option 8] Get Institution User V1 - subUsers",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_institution_user_id}}?$expand=subUsers",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "subUsers"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2i. [Option 9] Get Institution User V1 - Filters",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')"
+                    },
+                    {
+                      "key": "retrieveBillPayCredentials",
+                      "value": "true",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Retail User – Get Institution User V1 Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Get Institution User V1 - INSTITUTION_USER_ID | Retrieves user profile using the institution-specific user ID. |\n| 2b | \\[Option 2\\] Get Institution User V1 - HOST_USER_ID | Retrieves user profile using the host system member number. |\n| 2c | \\[Option 3\\] Get Institution User V1 - LOGIN_ID | Retrieves user profile using the user’s login identifier. |\n| 2d | \\[Option 4\\] Get Institution User V1 - LEGACY_USER_GUID | Retrieves user profile using the legacy customer GUID. |\n| 2e | \\[Option 5\\] Get Institution User V1 - USER_ID | Retrieves user profile using the authentication user identifier. |\n| 2f | \\[Option 6\\] Get Institution User V1 - contactMethods | Retrieves the user profile along with contact methods. |\n| 2g | \\[Option 7\\] Get Institution User V1 - postalAddresses | Retrieves the user profile along with postal addresses. |\n| 2h | \\[Option 8\\] Get Institution User V1 - subUsers | Retrieves the user profile along with sub-users. |\n| 2i | \\[Option 9\\] Get Institution User V1 - Filters | Retrieves the user profile, with search filters applied only to the $expand query parameter. |"
+        },
+        {
+          "name": "🔗 Get Institution User V2",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2a. [Option 1] Get Institution User V2 - INSTITUTION_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2b. [Option 2] Get Institution User V2 - HOST_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_host_user_id}}?userIdType=HOST_USER_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_host_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "HOST_USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2c. [Option 3] Get Institution User V2 - LOGIN_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_login_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LOGIN_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2d. [Option 4] Get Institution User V2 - LEGACY_USER_GUID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_legacy_user_guid}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LEGACY_USER_GUID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2e. [Option 5] Get Institution User V2 - USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2f. [Option 6] Get Institution User V2 - contactMethods",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2g. [Option 7] Get Institution User V2 - postalAddresses",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_institution_user_id}}?$expand=postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "postalAddresses"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2h. [Option 8] Get Institution User V2 - subUsers",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_institution_user_id}}?$expand=subUsers",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "subUsers"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2i. [Option 9] Get Institution User V2 - identificationDocuments",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_institution_user_id}}?$expand=identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2j. [Option 10] Get Institution User V2 - Filters",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Retail User – Get Institution User V2 Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Get Institution User V2 - INSTITUTION_USER_ID | Retrieves user profile using the institution-specific user ID. |\n| 2b | \\[Option 2\\] Get Institution User V2 - HOST_USER_ID | Retrieves user profile using the host system member number. |\n| 2c | \\[Option 3\\] Get Institution User V2 - LOGIN_ID | Retrieves user profile using the user’s login identifier. |\n| 2d | \\[Option 4\\] Get Institution User V2 - LEGACY_USER_GUID | Retrieves user profile using the legacy customer GUID. |\n| 2e | \\[Option 5\\] Get Institution User V2 - USER_ID | Retrieves user profile using the authentication user identifier. |\n| 2f | \\[Option 6\\] Get Institution User V2 - contactMethods | Retrieves the user profile along with contact methods. |\n| 2g | \\[Option 7\\] Get Institution User V2 - postalAddresses | Retrieves the user profile along with postal addresses. |\n| 2h | \\[Option 8\\] Get Institution User V2 - subUsers | Retrieves the user profile along with sub-users. |\n| 2i | \\[Option 9\\] Get Institution User V2 - identificationDocuments | Retrieves the user profile along with identification documents. |\n| 2j | \\[Option 10\\] Get Institution User V2 - Filters | Retrieves the user profile, with search filters applied only to the $expand query parameter. |"
+        },
+        {
+          "name": "🔗 Get User Status",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2a. [Option 1] Get User Status - INSTITUTION_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/user-status/{{retail_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "user-status",
+                    "{{retail_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2b. [Option 2] Get User Status - HOST_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/user-status/{{retail_user_host_user_id}}?userIdType=HOST_USER_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "user-status",
+                    "{{retail_user_host_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "HOST_USER_ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2c. [Option 3] Get User Status - LOGIN_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/user-status/{{retail_user_login_id}}?userIdType=LOGIN_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "user-status",
+                    "{{retail_user_login_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LOGIN_ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2d. [Option 4] Get User Status - CUSTOMER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/user-status/{{retail_user_legacy_user_guid}}?userIdType=CUSTOMER_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "user-status",
+                    "{{retail_user_legacy_user_guid}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "CUSTOMER_ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Retail User – Get User Status Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Get User Status - INSTITUTION_USER_ID | Retrieves user status using the institution-specific user ID. |\n| 2b | \\[Option 2\\] Get User Status - HOST_USER_ID | Retrieves user status using the host system member number. |\n| 2c | \\[Option 3\\] Get User Status - LOGIN_ID | Retrieves user status using the user’s login identifier. |\n| 2d | \\[Option 4\\] Get User Status - CUSTOMER_ID | Retrieves user status using the legacy customer GUID. |"
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏢 Business User",
+      "item": [
+        {
+          "name": "🔗 Get Institution User V1",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2a. [Option 1] Get Institution User V1 - INSTITUTION_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{business_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2b. [Option 2] Get Institution User V1 - LOGIN_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{business_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{business_user_login_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LOGIN_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2c. [Option 3] Get Institution User V1 - LEGACY_USER_GUID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{business_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{business_user_legacy_user_guid}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LEGACY_USER_GUID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2d. [Option 4] Get Institution User V1 - USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{business_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{business_user_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2e. [Option 5] Get Institution User V1 - contactMethods",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2f. [Option 6] Get Institution User V1 - postalAddresses",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{business_user_institution_user_id}}?$expand=postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "postalAddresses"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2g. [Option 7] Get Institution User V1 - Filters",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Business User – Get Institution User V1 Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Get Institution User V1 - INSTITUTION_USER_ID | Retrieves user profile using the institution-specific user ID. |\n| 2b | \\[Option 2\\] Get Institution User V1 - LOGIN_ID | Retrieves user profile using the user’s login identifier. |\n| 2c | \\[Option 3\\] Get Institution User V1 - LEGACY_USER_GUID | Retrieves user profile using the legacy customer GUID. |\n| 2d | \\[Option 4\\] Get Institution User V1 - USER_ID | Retrieves user profile using the authentication user identifier. |\n| 2e | \\[Option 5\\] Get Institution User V1 - contactMethods | Retrieves the user profile along with contact methods. |\n| 2f | \\[Option 6\\] Get Institution User V1 - postalAddresses | Retrieves the user profile along with postal addresses. |\n| 2g | \\[Option 7\\] Get Institution User V1 - Filters | Retrieves the user profile, with search filters applied only to the $expand query parameter. |"
+        },
+        {
+          "name": "🔗 Get Institution User V2",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2a. [Option 1] Get Institution User V2 - INSTITUTION_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2b. [Option 2] Get Institution User V2 - LOGIN_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_login_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LOGIN_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2c. [Option 3] Get Institution User V2 - LEGACY_USER_GUID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_legacy_user_guid}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LEGACY_USER_GUID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2d. [Option 4] Get Institution User V2 - USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses,identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "USER_ID"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods,postalAddresses,identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2e. [Option 5] Get Institution User V2 - contactMethods",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2f. [Option 6] Get Institution User V2 - postalAddresses",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_institution_user_id}}?$expand=postalAddresses",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "postalAddresses"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2g. [Option 7] Get Institution User V2 - identificationDocuments",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_institution_user_id}}?$expand=identificationDocuments",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "identificationDocuments"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2h. [Option 8] Get Institution User V2 - Filters",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "institution-users",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Business User – Get Institution User V2 Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Get Institution User V2 - INSTITUTION_USER_ID | Retrieves user profile using the institution-specific user ID. |\n| 2b | \\[Option 2\\] Get Institution User V2 - LOGIN_ID | Retrieves user profile using the user’s login identifier. |\n| 2c | \\[Option 3\\] Get Institution User V2 - LEGACY_USER_GUID | Retrieves user profile using the legacy customer GUID. |\n| 2d | \\[Option 4\\] Get Institution User V2 - USER_ID | Retrieves user profile using the authentication user identifier. |\n| 2e | \\[Option 5\\] Get Institution User V2 - contactMethods | Retrieves the user profile along with contact methods. |\n| 2f | \\[Option 6\\] Get Institution User V2 - postalAddresses | Retrieves the user profile along with postal addresses. |\n| 2g | \\[Option 7\\] Get Institution User V2 - identificationDocuments | Retrieves the user profile along with identification documents. |\n| 2h | \\[Option 8\\] Get Institution User V2 - Filters | Retrieves the user profile, with search filters applied only to the $expand query parameter. |"
+        },
+        {
+          "name": "🔗 Get User Status",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2a. [Option 1] Get User Status - INSTITUTION_USER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/user-status/{{business_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "user-status",
+                    "{{business_user_institution_user_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "INSTITUTION_USER_ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2b. [Option 2] Get User Status - LOGIN_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/user-status/{{business_user_login_id}}?userIdType=LOGIN_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "user-status",
+                    "{{business_user_login_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LOGIN_ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2c. [Option 3] Get User Status - CUSTOMER_ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/user-status/{{business_user_legacy_user_guid}}?userIdType=CUSTOMER_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "user-status",
+                    "{{business_user_legacy_user_guid}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "CUSTOMER_ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Business User – Get User Status Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Get User Status - INSTITUTION_USER_ID | Retrieves user status using the institution-specific user ID. |\n| 2b | \\[Option 2\\] Get User Status - LOGIN_ID | Retrieves user status using the user’s login identifier. |\n| 2c | \\[Option 3\\] Get User Status - CUSTOMER_ID | Retrieves user status using the legacy customer GUID. |"
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,773 @@
+{
+  "info": {
+    "_postman_id": "20dd993c-79c9-43ef-b4bd-fa78c482b751",
+    "name": "Core Banking - Banking Activities",
+    "description": "This Postman collection supports API testing of the banking activities operations.\n\n# Quick Links\n\n- [Search Banking Activities](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-bb0429f4-222b-4441-90df-9b2e2ccdf9c3?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-20dd993c-79c9-43ef-b4bd-fa78c482b751?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Search Banking Activities",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2a. [Option 1] Search Banking Activities - Basic Criteria",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2b. [Option 2] Search Banking Activities - Next Page Token",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "",
+                  "const baseUrl = pm.environment.get(\"apigee_base_url\");",
+                  "const accessToken = pm.environment.get(\"access_token\");",
+                  "const startDate = pm.environment.get(\"start_date\");",
+                  "const endDate = pm.environment.get(\"end_date\");",
+                  "",
+                  "const requestOptions = {",
+                  "    url: baseUrl + \"/v1/banking-activities\",",
+                  "    method: \"POST\",",
+                  "    header: {",
+                  "        \"Authorization\": \"Bearer \" + accessToken,",
+                  "        \"transactionId\": pm.variables.replaceIn(\"{{$guid}}\"),",
+                  "        \"Accept\": \"application/json\",",
+                  "        \"Content-Type\": \"application/json\"",
+                  "    },",
+                  "    body: {",
+                  "        mode: \"raw\",",
+                  "        raw: JSON.stringify({",
+                  "            startTime: startDate,",
+                  "            endTime: endDate",
+                  "        })",
+                  "    }",
+                  "};",
+                  "",
+                  "pm.sendRequest(requestOptions, function (error, response) {",
+                  "    if (error) {",
+                  "        console.error(\"Error calling banking activities API:\", error);",
+                  "        return;",
+                  "    }",
+                  "",
+                  "    let responseJson;",
+                  "",
+                  "    try {",
+                  "        responseJson = response.json();",
+                  "    } catch (parseError) {",
+                  "        console.error(\"Failed to parse response:\", parseError);",
+                  "        return;",
+                  "    }",
+                  "",
+                  "    const nextPageToken = responseJson.nextPageToken;",
+                  "",
+                  "    if (nextPageToken) {",
+                  "        pm.environment.set(\"next_page_token\", nextPageToken);",
+                  "    } else {",
+                  "        console.error(\"nextPageToken not found in response:\", JSON.stringify(responseJson));",
+                  "    }",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"nextPageToken\": \"{{next_page_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2c. [Option 3] Search Banking Activities - Event ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"pageSize\": 100,\n    \"eventIds\": [\n        \"login\",\n        \"logout\",\n        \"mfaChallenge\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2d. [Option 4] Search Banking Activities - Event Type",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"pageSize\": 100,\n    \"eventType\": \"system\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2e. [Option 5] Search Banking Activities - Retail User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const retailUserLoginId = pm.environment.get('retail_user_login_id');",
+                  "",
+                  "if (!retailUserLoginId || retailUserLoginId === '') {",
+                  "    throw new Error(",
+                  "        `Missing required environment variable: retail_user_login_id. Please set it in the active environment before running request.`",
+                  "    );",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"pageSize\": 100,\n    \"userType\": \"retail\",\n    \"userId\": \"{{retail_user_login_id}}\",\n    \"userIdType\": \"loginId\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2f. [Option 6] Search Banking Activities - Company ID",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const companyId = pm.environment.get('company_id');",
+                  "",
+                  "if (!companyId || companyId === '') {",
+                  "    throw new Error(",
+                  "        `Missing required environment variable: company_id. Please set it in the active environment before running request.`",
+                  "    );",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"pageSize\": 100,\n    \"companyId\": \"{{company_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2g. [Option 7] Search Banking Activities - Business User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const businessUserLoginId = pm.environment.get('business_user_login_id');",
+                  "",
+                  "if (!businessUserLoginId || businessUserLoginId === '') {",
+                  "    throw new Error(",
+                  "        `Missing required environment variable: business_user_login_id. Please set it in the active environment before running request.`",
+                  "    );",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"pageSize\": 100,\n    \"userType\": \"business\",\n    \"userId\": \"{{business_user_login_id}}\",\n    \"userIdType\": \"loginId\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2h. [Option 8] Search Banking Activities - Filters",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"pageSize\": 100,\n    \"additionalFilters\": {\n        \"condition\": \"and\",\n        \"filters\": [\n            {\n                \"attributeId\": \"channel\",\n                \"criteria\": \"equals\",\n                \"value\": \"MOBILE\"\n            },\n            {\n                \"attributeId\": \"reqctx_featurename\",\n                \"criteria\": \"like\",\n                \"value\": \"login\"\n            }\n        ]\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2i. [Option 9] Search Banking Activities - Filters and SubFilters",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"pageSize\": 100,\n    \"additionalFilters\": {\n        \"condition\": \"and\",\n        \"filters\": [\n            {\n                \"attributeId\": \"channel\",\n                \"criteria\": \"equals\",\n                \"value\": \"MOBILE\"\n            },\n            {\n                \"attributeId\": \"source\",\n                \"criteria\": \"notEqual\",\n                \"value\": \"AndroidBizBankingApp\"\n            }\n        ],\n        \"subFilters\": [\n            {\n                \"condition\": \"or\",\n                \"filters\": [\n                    {\n                        \"attributeId\": \"reqctx_featurename\",\n                        \"criteria\": \"like\",\n                        \"value\": \"login\"\n                    },\n                    {\n                        \"attributeId\": \"reqctx_featurename\",\n                        \"criteria\": \"like\",\n                        \"value\": \"logout\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2j. [Option 10] Search Banking Activities - Requested Attributes",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"startTime\": \"{{start_date}}\",\n    \"endTime\": \"{{end_date}}\",\n    \"requestedAttributes\": [\n        \"channel\",\n        \"errorMessage\",\n        \"ReqCtx_canonicalId\",\n        \"ReqCtx_featureName\",\n        \"member\",\n        \"ReqCtx_loginId\",\n        \"ReqCtx_sessionId\",\n        \"source\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/banking-activities",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "banking-activities"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Search Banking Activities Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Search Banking Activities - Basic Criteria | Retrieve banking activities based on a specified date range. |\n| 2b | \\[Option 2\\] Search Banking Activities - Next Page Token | Continue retrieving banking activities by using the nextPageToken returned from a previous search response to support pagination. |\n| 2c | \\[Option 3\\] Search Banking Activities - Event ID | Retrieve specific banking activities by supplying unique event ID(s) for precise event-level lookup. |\n| 2d | \\[Option 4\\] Search Banking Activities - Event Type | Retrieve specific banking activities by filtering on event type. |\n| 2e | \\[Option 5\\] Search Banking Activities - Retail User | Retrieve banking activities linked to a specific retail user using the user ID. |\n| 2f | \\[Option 6\\] Search Banking Activities - Company ID | Retrieve banking activities linked to a specific business using the company ID, commonly used in business banking scenarios. |\n| 2g | \\[Option 7\\] Search Banking Activities - Business User | Retrieve banking activities linked to a specific business user using the user ID. |\n| 2h | \\[Option 8\\] Search Banking Activities - Filters | Retrieve banking activities using advanced filtering criteria. |\n| 2i | \\[Option 9\\] Search Banking Activities - Filters and SubFilters | Perform a refined search for banking activities using filters and sub-filters to support complex query conditions and precise results. |\n| 2j | \\[Option 10\\] Search Banking Activities - Requested Attributes | Retrieve banking activities while restricting the response to specified attributes to reduce payload size and improve performance. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "const moment = require('moment');",
+          "const startDate = moment().subtract(30, 'days').format('YYYY-MM-DD') + \"T00:00:00.000Z\";",
+          "const endDate = moment().format('YYYY-MM-DD') + \"T00:00:00.000Z\";",
+          "",
+          "pm.environment.set('end_date', endDate);",
+          "pm.environment.set('start_date', startDate);",
+          "",
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

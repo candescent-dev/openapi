@@ -1,0 +1,921 @@
+{
+  "info": {
+    "_postman_id": "73964786-66a1-464b-bf49-b0f9c17febbf",
+    "name": "MX - Platform",
+    "description": "This Postman collection supports API testing of the MX Proxy – Platform endpoints. It is intended for validating platform-related APIs and passthrough data retrieval via the MX Proxy.\n\n# Quick Links\n\n- [Passthrough Create](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-a37e0518-b489-4864-9c0b-00fe3e034554?action=share&source=copy-link&creator=8321995)\n    \n- [Passthrough Read](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-52cde699-ca3b-46a6-80f3-5117fc8d2b78?action=share&source=copy-link&creator=8321995)\n    \n- [Passthrough Update](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-77bcf161-547c-4433-92bd-46b8b7e98b3a?action=share&source=copy-link&creator=8321995)\n    \n- [Passthrough Delete](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-4d1791bf-14b5-43d2-93c1-e8ed8dc28e0c?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-73964786-66a1-464b-bf49-b0f9c17febbf?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Passthrough Create",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Passthrough Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_platform_resource_path\");",
+                  "const jsonData = pm.response.json();",
+                  "const guid = jsonData.user?.guid;",
+                  "",
+                  "const guidPath = `${path.replace(/\\/$/, \"\")}/${guid}`;",
+                  "pm.environment.set(\"mx_platform_resource_path_guid\", guidPath);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_platform_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "{{mx_content_type}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept-Version",
+                "value": "{{mx_accept_version}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"user\": {\n        \"email\": \"{{user_email}}\",\n        \"id\": \"{{user_partner_id}}\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_platform_resource_path}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_platform_resource_path}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX Platform Passthrough Create Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Passthrough Create | Send a POST request through the proxy, mapping to the corresponding MX Platform API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Passthrough Read",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Get MX User GUID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_platform_resource_path\");",
+                  "const jsonData = pm.response.json();",
+                  "const guid = jsonData.users?.[0]?.guid;",
+                  "const guidPath = `${path.replace(/\\/$/, \"\")}/${guid}`;",
+                  "",
+                  "pm.environment.set(\"mx_platform_resource_path_guid\", guidPath);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_platform_resource_path\");",
+                  "const userEmail = pm.environment.get(\"user_email\");",
+                  "",
+                  "pm.environment.set(",
+                  "    \"mx_platform_resource_path_user_lookup\",",
+                  "    `${path}?email=${encodeURIComponent(userEmail)}`",
+                  ");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_platform_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept-Version",
+                "value": "{{mx_accept_version}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_platform_resource_path_user_lookup}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_platform_resource_path_user_lookup}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Passthrough Read",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_platform_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept-Version",
+                "value": "{{mx_accept_version}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_platform_resource_path_guid}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_platform_resource_path_guid}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX Platform Passthrough Read Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for MX User GUID | (Optional) Use this step to retrieve the MX user GUID if it is not already known, by looking up the user’s email address. |\n| 3 | Passthrough Read | Send a GET request through the proxy, mapping to the corresponding MX Platform API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Passthrough Update",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Get MX User GUID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_platform_resource_path\");",
+                  "const jsonData = pm.response.json();",
+                  "const guid = jsonData.users?.[0]?.guid;",
+                  "const guidPath = `${path.replace(/\\/$/, \"\")}/${guid}`;",
+                  "",
+                  "pm.environment.set(\"mx_platform_resource_path_guid\", guidPath);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_platform_resource_path\");",
+                  "const userEmail = pm.environment.get(\"user_email\");",
+                  "",
+                  "pm.environment.set(",
+                  "    \"mx_platform_resource_path_user_lookup\",",
+                  "    `${path}?email=${encodeURIComponent(userEmail)}`",
+                  ");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_platform_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept-Version",
+                "value": "{{mx_accept_version}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_platform_resource_path_user_lookup}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_platform_resource_path_user_lookup}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Passthrough Update",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_platform_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "{{mx_content_type}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept-Version",
+                "value": "{{mx_accept_version}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"user\": {\n        \"email\": \"{{user_email}}\",\n        \"id\": \"{{user_partner_id}}\",\n        \"is_disabled\": true\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_platform_resource_path_guid}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_platform_resource_path_guid}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX Platform Passthrough Update Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for MX User GUID | (Optional) Use this step to retrieve the MX user GUID if it is not already known, by looking up the user’s email address. |\n| 3 | Passthrough Update | Send a PUT request through the proxy, mapping to the corresponding MX Platform API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Passthrough Delete",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Get MX User GUID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_platform_resource_path\");",
+                  "const jsonData = pm.response.json();",
+                  "const guid = jsonData.users?.[0]?.guid;",
+                  "const guidPath = `${path.replace(/\\/$/, \"\")}/${guid}`;",
+                  "",
+                  "pm.environment.set(\"mx_platform_resource_path_guid\", guidPath);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const path = pm.environment.get(\"mx_platform_resource_path\");",
+                  "const userEmail = pm.environment.get(\"user_email\");",
+                  "",
+                  "pm.environment.set(",
+                  "    \"mx_platform_resource_path_user_lookup\",",
+                  "    `${path}?email=${encodeURIComponent(userEmail)}`",
+                  ");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_platform_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept-Version",
+                "value": "{{mx_accept_version}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_platform_resource_path_user_lookup}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_platform_resource_path_user_lookup}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Passthrough Delete",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "correlationId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "ext_host",
+                "value": "{{mx_platform_host}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "{{mx_accept}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept-Version",
+                "value": "{{mx_accept_version}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/mx/{{mx_platform_resource_path_guid}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "mx",
+                "{{mx_platform_resource_path_guid}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 MX Platform Passthrough Delete Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for MX User GUID | (Optional) Use this step to retrieve the MX user GUID if it is not already known, by looking up the user’s email address. |\n| 3 | Passthrough Delete | Send a DELETE request through the proxy, mapping to the corresponding MX Platform API resource. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\",",
+          "    \"mx_platform_host\",",
+          "    \"mx_accept\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

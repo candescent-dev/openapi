@@ -1,0 +1,542 @@
+{
+  "info": {
+    "_postman_id": "69261545-1b51-46aa-90f6-ebe3bc10e64d",
+    "name": "Authentication - OAuth V1",
+    "description": "This Postman collection validates **OAuth V1 flows** for **Retail** and **Business** users using two grant types:\n\n- **Client Credentials** – Institution-level access for server-to-server communication\n    \n- **Password Grant** – User-level access via login credentials (Retail User only)\n    \n\n# Quick Links\n\n👤 Retail User\n\n- [Client Credential](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-30367a5c-d890-439e-b6b3-dcce23979b01?action=share&source=copy-link&creator=8321995)\n    \n- [Password](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-a0de25df-12fd-404b-b65a-365515543362?action=share&source=copy-link&creator=8321995)\n    \n\n🏢 Business User\n\n- [Client Credential](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-3ce75902-8e03-4828-bc35-15dcfafdf096?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-69261545-1b51-46aa-90f6-ebe3bc10e64d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "👤 Retail User",
+      "item": [
+        {
+          "name": "🔗 Client Credential",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const xml2js = require('xml2js');",
+                      "",
+                      "xml2js.parseString(pm.response.text(), function (error, jsonData) {",
+                      "    if (error) {",
+                      "        console.error(\"Error parsing XML:\", error);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    const accessToken = jsonData.token.access_token[0];",
+                      "",
+                      "    pm.environment.set(\"access_token\", accessToken);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "di_tid",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "di_fiid",
+                    "value": "{{institution_id}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "type": "text",
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/oauth/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "oauth",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Get Profile Information",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "di_tid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{retail_user_member_number}}?fiCustomerIdType=MEMNUMBER",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "bankingservices",
+                    "v2",
+                    "fis",
+                    "{{institution_id}}",
+                    "fiCustomers",
+                    "{{retail_user_member_number}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fiCustomerIdType",
+                      "value": "MEMNUMBER"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Retail User – Client Credentials Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials. |\n| 2 | Get Profile Information | Access a protected resource using the access token. |"
+        },
+        {
+          "name": "🔗 Password",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const xml2js = require('xml2js');",
+                      "",
+                      "xml2js.parseString(pm.response.text(), function (error, jsonData) {",
+                      "    if (error) {",
+                      "        console.error(\"Error parsing XML:\", error);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    const accessToken = jsonData.token.access_token[0];",
+                      "    const fiCustomerId = jsonData.token.di_ficustomer[0];",
+                      "",
+                      "    pm.environment.set(\"access_token\", accessToken);",
+                      "    pm.environment.set(\"retail_customer_id\", fiCustomerId);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "di_tid",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "di_fiid",
+                    "value": "{{institution_id}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{retail_user_login_id}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "{{retail_user_password}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/oauth/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "oauth",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Get Profile Information",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "di_tid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{retail_customer_id}}",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "bankingservices",
+                    "v2",
+                    "fis",
+                    "{{institution_id}}",
+                    "fiCustomers",
+                    "{{retail_customer_id}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Retail User – Password Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using the user's credentials. |\n| 2 | Get Profile Information | Access a protected resource using the access token. |",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "requests": {},
+                "exec": [
+                  "// Pre-request script to check if 'retail_user_password' environment variable is set",
+                  "const password = pm.environment.get('retail_user_password');",
+                  "",
+                  "if (!password) {",
+                  "    throw new Error(\"Environment variable 'retail_user_password' is not set. Please set it before running requests in this folder.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "// Pre-request script to check for required environment variables at the collection level",
+              "const requiredVars = [",
+              "    \"apigee_base_url\",",
+              "    \"client_id\",",
+              "    \"client_secret\",",
+              "    \"institution_id\"",
+              "];",
+              "",
+              "const mutuallyExclusiveVars = [",
+              "    \"retail_user_member_number\",",
+              "    \"retail_user_login_id\"",
+              "];",
+              "",
+              "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+              "",
+              "// Check that at least one of the mutually exclusive variables is present",
+              "const hasAtLeastOne = mutuallyExclusiveVars.some(varName => pm.environment.get(varName));",
+              "if (!hasAtLeastOne) {",
+              "    missingVars.push(\"retail_user_member_number or retail_user_login_id (at least one required)\");",
+              "}",
+              "",
+              "if (missingVars.length > 0) {",
+              "    throw new Error(",
+              "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+              "    );",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏢 Business User",
+      "item": [
+        {
+          "name": "🔗 Client Credential",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const xml2js = require('xml2js');",
+                      "",
+                      "xml2js.parseString(pm.response.text(), function (error, jsonData) {",
+                      "    if (error) {",
+                      "        console.error(\"Error parsing XML:\", error);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    const accessToken = jsonData.token.access_token[0];",
+                      "",
+                      "    pm.environment.set(\"access_token\", accessToken);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "di_tid",
+                    "value": "{{$guid}}"
+                  },
+                  {
+                    "key": "di_fiid",
+                    "value": "{{institution_id}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "type": "text",
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/oauth/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "oauth",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Get Profile Information",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "di_tid",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/xml",
+                    "type": "text"
+                  },
+                  {
+                    "key": "intuit_IFS_userType",
+                    "value": "PRIMARY_ADMIN",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{business_tin}}?fiCustomerIdType=MEMNUMBER",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "bankingservices",
+                    "v2",
+                    "fis",
+                    "{{institution_id}}",
+                    "fiCustomers",
+                    "{{business_tin}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fiCustomerIdType",
+                      "value": "MEMNUMBER"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Business User – Client Credentials Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials. |\n| 2 | Get Profile Information | Access a protected resource using the access token. |"
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "// Pre-request script to check for required environment variables",
+              "const requiredVars = [",
+              "    \"apigee_base_url\",",
+              "    \"client_id\",",
+              "    \"client_secret\",",
+              "    \"institution_id\",",
+              "    \"business_tin\"",
+              "];",
+              "",
+              "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+              "",
+              "if (missingVars.length > 0) {",
+              "    throw new Error(",
+              "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+              "    );",
+              "}"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

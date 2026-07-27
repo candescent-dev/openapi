@@ -1,0 +1,616 @@
+{
+  "info": {
+    "_postman_id": "6376d0cc-3236-44a5-aac5-660bda63b997",
+    "name": "Documents And Preferences - Institution Disclosures",
+    "description": "This Postman collection supports API testing of the disclosure operations involving institution disclosures.\n\n# Quick Links\n\n- [Create Institution Disclosure](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-b12a357c-9599-4108-9857-12992050ce83?action=share&source=copy-link&creator=8321995&ctx=documentation)\n    \n- [Get List of Institution Disclosures](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-c9f09735-322e-44e7-b935-0095c2d57aef?action=share&source=copy-link&creator=8321995&ctx=documentation)\n    \n- [Update Institution Disclosure](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-eec3fc92-e9ca-4e44-9bd9-0a7300772d36?action=share&source=copy-link&creator=8321995&ctx=documentation)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-6376d0cc-3236-44a5-aac5-660bda63b997?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Create Institution Disclosure",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2a. [Option 1] Create Institution Disclosure - Custom with Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"institutionDisclosureName\": \"TEST_DISCLOSURE_{{$randomInt}}\",\n    \"institutionDisclosureStatus\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/institution-disclosures",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "institution-disclosures"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2b. [Option 2] Create Institution Disclosure - Custom with URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"institutionDisclosureName\": \"TEST_DISCLOSURE_{{$randomInt}}\",\n    \"institutionDisclosureData\": \"https://www.testbank.com/disclosure.pdf\",\n    \"institutionDisclosureDataType\": \"URL\",\n    \"institutionDisclosureStatus\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/institution-disclosures",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "institution-disclosures"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2c. [Option 3] Create Institution Disclosure - Online Statement",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"institutionDisclosureName\": \"OLS\",\n    \"institutionDisclosureStatus\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/institution-disclosures",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "institution-disclosures"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Create Institution Disclosure Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2a | \\[Option 1\\] Create Institution Disclosure - Custom with Name | Create a disclosure with a custom name. |\n| 2b | \\[Option 2\\] Create Institution Disclosure - Custom with URL | Create a disclosure with a custom name and associated URL. |\n| 2c | \\[Option 3\\] Create Institution Disclosure - Online Statement | Create a disclosure specifically for online statements. |"
+    },
+    {
+      "name": "🔗 Get List of Institution Disclosures",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get List of Institution Disclosures",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/institution-disclosures",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "institution-disclosures"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Get List of Institution Disclosures Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Get List of Institution Disclosures | Retrieve all disclosures associated with the institution. |"
+    },
+    {
+      "name": "🔗 Update Institution Disclosure",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Search for Institution Disclosure ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const defaultDisclosureName = pm.environment.get(\"default_disclosure_name\");",
+                  "const institutionDisclosure = Array.isArray(jsonData.institutionDisclosures)",
+                  "    ? jsonData.institutionDisclosures.find(disc => disc.institutionDisclosureName.includes(defaultDisclosureName))",
+                  "    : null;",
+                  "",
+                  "pm.environment.set(\"institution_disclosure_id\", institutionDisclosure?.institutionDisclosureId ?? null);",
+                  "pm.environment.set(\"institution_disclosure_name\", institutionDisclosure?.institutionDisclosureName ?? null);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/institution-disclosures",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "institution-disclosures"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Update Institution Disclosure",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"institutionDisclosureId\": \"{{institution_disclosure_id}}\",\n    \"institutionDisclosureName\": \"{{institution_disclosure_name}}\",\n    \"institutionDisclosureData\": \"https://www.testbank.com/disclosure2.pdf\",\n    \"institutionDisclosureDataType\": \"URL\",\n    \"institutionDisclosureStatus\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/institution-disclosures/{{institution_disclosure_id}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "institution-disclosures",
+                "{{institution_disclosure_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Update Institution Disclosure Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for Institution Disclosure ID | (Optional) Use this step to find the disclosure ID if it is not already known. |\n| 3 | Update Institution Disclosure | Update the details and status of an existing institution disclosure. |"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\",",
+          "    \"default_disclosure_name\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

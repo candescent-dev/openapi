@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.9.0] - 2026-07-27
+
+### Breaking changes (3 paths)
+- `/v3/groups`
+- `/v3/groups/{groupId}`
+- `/v3/groups/{groupId}/participants`
+
+### Schemas removed (6) ⚠️ Breaking
+- `BaseGroupsWithParticipantsCountDTO`
+- `FileUpload`
+- `GroupBaseRequestDTO`
+- `GroupBaseResponseDTO`
+- `GroupExperienceDTO`
+- `UploadResponseDTO`
+
+### Schemas — breaking changes (2)
+- `GroupsWithParticipantsCount`
+- `Page`
+
+### Schemas added (8)
+- `DeleteExperienceGroupResponse`
+- `ExperienceGroupRequest`
+- `ExperienceGroupResponse`
+- `ExperienceGroupsResponse`
+- `HalLink`
+- `Page1`
+- `UploadExperienceGroupParticipantsRequest`
+- `UploadExperienceGroupParticipantsResponse`
+
+### Schemas updated (2)
+- `BasePageDTOListImportJobDTO`
+- `BasePageDTOListImportJobErrorDTO`
+
+- Documentation updates on 1 path
+
 ## [1.8.0] - 2026-07-17
 
 ### Removed (8 paths) ⚠️ Breaking

@@ -1,0 +1,1348 @@
+{
+  "info": {
+    "_postman_id": "bae453aa-3edc-49c2-9cae-13e97228e940",
+    "name": "Core Banking - Transactions",
+    "description": "This Postman collection supports API testing of the transactions operation involving Retail and Business users.\n\n# Quick Links\n\n👤 Retail User\n\n- [Get List of Transactions](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-b82b12c1-1839-41a8-85aa-4c4c4d498771?action=share&source=copy-link&creator=8321995&ctx=documentation)\n    \n\n🏢 Business User\n\n- [Get List of Transactions](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-b1d16241-7578-480e-8643-ebf02b8e95fc?action=share&source=copy-link&creator=8321995&ctx=documentation)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-bae453aa-3edc-49c2-9cae-13e97228e940?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "👤 Retail User",
+      "item": [
+        {
+          "name": "🔗 Get List of Transactions",
+          "item": [
+            {
+              "name": "Client Credential",
+              "item": [
+                {
+                  "name": "1. Generate Access Token",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accessToken = jsonData.access_token;",
+                          "",
+                          "pm.environment.set(\"access_token\", accessToken);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "basic",
+                      "basic": [
+                        {
+                          "key": "password",
+                          "value": "{{client_secret}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "username",
+                          "value": "{{client_id}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "transactionid",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "institutionId",
+                        "value": "{{institution_id}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "grant_type",
+                          "value": "client_credentials",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "oauth2",
+                        "v1",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "2. [Optional] Search for Account ID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accountNumber = pm.environment.get(\"retail_user_account_number\");",
+                          "const account = Array.isArray(jsonData.accounts)",
+                          "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                          "    : null;",
+                          "",
+                          "pm.environment.set(\"account_id\", account?.id ?? null);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/accounts?hostUserId={{retail_user_host_user_id}}",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "key": "hostUserId",
+                          "value": "{{retail_user_host_user_id}}"
+                        },
+                        {
+                          "key": "loginId",
+                          "value": "{{retail_user_login_id}}",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "viewName",
+                          "value": "m",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "crossAccount",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "category eq 'DEPOSIT'",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "3. Get List of Transactions",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/transactions?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "transactions"
+                      ],
+                      "query": [
+                        {
+                          "key": "hostUserId",
+                          "value": "{{retail_user_host_user_id}}"
+                        },
+                        {
+                          "key": "loginId",
+                          "value": "{{retail_user_login_id}}",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "accountId",
+                          "value": "{{account_id}}"
+                        },
+                        {
+                          "key": "startDate",
+                          "value": "{{start_date}}"
+                        },
+                        {
+                          "key": "endDate",
+                          "value": "{{end_date}}"
+                        },
+                        {
+                          "key": "retrieveFutureTransactions",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$skip",
+                          "value": "5",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$top",
+                          "value": "10",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "contains(description, 'transfer')",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isCreditTransaction",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Password",
+              "item": [
+                {
+                  "name": "1. Generate Access Token",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accessToken = jsonData.access_token;",
+                          "",
+                          "pm.environment.set(\"access_token\", accessToken);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "basic",
+                      "basic": [
+                        {
+                          "key": "password",
+                          "value": "{{client_secret}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "username",
+                          "value": "{{client_id}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "transactionid",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "institutionId",
+                        "value": "{{institution_id}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "grant_type",
+                          "value": "password",
+                          "type": "text"
+                        },
+                        {
+                          "key": "username",
+                          "value": "{{retail_user_login_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "password",
+                          "value": "{{retail_user_password}}",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "oauth2",
+                        "v1",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "2. [Optional] Search for Account ID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accountNumber = pm.environment.get(\"retail_user_account_number\");",
+                          "const account = Array.isArray(jsonData.accounts)",
+                          "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                          "    : null;",
+                          "",
+                          "pm.environment.set(\"account_id\", account?.id ?? null);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/accounts",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "key": "viewName",
+                          "value": "m",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "crossAccount",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "category eq 'DEPOSIT'",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "3. Get List of Transactions",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/transactions?accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "transactions"
+                      ],
+                      "query": [
+                        {
+                          "key": "accountId",
+                          "value": "{{account_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "startDate",
+                          "value": "{{start_date}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "endDate",
+                          "value": "{{end_date}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "retrieveFutureTransactions",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$skip",
+                          "value": "5",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$top",
+                          "value": "10",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "contains(description, 'transfer')",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isCreditTransaction",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "requests": {},
+                    "exec": [
+                      "// Pre-request script to check if 'retail_user_password' environment variable is set",
+                      "const password = pm.environment.get('retail_user_password');",
+                      "",
+                      "if (!password) {",
+                      "    throw new Error(\"Environment variable 'retail_user_password' is not set. Please set it before running requests in this folder.\");",
+                      "}"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "description": "## 🔄 Retail User – Get List of Transactions Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client or user credentials to authorize API requests. |\n| 2 | Search for Account ID | (Optional) Use this step to find the account ID if it is not already known. |\n| 3 | Get List of Transactions | Retrieve the list of transactions linked to the specified account. |"
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "// Pre-request script to check for required environment variables at the collection level",
+              "const requiredVars = [",
+              "    \"apigee_base_url\",",
+              "    \"client_id\",",
+              "    \"client_secret\",",
+              "    \"institution_id\"",
+              "];",
+              "",
+              "const mutuallyExclusiveVars = [",
+              "    \"retail_user_host_user_id\",",
+              "    \"retail_user_login_id\"",
+              "];",
+              "",
+              "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+              "",
+              "// Check that at least one of the mutually exclusive variables is present",
+              "const hasAtLeastOne = mutuallyExclusiveVars.some(varName => pm.environment.get(varName));",
+              "if (!hasAtLeastOne) {",
+              "    missingVars.push(\"retail_user_host_user_id or retail_user_login_id (at least one required)\");",
+              "}",
+              "",
+              "if (missingVars.length > 0) {",
+              "    throw new Error(",
+              "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+              "    );",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏢 Business User",
+      "item": [
+        {
+          "name": "🔗 Get List of Transactions",
+          "item": [
+            {
+              "name": "Client Credential",
+              "item": [
+                {
+                  "name": "1. Generate Access Token",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accessToken = jsonData.access_token;",
+                          "",
+                          "pm.environment.set(\"access_token\", accessToken);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "basic",
+                      "basic": [
+                        {
+                          "key": "password",
+                          "value": "{{client_secret}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "username",
+                          "value": "{{client_id}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "transactionid",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "institutionId",
+                        "value": "{{institution_id}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "grant_type",
+                          "value": "client_credentials",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "oauth2",
+                        "v1",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "2. [Optional] Search for Business Entity",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const businessTin = pm.environment.get(\"business_tin\");",
+                          "const customer = Array.isArray(jsonData.customers)",
+                          "    ? jsonData.customers.find(cust => cust.memberNumber === businessTin)",
+                          "    : null;",
+                          "",
+                          "pm.environment.set(\"institution_customer_id\", customer?.customerId ?? null);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "correlationId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers",
+                        "{{business_user_login_id}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "userIdType",
+                          "value": "LOGIN_ID"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "3. [Optional] Search for Account ID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accountNumber = pm.environment.get(\"business_user_account_number\");",
+                          "const account = Array.isArray(jsonData.accounts)",
+                          "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                          "    : null;",
+                          "",
+                          "pm.environment.set(\"account_id\", account?.id ?? null);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "key": "loginId",
+                          "value": "{{business_user_login_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "institutionCustomerId",
+                          "value": "{{institution_customer_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "viewName",
+                          "value": "m",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "crossAccount",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "category eq 'DEPOSIT'",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "4. Get List of Transactions",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/transactions?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "transactions"
+                      ],
+                      "query": [
+                        {
+                          "key": "loginId",
+                          "value": "{{business_user_login_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "institutionCustomerId",
+                          "value": "{{institution_customer_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "accountId",
+                          "value": "{{account_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "startDate",
+                          "value": "{{start_date}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "endDate",
+                          "value": "{{end_date}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "retrieveFutureTransactions",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$skip",
+                          "value": "5",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$top",
+                          "value": "10",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "contains(description, 'transfer')",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isCreditTransaction",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Password",
+              "item": [
+                {
+                  "name": "1. Generate Access Token",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accessToken = jsonData.access_token;",
+                          "",
+                          "pm.environment.set(\"access_token\", accessToken);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "basic",
+                      "basic": [
+                        {
+                          "key": "password",
+                          "value": "{{client_secret}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "username",
+                          "value": "{{client_id}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "transactionid",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "institutionId",
+                        "value": "{{institution_id}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "grant_type",
+                          "value": "password",
+                          "type": "text"
+                        },
+                        {
+                          "key": "username",
+                          "value": "{{business_user_login_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "password",
+                          "value": "{{business_user_password}}",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "oauth2",
+                        "v1",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "2. [Optional] Search for Business Entity",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const businessTin = pm.environment.get(\"business_tin\");",
+                          "const customer = Array.isArray(jsonData.customers)",
+                          "    ? jsonData.customers.find(cust => cust.memberNumber === businessTin)",
+                          "    : null;",
+                          "",
+                          "pm.environment.set(\"institution_customer_id\", customer?.customerId ?? null);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "correlationId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers",
+                        "{{business_user_login_id}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "userIdType",
+                          "value": "LOGIN_ID"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "3. [Optional] Search for Account ID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const jsonData = pm.response.json();",
+                          "const accountNumber = pm.environment.get(\"business_user_account_number\");",
+                          "const account = Array.isArray(jsonData.accounts)",
+                          "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                          "    : null;",
+                          "",
+                          "pm.environment.set(\"account_id\", account?.id ?? null);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/accounts?institutionCustomerId={{institution_customer_id}}",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "key": "institutionCustomerId",
+                          "value": "{{institution_customer_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "viewName",
+                          "value": "m",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "crossAccount",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "category eq 'DEPOSIT'",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "4. Get List of Transactions",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "transactionId",
+                        "value": "{{$guid}}",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{apigee_base_url}}/v1/transactions?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}",
+                      "host": [
+                        "{{apigee_base_url}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "transactions"
+                      ],
+                      "query": [
+                        {
+                          "key": "institutionCustomerId",
+                          "value": "{{institution_customer_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "accountId",
+                          "value": "{{account_id}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "startDate",
+                          "value": "{{start_date}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "endDate",
+                          "value": "{{end_date}}",
+                          "type": "text"
+                        },
+                        {
+                          "key": "retrieveFutureTransactions",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$skip",
+                          "value": "5",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$top",
+                          "value": "10",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "contains(description, 'transfer')",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isCreditTransaction",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        },
+                        {
+                          "key": "additionalFields",
+                          "value": "true",
+                          "type": "text",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {},
+                    "exec": [
+                      "// Pre-request script to check if 'business_user_password' environment variable is set",
+                      "const password = pm.environment.get('business_user_password');",
+                      "",
+                      "if (!password) {",
+                      "    throw new Error(\"Environment variable 'business_user_password' is not set. Please set it before running requests in this folder.\");",
+                      "}"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "description": "## 🔄 Business User – Get List of Accounts Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client or user credentials to authorize API requests. |\n| 2 | Search for Business Entity | (Optional) Use this step to locate the institution customer ID if it’s not already available. Retrieve business user details and match the memberNumber (TIN/EIN) to identify the corresponding institutionCustomerId. |\n| 3 | Search for Account ID | (Optional) Use this step to find the account ID if it is not already known. |\n| 4 | Get List of Transactions | Retrieve the list of transactions linked to the specified account. |"
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "// Pre-request script to check for required environment variables",
+              "const requiredVars = [",
+              "    \"apigee_base_url\",",
+              "    \"client_id\",",
+              "    \"client_secret\",",
+              "    \"institution_id\",",
+              "    \"business_user_login_id\",",
+              "    \"business_tin\"",
+              "];",
+              "",
+              "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+              "",
+              "if (missingVars.length > 0) {",
+              "    throw new Error(",
+              "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+              "    );",
+              "}"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          "const moment = require('moment');",
+          "const startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');",
+          "const endDate = moment().format('YYYY-MM-DD');",
+          "",
+          "pm.environment.set('end_date', endDate);",
+          "pm.environment.set('start_date', startDate);"
+        ]
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Candescent DI API
-  version: 1.8.0
+  version: 1.9.0
   description: >
     Welcome to the **Candescent Digital Insight API** documentation. This
     comprehensive API platform
@@ -4481,51 +4481,37 @@ tags:
   - name: Experience Groups
     x-displayName: Experience Groups
     description: >
-      **Experience Groups** APIs allow financial institutions to organize and
-      segment users into
+      The **Experience Groups** APIs manage static experience groups within the
+      retail banking
 
-      logical groups for targeted digital experiences. These groups are used to
-      support personalized
+      platform. Use these APIs to create and manage user cohorts, view
+      participant counts, and bulk
 
-      features, promotions, experiments, and A/B testing within the digital
-      banking platform.
-
-
-      ## End-user benefits
+      update group membership through CSV uploads.
 
 
-      - Creating and managing experience groups for user segmentation
-
-      - Bulk upload user lists via CSV (ADD, REMOVE, REPLACE operations)
-
-      - Control feature rollouts and A/B testing with defined cohorts
-
-      - Enable personalized experiences for different customer segments
+      ## End-user Benefits
 
 
-      ## Integration capabilities
+      - Create, update, retrieve, and delete static experience groups
+
+      - Bulk add, remove, or replace group participants using CSV file uploads
+
+      - View participant counts for each group
+
+      - Navigate large group collections using paginated results
 
 
-      - **Group Management**: Create, update, list, and delete experience groups
-
-      - **Participant Management**: Upload user lists (ADD, REMOVE, REPLACE
-
-      operations)
-
-      - **Pagination**: Navigate through large result sets efficiently
+      ## Integration Capabilities
 
 
-      ## File Upload Requirements
+      - Create, update, retrieve, list, and delete groups
 
+      - Upload participant lists with `ADD`, `REMOVE`, or `REPLACE` operations
 
-      When uploading participants to Experience Groups, the CSV file must:
-
-      - Contain participant IDs (max 32 characters each)
-
-      - Specify the operation type: `ADD`, `REMOVE`, or `REPLACE`
-
-      - Be uploaded as multipart/form-data
-
+      - List groups using 0-based page and size parameters (default page size:
+      20), with `next` and
+        `previous` links for navigation between result pages
 
       ## Scopes
 
@@ -4559,13 +4545,35 @@ tags:
 
       |--------|-------|-------------------|
 
-      | 1000 | Success (e.g. upload accepted, group deleted) | 200 |
+      | 2000 | invalid groupId {groupId} | 400 |
 
-      | 2000 | Client / validation (e.g. invalid data, not found) | 400 |
+      | 2000 | groupId {groupId} not found or has been marked for deletion | 400
+      |
 
-      | 2001 | Internal server error or generic bad request | 400 / 500 |
+      | 2000 | Content-Type must be multipart/form-data or multipart/mixed | 400
+      |
 
-      | 2003 | Invalid authorization | 401 |
+      | 2000 | Invalid type value. Type value can only be ADD, REMOVE, or
+      REPLACE. | 400 |
+
+      | 2000 | type parameter is required. | 400 |
+
+      | 2000 | Uploaded file data is empty. | 400 |
+
+      | 2000 | File type: {contentType} not allowed. | 400 |
+
+      | 2000 | {field} is required | 400 |
+
+      | 2000 | {field} cannot exceed {max} characters | 400 |
+
+      | 2001 | There are import jobs in process, need to wait for them to
+      finish. | 400 |
+
+      | 2001 | additional details may be available in server logs | 500 |
+
+      | 2003 | Invalid Authorization | 401 |
+
+      | 2004 | A group with name {groupName} already exists. | 400 |
 
 
       ## Endpoints
@@ -16628,6 +16636,7 @@ paths:
         - $ref: '#/components/parameters/OAuthV2Authorization'
         - $ref: '#/components/parameters/TransactionIdRequest'
       requestBody:
+        required: true
         description: |
           Request payload used to create an institution disclosure.
         content:
@@ -16649,7 +16658,6 @@ paths:
                   institutionDisclosureData: 'https://www.testbank.com/disclosure.pdf'
                   institutionDisclosureDataType: URL
                   institutionDisclosureStatus: true
-        required: true
       responses:
         '200':
           description: Success
@@ -16744,6 +16752,7 @@ paths:
             type: string
             example: 50145570B91B5BD3E063B9E011AC7529
       requestBody:
+        required: true
         description: |
           Request payload used to update an institution disclosure.
         content:
@@ -16760,7 +16769,6 @@ paths:
                   institutionDisclosureData: 'https://www.testbank.com/disclosure2.pdf'
                   institutionDisclosureDataType: URL
                   institutionDisclosureStatus: true
-        required: true
       responses:
         '200':
           description: Success
@@ -16960,6 +16968,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AccountType2'
       requestBody:
+        required: true
         description: >
           Request payload used to create a user disclosure or update OLS
           disclosure.
@@ -16983,7 +16992,6 @@ paths:
                   accountId: xsIv99a3eDsUA53KnzFwL-dtRv49hVeOC6Vy1zk7cAQ
                   institutionUserDisclosureStatus: ACCEPTED
                   paperWaiver: true
-        required: true
       responses:
         '204':
           description: No Content
@@ -17049,6 +17057,7 @@ paths:
         - $ref: '#/components/parameters/LoginId'
         - $ref: '#/components/parameters/UserDisclosuresInstitutionCustomerId'
       requestBody:
+        required: true
         description: |
           Request payload used to update a custom user disclosure.
         content:
@@ -17065,10 +17074,9 @@ paths:
                   institutionUserDisclosureId: 50145570B9165BD3E063B9E011AC7529
                   institutionUserDisclosureStatus: ACCEPTED
                   institutionDisclosureName: TEST_DISCLOSURE_123
-        required: true
       responses:
         '204':
-          description: No content
+          description: No Content
         '400':
           $ref: '#/components/responses/UserDisclosuresError400'
         '401':
@@ -17132,6 +17140,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AccountType2'
       requestBody:
+        required: true
         description: |
           Request payload used to delete an account-specific OLS disclosure.
         content:
@@ -17147,10 +17156,9 @@ paths:
                 value:
                   institutionDisclosureName: OLS
                   accountId: xsIv99a3eDsUA53KnzFwL-dtRv49hVeOC6Vy1zk7cAQ
-        required: true
       responses:
         '204':
-          description: No content
+          description: No Content
         '400':
           $ref: '#/components/responses/UserDisclosuresError400'
         '401':
@@ -17160,249 +17168,564 @@ paths:
         '501':
           $ref: '#/components/responses/UserDisclosuresError501'
       x-position: 4
-  '/v3/groups/{groupId}/participants':
-    put:
-      summary: Upload Group Participants File
-      description: >
-        Uploads a CSV file containing participant IDs to add, remove, or replace
-        users in an experience group.
-
-
-        **File Requirements:**
-
-        - Format: CSV file with participant IDs
-
-        - Each participant ID must be 32 characters or less
-
-        - File is submitted as multipart/form-data
-
-
-        **Operation Types:**
-
-        - `ADD`: Add new participants to the existing group members
-
-        - `REMOVE`: Remove specified participants from the group
-
-        - `REPLACE`: Replace all existing participants with the new list
-
-
-        **Processing:**
-
-        The upload creates an asynchronous job. Use the returned `jobId` to
-        monitor progress 
-
-        via the GET `/v3/jobs/{jobId}` endpoint.
-      operationId: uploadUserListFileV3
-      tags:
-        - Experience Groups
-      parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - $ref: '#/components/parameters/TransactionIdRequest'
-        - $ref: '#/components/parameters/OAuthV2Authorization'
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/FileUpload'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UploadResponseDTO'
-              example:
-                code: '1000'
-                message: >-
-                  File upload for file: shane5_list.csv and group:
-                  9b573b07-296f-404b-a3e4-557a8f2aba87 was successful with
-                  jobId: 377a8762-9ae4-454d-95dd-78c93554235a
-                jobId: 377a8762-9ae4-454d-95dd-78c93554235a
-                jobStatus: CREATED
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2001'
-                message: Internal Server Error
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2003'
-                message: Invalid Authorization
-      x-position: 5
   /v3/groups:
     post:
-      summary: Create Experience Group
-      description: >
-        Creates a new experience group for organizing users. Experience groups
-        allow you to segment users for
-
-        targeted features, promotions, or A/B testing.
-
-
-        After creation, use the PUT `/v3/groups/{groupId}/participants` endpoint
-        to add users to the group.
-      operationId: createExperienceGroupV3
       tags:
         - Experience Groups
+      summary: Create Experience Group
+      description: >
+        Creates a new experience group for segmenting retail banking users for
+        targeted experiences,
+
+        campaigns, or feature rollouts.
+
+
+        **Use this endpoint to:**
+
+
+        - Create an experience group before uploading participants.
+
+        - Define a group name and optional description for audience targeting.
+
+        - Establish a group that can be managed later through update, delete,
+        and participant upload
+          endpoints.
+
+        **Behavior and capabilities:**
+
+
+        - `groupName` is required, must be unique within the institution, and
+        cannot exceed 50
+          characters.
+        - `groupDescription` is optional and cannot exceed 450 characters.
+
+        - If not specified, `groupType` defaults to `EXPERIENCE_GROUP`.
+
+        - If not specified, `groupPlatform` defaults to `RETAIL_BANKING`.
+
+        - A successful request returns the created group, including its
+        generated groupId and an
+          initial groupParticipantCount value of 0.
+
+        ### Next Steps
+
+
+        After creating a group, use the
+
+        [Upload Experience Group
+        Participants](/api/generated/upload-experience-group-participants-v-3/)
+
+        endpoint to upload a CSV file containing participant member numbers to
+        the group.
+      operationId: createExperienceGroupV3
       parameters:
-        - $ref: '#/components/parameters/TransactionIdRequest'
         - $ref: '#/components/parameters/OAuthV2Authorization'
+        - $ref: '#/components/parameters/TransactionIdRequest'
       requestBody:
+        required: true
+        description: >
+          Request payload used to create a new Experience Group with a name,
+          optional description,
+
+          type, and platform.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GroupBaseRequestDTO'
-            example:
-              groupName: My new static group
-              groupDescription: some description
-        required: true
+              $ref: '#/components/schemas/ExperienceGroupRequest'
+            examples:
+              CreateExperienceGroupRequest:
+                summary: CreateExperienceGroupRequest
+                description: >
+                  Create an experience group with name, description, type, and
+                  platform.
+                value:
+                  groupName: Test New Feature
+                  groupDescription: This group is used to test the new feature.
+                  groupType: EXPERIENCE_GROUP
+                  groupPlatform: RETAIL_BANKING
       responses:
         '200':
-          description: OK
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GroupBaseResponseDTO'
-              example:
-                groupId: 482cf7f8-3e59-4ccf-a996-97c79fd50cb1
-                groupName: My new static group
-                groupDescription: some description
-                groupType: EXPERIENCE_GROUP
-                groupPlatform: RETAIL_BANKING
-                groupLastUpdatedDateTime: '2022-10-19T20:31:29.076Z'
-                groupParticipantCount: 0
-                groupStatus: ACTIVE
+                $ref: '#/components/schemas/ExperienceGroupResponse'
+              examples:
+                CreateExperienceGroupResponse:
+                  summary: CreateExperienceGroupResponse
+                  description: >-
+                    Response returned when an Experience Group is successfully
+                    created.
+                  value:
+                    groupId: 9d551eeb-3254-4ac4-b449-668b374f4066
+                    groupName: Test New Feature
+                    groupDescription: This group is used to test the new feature.
+                    groupType: EXPERIENCE_GROUP
+                    groupPlatform: RETAIL_BANKING
+                    groupLastUpdatedDateTime: '2026-07-23T16:19:00.613Z'
+                    groupParticipantCount: 0
+                    groupStatus: ACTIVE
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2001'
-                message: Bad Request
+          $ref: '#/components/responses/ExperienceGroupsError400'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2003'
-                message: Invalid Authorization
+          $ref: '#/components/responses/ExperienceGroupsError401'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2001'
-                message: Internal Server Error
+          $ref: '#/components/responses/ExperienceGroupsError500'
       x-position: 2
     get:
-      summary: List Experience Groups
-      description: >
-        Retrieves all experience groups with their participant counts. Use
-        pagination parameters to navigate through
-
-        large result sets.
-
-
-        **Pagination:**
-
-        - Use `page` (0-based) and `size` parameters to paginate results
-
-        - Response includes HATEOAS links for navigation (first, self, next,
-        last)
-
-        - Default page size is 20 records
-      operationId: listExperienceGroupsV3
       tags:
         - Experience Groups
+      summary: List Experience Groups
+      description: >
+        Retrieves a paginated list of active experience groups for the
+        authenticated institution,
+
+        including participant counts for each group.
+
+
+        ### Use this endpoint to
+
+
+        - View available experience groups for campaigns, targeted experiences,
+        and feature rollouts.
+
+        - Review group membership counts before managing participants.
+
+        - Navigate large collections of groups using pagination.
+
+
+        **Behavior and capabilities:**
+
+
+        - Returns only active experience groups for the authenticated
+        institution.
+
+        - Each group includes key details such as groupId, groupName, groupType,
+        and noOfParticipants.
+
+        - Supports pagination through the page and size query parameters.
+
+        - Supports result sorting through the sort query parameter.
+
+        - Response includes group resources in `_embedded`, navigation links
+        (`first`, `self`,
+          `next`, `last`) in `_links`, and pagination details in `page`.
+      operationId: listExperienceGroupsV3
       parameters:
-        - $ref: '#/components/parameters/TransactionIdRequest'
         - $ref: '#/components/parameters/OAuthV2Authorization'
-        - name: pageable
+        - $ref: '#/components/parameters/TransactionIdRequest'
+        - name: page
           in: query
           required: false
+          description: Zero-based page index. Defaults to `0`.
           schema:
-            $ref: '#/components/schemas/Pageable'
+            type: integer
+            format: int32
+            default: 0
+            example: 0
+        - name: size
+          in: query
+          required: false
+          description: >
+            Number of experience groups to return per page. Must be greater than
+            `0`. Defaults to `20`.
+          schema:
+            type: integer
+            format: int32
+            default: 20
+            example: 10
+        - name: sort
+          in: query
+          required: false
+          description: >
+            Sort results by a supported property and optional direction (`asc`
+            or `desc`). Supported
+
+            properties are `groupId`, `groupName`, and
+            `groupType.groupTypeName`.
+          schema:
+            type: string
+            example: 'groupName,asc'
       responses:
         '200':
-          description: OK
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseGroupsWithParticipantsCountDTO'
-              example:
-                links:
-                  - rel: first
-                    href: >-
-                      https://ncrdev-dev.apigee.net/digitalbanking/v3/groups/?page=0&size=3
-                  - rel: self
-                    href: >-
-                      https://ncrdev-dev.apigee.net/digitalbanking/v3/groups/?page=0&size=3
-                  - rel: next
-                    href: >-
-                      https://ncrdev-dev.apigee.net/digitalbanking/v3/groups/?page=1&size=3
-                  - rel: last
-                    href: >-
-                      https://ncrdev-dev.apigee.net/digitalbanking/v3/groups/?page=8&size=3
-                content:
-                  - groupId: 75cd47e8-86ed-4be9-ac13-cf0edfa8b2d1
-                    groupName: Matt Static 2
-                    groupType: EXPERIENCE_GROUP
-                    noOfParticipants: 3
-                    links: []
-                  - groupId: 9774d065-7ead-4317-b6b2-a590917583c7
-                    groupName: Vin new group
-                    groupType: EXPERIENCE_GROUP
-                    noOfParticipants: 8
-                    links: []
-                  - groupId: ce4d74d2-812e-4753-97b0-eb929f1603c9
-                    groupName: promod-prod-issue-static
-                    groupType: EXPERIENCE_GROUP
-                    noOfParticipants: 3
-                    links: []
-                page:
-                  size: 3
-                  totalElements: 25
-                  totalPages: 9
-                  number: 0
+                $ref: '#/components/schemas/ExperienceGroupsResponse'
+              examples:
+                ListExperienceGroupsResponse:
+                  summary: ListExperienceGroupsResponse
+                  description: >
+                    Paginated response containing active Experience Groups,
+                    participant counts,
+
+                    and pagination links.
+                  value:
+                    _embedded:
+                      groupsWithParticipantsCountList:
+                        - groupId: 6dec7bda-e26c-411e-bea0-3b274bb7e5cc
+                          groupName: AIC_AUTOMATION_USERS_GRP
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 1
+                        - groupId: 9cae3fa6-7e23-4d57-8576-ecb44a7efd21
+                          groupName: AIC_TEST_USERS
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 1
+                        - groupId: cf7a7eae-6890-4269-94b7-5a0c092010f7
+                          groupName: AITESTGROUP
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 0
+                        - groupId: 19ac94f0-a2f0-4064-8a51-121cbcd8cba7
+                          groupName: AW
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 1
+                        - groupId: cb080e54-48a5-45b7-94f0-079801d7ec7f
+                          groupName: AcctGrouping
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 3
+                        - groupId: d80f9f91-150e-4b96-826c-d6336d8811e8
+                          groupName: AkshayTest
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 1
+                        - groupId: 8ed30b1e-6772-4c1e-8e63-9612d2e372ab
+                          groupName: Allowed Users Group
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 1
+                        - groupId: 831c2ab1-7f21-4159-bbde-a4e257c3dfa0
+                          groupName: BAURetail
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 1
+                        - groupId: 7d8b76ed-5e4e-40bb-af1e-7487bf258c86
+                          groupName: BB Phoenix Auto Off
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 3
+                        - groupId: 50ae2401-8a51-4ca7-864e-2b56f627d1ca
+                          groupName: BB Test Group
+                          groupType: EXPERIENCE_GROUP
+                          noOfParticipants: 0
+                    _links:
+                      first:
+                        href: >-
+                          https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=0&size=10&sort=groupName,asc
+                      prev:
+                        href: >-
+                          https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=0&size=10&sort=groupName,asc
+                      self:
+                        href: >-
+                          https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=1&size=10&sort=groupName,asc
+                      next:
+                        href: >-
+                          https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=2&size=10&sort=groupName,asc
+                      last:
+                        href: >-
+                          https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=14&size=10&sort=groupName,asc
+                    page:
+                      size: 10
+                      totalElements: 145
+                      totalPages: 15
+                      number: 1
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2003'
-                message: Invalid Authorization
+          $ref: '#/components/responses/ExperienceGroupsError401'
         '500':
-          description: Internal Server Error
+          $ref: '#/components/responses/ExperienceGroupsError500'
+      x-position: 1
+  '/v3/groups/{groupId}':
+    put:
+      tags:
+        - Experience Groups
+      summary: Update Experience Group
+      description: >
+        Updates the name and description of an existing experience group
+        identified by `groupId`.
+
+
+        **Use this endpoint to:**
+
+
+        - Rename an experience group used for campaigns, targeted experiences,
+        or feature rollouts.
+
+        - Add, update, or remove the group description.
+
+        - Maintain group metadata without affecting participant membership.
+
+
+        **Behavior and capabilities:**
+
+
+        - `groupName` is required, must be unique within the institution, and
+        cannot exceed 50
+          characters.
+        - `groupDescription` is optional and cannot exceed 450 characters. Omit
+        `groupDescription`
+          from the request to remove the existing description.
+        - `groupType` and `groupPlatform` are immutable and cannot be modified
+        after group creation.
+
+        - Updating a group does not add, remove, or modify participants.
+      operationId: updateExperienceGroupV3
+      parameters:
+        - $ref: '#/components/parameters/OAuthV2Authorization'
+        - $ref: '#/components/parameters/TransactionIdRequest'
+        - $ref: '#/components/parameters/GroupId'
+      requestBody:
+        required: true
+        description: >
+          Updated experience group details. `groupName` is required. To remove
+          an existing description,
+
+          omit `groupDescription` from the request. `groupType` and
+          `groupPlatform` are immutable
+
+          and cannot be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperienceGroupRequest'
+            examples:
+              UpdateExperienceGroupRequest:
+                summary: UpdateExperienceGroupRequest
+                description: >
+                  Request payload used to update an existing Experience Group.
+                  Only the group name
+
+                  and description can be modified. The group type and platform
+                  are immutable and
+
+                  must not be included in the update request.
+                value:
+                  groupName: Test New Feature
+                  groupDescription: Update description for new feature testing.
+      responses:
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2001'
-                message: additional details may be available in server logs
-      x-position: 1
+                $ref: '#/components/schemas/ExperienceGroupResponse'
+              examples:
+                UpdateExperienceGroupResponse:
+                  summary: UpdateExperienceGroupResponse
+                  description: >-
+                    Response returned when an Experience Group is successfully
+                    updated.
+                  value:
+                    groupId: 9d551eeb-3254-4ac4-b449-668b374f4066
+                    groupName: Test New Feature
+                    groupDescription: Update description for new feature testing.
+                    groupType: EXPERIENCE_GROUP
+                    groupPlatform: RETAIL_BANKING
+                    groupLastUpdatedDateTime: '2026-07-23T18:43:52.504Z'
+                    groupParticipantCount: 0
+                    groupStatus: ACTIVE
+        '400':
+          $ref: '#/components/responses/ExperienceGroupsError400'
+        '401':
+          $ref: '#/components/responses/ExperienceGroupsError401'
+        '500':
+          $ref: '#/components/responses/ExperienceGroupsError500'
+      x-position: 3
+    delete:
+      tags:
+        - Experience Groups
+      summary: Delete Experience Group
+      description: >
+        Permanently deletes an experience group identified by `groupId`,
+        including all associated
+
+        participant memberships and import job data. This action cannot be
+        undone.
+
+
+        **Use this endpoint to:**
+
+
+        - Remove an experience group that is no longer needed.
+
+        - Clean up unused groups and related data.
+
+        - Delete a group and all associated participant memberships in a single
+        operation.
+
+
+        **Behavior and capabilities:**
+
+
+        - The specified group must exist and be eligible for deletion.
+
+        - All participant memberships associated with the group are permanently
+        removed.
+
+        - All import job data associated with the group is deleted and can no
+        longer be accessed.
+
+        - Deleting a group does not affect other experience groups or their
+        participants.
+
+        - On success, the API returns a confirmation message with the deleted
+        `groupId`.
+      operationId: deleteExperienceGroupV3
+      parameters:
+        - $ref: '#/components/parameters/OAuthV2Authorization'
+        - $ref: '#/components/parameters/TransactionIdRequest'
+        - $ref: '#/components/parameters/GroupId'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteExperienceGroupResponse'
+              examples:
+                DeleteExperienceGroupResponse:
+                  summary: DeleteExperienceGroupResponse
+                  description: >-
+                    Response returned when an Experience Group is successfully
+                    deleted.
+                  value:
+                    code: '1000'
+                    message: >-
+                      groupId 9d551eeb-3254-4ac4-b449-668b374f4066 was
+                      successfully deleted
+        '400':
+          $ref: '#/components/responses/ExperienceGroupsError400'
+        '401':
+          $ref: '#/components/responses/ExperienceGroupsError401'
+        '500':
+          $ref: '#/components/responses/ExperienceGroupsError500'
+      x-position: 4
+  '/v3/groups/{groupId}/participants':
+    put:
+      tags:
+        - Experience Groups
+      summary: Upload Experience Group Participants
+      description: >
+        Uploads a CSV file of retail banking member numbers to add, remove, or
+        replace participants
+
+        in an existing experience group. Participant updates are processed
+        asynchronously as an
+
+        import job.
+
+
+        **Use this endpoint to:**
+
+
+        - Add participants to an experience group from a CSV file.
+
+        - Remove participants from an experience group using a CSV file.
+
+        - Replace all existing participants in an experience group with a new
+        participant list.
+
+
+        **Behavior and capabilities:**
+
+
+        - Requires multipart form data containing an upload `type` (`ADD`,
+        `REMOVE`, or `REPLACE`)
+          and a CSV file.
+        - The CSV file must include a `ParticipantId` column. Each
+        `ParticipantId` value represents
+          a retail banking member number and must not exceed 32 characters.
+        - Supported file content types are `text/csv` and
+        `application/vnd.ms-excel`.
+
+        - Only one import job can run for an experience group at a time. Upload
+        requests are rejected
+          while another import job is in progress.
+        - On success, the API creates an import job and returns its `jobId` and
+        initial `jobStatus`
+          (`CREATED`). Use the [Get Job by ID](/api/generated/get-job-v-3/) endpoint to monitor job
+          status and results.
+      operationId: uploadExperienceGroupParticipantsV3
+      parameters:
+        - $ref: '#/components/parameters/OAuthV2Authorization'
+        - $ref: '#/components/parameters/TransactionIdRequest'
+        - $ref: '#/components/parameters/GroupId'
+      requestBody:
+        required: true
+        description: >
+          Multipart form data containing the participant upload operation and
+          CSV file.
+
+          - `type` is required and must be one of `ADD`, `REMOVE`, or `REPLACE`.
+
+          - `fileName` is required and must contain a CSV file.
+
+          - The CSV file must include a `ParticipantId` column. Each value is a
+          retail banking
+            member number and must not exceed 32 characters.
+          - Supported file content types are `text/csv` and
+          `application/vnd.ms-excel`.
+
+
+          Example CSV content for `fileName` (`participants.csv`):
+
+
+          ```csv
+
+          ParticipantId
+
+          202510091
+
+          ```
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadExperienceGroupParticipantsRequest'
+            encoding:
+              fileName:
+                contentType: text/csv
+            examples:
+              UploadExperienceGroupParticipantsRequest:
+                summary: UploadExperienceGroupParticipantsRequest
+                description: >
+                  Multipart form-data request used to upload participant
+                  membership changes. The
+
+                  uploaded CSV file must contain a `ParticipantId` column with
+                  one participant
+
+                  identifier per row. The `type` field specifies whether
+                  participants should be 
+
+                  added, removed, or replaced.
+                value:
+                  type: ADD
+                  fileName: participants.csv
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadExperienceGroupParticipantsResponse'
+              examples:
+                UploadExperienceGroupParticipantsResponse:
+                  summary: UploadExperienceGroupParticipantsResponse
+                  description: >
+                    Response returned when a participant upload is accepted and
+                    an import job is
+
+                    successfully created.
+                  value:
+                    code: '1000'
+                    message: >-
+                      File upload for file: participants.csv and group:
+                      cc8e0de6-b556-4974-9c70-7d3f9cb58fb8 was successful with
+                      jobId: d085e6aa-c4e2-4caf-abbb-7e8ab3160751
+                    jobId: d085e6aa-c4e2-4caf-abbb-7e8ab3160751
+                    jobStatus: CREATED
+        '400':
+          $ref: '#/components/responses/ExperienceGroupsError400'
+        '401':
+          $ref: '#/components/responses/ExperienceGroupsError401'
+        '500':
+          $ref: '#/components/responses/ExperienceGroupsError500'
+      x-position: 5
   '/v3/jobs/{jobId}/errors':
     get:
       summary: Get Job Errors
@@ -17717,166 +18040,6 @@ paths:
                 code: '2001'
                 message: additional details may be available in server logs
       x-position: 1
-  '/v3/groups/{groupId}':
-    delete:
-      summary: Delete Experience Group
-      description: >
-        Deletes an experience group and removes all user associations. This
-        action cannot be undone.
-
-
-        **Important:**
-
-        - All participant associations will be permanently removed
-
-        - Historical job data for this group will no longer be accessible
-
-        - Ensure the group is not in use by any active campaigns or features
-        before deletion
-
-
-        **Prerequisites:**
-
-        - The group must exist and be in `ACTIVE` status
-
-        - User must have appropriate permissions to delete groups
-      operationId: deleteExperienceGroupV3
-      tags:
-        - Experience Groups
-      parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - $ref: '#/components/parameters/TransactionIdRequest'
-        - $ref: '#/components/parameters/OAuthV2Authorization'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '1000'
-                message: >-
-                  groupId f6a0ab94-04d5-460b-978b-f2e401783bf9 was successfully
-                  deleted
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2000'
-                message: Invalid Data
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2003'
-                message: Invalid Authorization
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2001'
-                message: additional details may be available in server logs
-      x-position: 4
-    put:
-      summary: Update Experience Group
-      description: >
-        Updates an existing experience group. You can modify the group name and
-        description.
-
-
-        **Important:**
-
-        - If `groupDescription` is not included in the request, it will be
-        deleted from the group
-
-        - The `groupType` and `groupPlatform` cannot be modified
-
-        - Updating a group does not affect its participants
-      operationId: updateExperienceGroupV3
-      tags:
-        - Experience Groups
-      parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - $ref: '#/components/parameters/TransactionIdRequest'
-        - $ref: '#/components/parameters/OAuthV2Authorization'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupBaseRequestDTO'
-            examples:
-              exampleRequest:
-                value:
-                  groupId: 482cf7f8-3e59-4ccf-a996-97c79fd50cb1
-                  groupName: updated group name
-                  groupDescription: updated description - will be deleted if not included
-                description: 'Only groupName, groupDescription can be updated'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupBaseResponseDTO'
-              example:
-                groupId: 482cf7f8-3e59-4ccf-a996-97c79fd50cb1
-                groupName: updated group name
-                groupDescription: updated group description
-                groupType: EXPERIENCE_GROUP
-                groupPlatform: RETAIL_BANKING
-                groupLastUpdatedDateTime: '2022-10-19T20:31:29.076Z'
-                groupParticipantCount: 0
-                groupStatus: ACTIVE
-                sortOrder: 0
-                isDeletable: true
-                isRenamable: true
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2001'
-                message: Bad Request
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2003'
-                message: Invalid Authorization
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                code: '2001'
-                message: Internal Server Error
-      x-position: 3
   '/pss/v1/fis/{fiId}/audiences/userListJobs':
     post:
       summary: Create User List Upload Job
@@ -32347,69 +32510,511 @@ components:
         - USER_DEFINED
         - RETIREMENT_IRA
       example: CHECKING
-    GroupBaseRequestDTO:
+    ExperienceGroupRequest:
       type: object
+      description: >
+        Request payload for creating or updating an experience group.
+
+        - `groupName` is required.
+
+        - On create, `groupType` defaults to `EXPERIENCE_GROUP` and
+        `groupPlatform`
+          defaults to `RETAIL_BANKING` when omitted.
+        - On update, only `groupName` and `groupDescription` are applied.
+          `groupType` and `groupPlatform` are immutable and ignored if provided.
       required:
         - groupName
       properties:
         groupName:
           type: string
+          description: >
+            Name of the experience group. Must be unique within the institution
+            and cannot be blank.
+          maxLength: 50
+          example: Test New Feature
         groupDescription:
           type: string
+          description: >
+            Optional description of the experience group. Maximum length is 450
+            characters. When
+
+            updating a group, omit this field to remove the existing
+            description.
+          maxLength: 450
+          example: This group is used to test the new feature.
         groupType:
           type: string
-          description: Required only for a create and must always be EXPERIENCE_GROUP
-          default: EXPERIENCE_GROUP
+          description: >
+            Type of group. Optional when creating a group and defaults to
+            `EXPERIENCE_GROUP`. The
+
+            only supported value is `EXPERIENCE_GROUP`. This field cannot be
+            modified after group
+
+            creation.
           enum:
             - EXPERIENCE_GROUP
+          example: EXPERIENCE_GROUP
         groupPlatform:
           type: string
-          description: Required only for a create and must always be RETAIL_BANKING
-          default: RETAIL_BANKING
+          description: >
+            Platform associated with the group. Optional when creating a group
+            and defaults to
+
+            `RETAIL_BANKING`. The only supported value is `RETAIL_BANKING`. This
+            field cannot be
+
+            modified after group creation.
           enum:
             - RETAIL_BANKING
-    GroupBaseResponseDTO:
+          example: RETAIL_BANKING
+      example:
+        groupName: Test New Feature
+        groupDescription: This group is used to test the new feature.
+        groupType: EXPERIENCE_GROUP
+        groupPlatform: RETAIL_BANKING
+    ExperienceGroupResponse:
       type: object
+      description: Experience group returned by create and update operations.
+      required:
+        - groupId
+        - groupName
+        - groupType
+        - groupPlatform
+        - groupLastUpdatedDateTime
+        - groupParticipantCount
+        - groupStatus
       properties:
         groupId:
           type: string
+          description: Unique identifier of the experience group.
+          format: uuid
+          example: 9d551eeb-3254-4ac4-b449-668b374f4066
         groupName:
           type: string
+          description: Name of the experience group. Must be unique within the institution.
+          maxLength: 50
+          example: Test New Feature
         groupDescription:
           type: string
+          description: |
+            Optional description of the experience group.
+          maxLength: 450
+          example: This group is used to test the new feature.
         groupType:
           type: string
+          description: >
+            Type of the experience group. The value is always
+            `EXPERIENCE_GROUP`.
           enum:
             - EXPERIENCE_GROUP
+          example: EXPERIENCE_GROUP
         groupPlatform:
           type: string
+          description: >
+            Platform associated with the experience group. The value is always
+            `RETAIL_BANKING`.
           enum:
             - RETAIL_BANKING
+          example: RETAIL_BANKING
         groupLastUpdatedDateTime:
           type: string
+          description: 'Date and time when the group was last updated, in ISO 8601 format.'
+          format: date-time
+          example: '2026-07-23T16:19:00.613Z'
         groupParticipantCount:
           type: integer
+          description: Number of participants currently associated with the group.
           format: int32
-        groupExperience:
-          $ref: '#/components/schemas/GroupExperienceDTO'
-        groupExperienceName:
-          type: string
+          example: 0
         groupStatus:
           type: string
+          description: Current status of the experience group.
           enum:
             - ACTIVE
             - DELETED
-    GroupExperienceDTO:
+          example: ACTIVE
+      example:
+        groupId: 9d551eeb-3254-4ac4-b449-668b374f4066
+        groupName: Test New Feature
+        groupDescription: This group is used to test the new feature.
+        groupType: EXPERIENCE_GROUP
+        groupPlatform: RETAIL_BANKING
+        groupLastUpdatedDateTime: '2026-07-23T16:19:00.613Z'
+        groupParticipantCount: 0
+        groupStatus: ACTIVE
+    DeleteExperienceGroupResponse:
       type: object
+      description: Confirmation returned when an experience group is successfully deleted.
+      required:
+        - code
+        - message
       properties:
-        experienceName:
+        code:
           type: string
-        experienceId:
+          description: >
+            Application response code indicating the result of the delete
+            operation. A value of
+
+            `1000` indicates the group was deleted successfully.
+          example: '1000'
+        message:
           type: string
+          description: Confirmation message identifying the deleted experience group.
+          example: >-
+            groupId 9d551eeb-3254-4ac4-b449-668b374f4066 was successfully
+            deleted
+      example:
+        code: '1000'
+        message: groupId 9d551eeb-3254-4ac4-b449-668b374f4066 was successfully deleted
+    ExperienceGroupsResponse:
+      type: object
+      description: >
+        Paginated response containing active experience groups for the
+        authenticated financial
+
+        institution, including participant counts and navigation links.
+      required:
+        - _links
+        - page
+      properties:
+        _embedded:
+          type: object
+          description: >
+            Experience groups returned for the current page. May be omitted when
+            no groups match the
+
+            request.
+          required:
+            - groupsWithParticipantsCountList
+          properties:
+            groupsWithParticipantsCountList:
+              type: array
+              description: |
+                Experience groups included in the current page of results.
+              items:
+                $ref: '#/components/schemas/GroupsWithParticipantsCount'
+        _links:
+          type: object
+          description: Navigation links for the paginated result set.
+          required:
+            - self
+          additionalProperties:
+            $ref: '#/components/schemas/HalLink'
+          properties:
+            first:
+              $ref: '#/components/schemas/HalLink'
+            self:
+              $ref: '#/components/schemas/HalLink'
+            next:
+              $ref: '#/components/schemas/HalLink'
+            last:
+              $ref: '#/components/schemas/HalLink'
+            prev:
+              $ref: '#/components/schemas/HalLink'
+        page:
+          $ref: '#/components/schemas/Page'
+      example:
+        _embedded:
+          groupsWithParticipantsCountList:
+            - groupId: 6dec7bda-e26c-411e-bea0-3b274bb7e5cc
+              groupName: AIC_AUTOMATION_USERS_GRP
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 1
+            - groupId: 9cae3fa6-7e23-4d57-8576-ecb44a7efd21
+              groupName: AIC_TEST_USERS
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 1
+            - groupId: cf7a7eae-6890-4269-94b7-5a0c092010f7
+              groupName: AITESTGROUP
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 0
+            - groupId: a1d2150c-7b48-4ac8-8379-1e955be83169
+              groupName: AA1_New
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 5
+            - groupId: cb080e54-48a5-45b7-94f0-079801d7ec7f
+              groupName: AcctGrouping
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 3
+            - groupId: 2d588d32-88e0-44c9-9041-c7cba7e28660
+              groupName: AA_Group
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 2
+            - groupId: 8ed30b1e-6772-4c1e-8e63-9612d2e372ab
+              groupName: Allowed Users Group
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 1
+            - groupId: 831c2ab1-7f21-4159-bbde-a4e257c3dfa0
+              groupName: BAURetail
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 1
+            - groupId: cf6a165e-ac5d-4cd3-a59a-4038ce33858b
+              groupName: AA_New_Modern_Grp
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 11
+            - groupId: 50ae2401-8a51-4ca7-864e-2b56f627d1ca
+              groupName: BB Test Group
+              groupType: EXPERIENCE_GROUP
+              noOfParticipants: 0
+        _links:
+          first:
+            href: >-
+              https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=0&size=10&sort=groupName,asc
+          prev:
+            href: >-
+              https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=0&size=10&sort=groupName,asc
+          self:
+            href: >-
+              https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=1&size=10&sort=groupName,asc
+          next:
+            href: >-
+              https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=2&size=10&sort=groupName,asc
+          last:
+            href: >-
+              https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=14&size=10&sort=groupName,asc
+        page:
+          size: 10
+          totalElements: 145
+          totalPages: 15
+          number: 1
+    GroupsWithParticipantsCount:
+      type: object
+      description: >-
+        Summary information for an experience group, including its participant
+        count.
+      required:
+        - groupId
+        - groupName
+        - groupType
+        - noOfParticipants
+      properties:
         groupId:
           type: string
-        default:
-          type: boolean
+          description: Unique identifier of the experience group.
+          format: uuid
+          example: 6dec7bda-e26c-411e-bea0-3b274bb7e5cc
+        groupName:
+          type: string
+          description: Name of the experience group.
+          example: AIC_AUTOMATION_USERS_GRP
+        groupType:
+          type: string
+          description: Type of the experience group.
+          enum:
+            - EXPERIENCE_GROUP
+          example: EXPERIENCE_GROUP
+        noOfParticipants:
+          type: integer
+          description: Number of participants currently assigned to the group.
+          format: int32
+          example: 1
+      example:
+        groupId: 6dec7bda-e26c-411e-bea0-3b274bb7e5cc
+        groupName: AIC_AUTOMATION_USERS_GRP
+        groupType: EXPERIENCE_GROUP
+        noOfParticipants: 1
+    Page:
+      type: object
+      description: Pagination metadata for list responses.
+      required:
+        - size
+        - totalElements
+        - totalPages
+        - number
+      properties:
+        size:
+          type: integer
+          description: Number of groups returned per page.
+          format: int64
+          example: 10
+        totalElements:
+          type: integer
+          description: Total number of matching experience groups.
+          format: int64
+          example: 145
+        totalPages:
+          type: integer
+          description: Total number of available pages.
+          format: int64
+          example: 15
+        number:
+          type: integer
+          description: Zero-based index of the current page.
+          format: int64
+          example: 1
+      example:
+        size: 10
+        totalElements: 145
+        totalPages: 15
+        number: 1
+    HalLink:
+      type: object
+      description: Navigation link.
+      required:
+        - href
+      properties:
+        href:
+          type: string
+          description: URL for the linked resource.
+          example: >-
+            https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=1&size=10&sort=groupName,asc
+      example:
+        href: >-
+          https://gateway-dev-x.dev.ext.dracobank.com/digitalbanking/groups/v3/groups?page=1&size=10&sort=groupName,asc
+    UploadExperienceGroupParticipantsRequest:
+      type: object
+      description: >
+        Multipart form data used to upload participant IDs to an experience
+        group.
+
+        - `type` is required and specifies the import operation.
+
+        - `fileName` is required and must contain a CSV file.
+
+        - Supported request content types are `multipart/form-data` and
+        `multipart/mixed`.
+
+        - Supported file content types are `text/csv` and
+        `application/vnd.ms-excel`.
+
+        - CSV content is validated asynchronously when the import job is
+        processed.
+
+
+        Example multipart fields:
+
+
+        | Field | Value |
+
+        | --- | --- |
+
+        | `type` | `ADD` |
+
+        | `fileName` | `participants.csv` |
+
+
+        Example `participants.csv` content:
+
+
+        ```csv
+
+        ParticipantId
+
+        202510091
+
+        ```
+      required:
+        - type
+        - fileName
+      properties:
+        type:
+          type: string
+          description: >
+            Import operation to perform. Values are case-insensitive.
+
+            - `ADD`: Adds the uploaded participants to the group.
+
+            - `REMOVE`: Removes the uploaded participants from the group.
+
+            - `REPLACE`: Replaces all existing participants with the uploaded
+            list.
+          enum:
+            - ADD
+            - REMOVE
+            - REPLACE
+          example: ADD
+        fileName:
+          type: string
+          description: >
+            CSV file of retail banking member numbers.
+
+            - The file must include a `ParticipantId` column.
+
+            - Each `ParticipantId` value is a retail banking member number and
+            must not exceed 32
+              characters.
+            - Values are validated during import job processing.
+
+
+            Example file content:
+
+
+            ```csv
+
+            ParticipantId
+
+            202510091
+
+            ```
+          format: binary
+          example: participants.csv
+      example:
+        type: ADD
+        fileName: participants.csv
+    UploadExperienceGroupParticipantsResponse:
+      type: object
+      description: >
+        Response returned when a participant file upload is accepted and an
+        asynchronous import job
+
+        is created.
+      required:
+        - code
+        - message
+        - jobId
+        - jobStatus
+      properties:
+        code:
+          type: string
+          description: >
+            Application response code indicating the result of the upload
+            request. A value of `1000`
+
+            indicates the upload request was accepted.
+          example: '1000'
+        message:
+          type: string
+          description: >
+            Confirmation message identifying the uploaded file, experience
+            group, and created import
+
+            job.
+          example: >-
+            File upload for file: participants.csv and group:
+            cc8e0de6-b556-4974-9c70-7d3f9cb58fb8 was successful with jobId:
+            d085e6aa-c4e2-4caf-abbb-7e8ab3160751
+        jobId:
+          type: string
+          description: >
+            Unique identifier of the import job created for the upload. Use the
+            [Get Job by ID](/api/generated/get-job-v-3/)
+
+            endpoint to monitor job status and review processing results.
+          format: uuid
+          example: d085e6aa-c4e2-4caf-abbb-7e8ab3160751
+        jobStatus:
+          type: string
+          description: >
+            Current status of the import job. Upload requests return an initial
+            status of `CREATED`.
+          enum:
+            - CREATED
+            - PROCESSING
+            - SUCCESSFUL
+            - PARTIAL_SUCCESS
+            - FAILED
+            - CANCELLED
+            - UNKNOWN
+          example: CREATED
+      example:
+        code: '1000'
+        message: >-
+          File upload for file: participants.csv and group:
+          cc8e0de6-b556-4974-9c70-7d3f9cb58fb8 was successful with jobId:
+          d085e6aa-c4e2-4caf-abbb-7e8ab3160751
+        jobId: d085e6aa-c4e2-4caf-abbb-7e8ab3160751
+        jobStatus: CREATED
     Pageable:
       type: object
       properties:
@@ -32427,32 +33032,6 @@ components:
           type: array
           items:
             type: string
-    UploadResponseDTO:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        jobId:
-          type: string
-        jobStatus:
-          type: string
-    FileUpload:
-      type: object
-      required:
-        - type
-        - fileName
-      properties:
-        type:
-          type: string
-          enum:
-            - ADD
-            - REMOVE
-            - REPLACE
-        fileName:
-          type: string
-          format: binary
     BasePageDTOListImportJobErrorDTO:
       type: object
       properties:
@@ -32465,7 +33044,7 @@ components:
           items:
             $ref: '#/components/schemas/ImportJobErrorDTO'
         page:
-          $ref: '#/components/schemas/Page'
+          $ref: '#/components/schemas/Page1'
     ImportJobErrorDTO:
       type: object
       properties:
@@ -32566,36 +33145,7 @@ components:
           items:
             $ref: '#/components/schemas/ImportJobDTO'
         page:
-          $ref: '#/components/schemas/Page'
-    GroupsWithParticipantsCount:
-      type: object
-      properties:
-        groupId:
-          type: string
-        groupName:
-          type: string
-        groupType:
-          type: string
-        noOfParticipants:
-          type: integer
-          format: int32
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Links'
-    BaseGroupsWithParticipantsCountDTO:
-      type: object
-      properties:
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/Links'
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupsWithParticipantsCount'
-        page:
-          $ref: '#/components/schemas/Page'
+          $ref: '#/components/schemas/Page1'
     Links:
       type: object
       properties:
@@ -32603,7 +33153,7 @@ components:
           type: string
         href:
           type: string
-    Page:
+    Page1:
       type: object
       properties:
         size:
@@ -33220,6 +33770,15 @@ components:
       schema:
         type: string
         example: 8fe733f4e27246908f92e8f7c0b96847
+    GroupId:
+      name: groupId
+      in: path
+      required: true
+      description: Unique identifier of the experience group.
+      schema:
+        type: string
+        format: uuid
+        example: 482cf7f8-3e59-4ccf-a996-97c79fd50cb1
     MxPlatformExtHost:
       name: ext_host
       in: header
@@ -34310,6 +34869,50 @@ components:
           example:
             code: DSC_10003
             message: Invalid operation.
+    ExperienceGroupsError400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            BadRequest:
+              summary: BadRequest
+              description: >
+                Example response when the request is invalid (for example, an
+                invalid `groupId`).
+              value:
+                code: '2000'
+                message: 'invalid groupId {groupId}'
+    ExperienceGroupsError401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            Unauthorized:
+              summary: Unauthorized
+              description: >
+                Example response when the Authorization header is missing or
+                invalid.
+              value:
+                code: '2003'
+                message: Invalid Authorization
+    ExperienceGroupsError500:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            InternalServerError:
+              summary: InternalServerError
+              description: |
+                Example response when an unexpected server error occurs.
+              value:
+                code: '2001'
+                message: additional details may be available in server logs
     MxPlatformResponseBody:
       description: >
         Response payload returned by the target MX Platform endpoint. Refer to

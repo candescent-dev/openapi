@@ -1,0 +1,1230 @@
+{
+  "info": {
+    "_postman_id": "adaf8f7e-0104-4b09-87be-1da40b607194",
+    "name": "Customer Campaigns - Experience Groups",
+    "description": "This Postman collection supports API testing of the experience groups operations involving Retail users.\n\n# Quick Links\n\n- [Create Experience Group](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-3033b0d2-3ee7-4671-9610-2ac5eb13d4f4?action=share&source=copy-link&creator=8321995)\n    \n- [List Experience Groups](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-036e475f-2d64-4e4a-8649-bf3436fe78f7?action=share&source=copy-link&creator=8321995)\n    \n- [Update Experience Group](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-d815b17e-7a23-4054-8311-a4f17bb65f5a?action=share&source=copy-link&creator=8321995)\n    \n- [Delete Experience Group](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-dacf3c82-0fd1-47c6-a45d-56e48f1b1ba7?action=share&source=copy-link&creator=8321995)\n    \n- [Upload Experience Group Participants](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-8d2f721d-0bb8-46ba-95af-856f43d19706?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-adaf8f7e-0104-4b09-87be-1da40b607194?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Create Experience Group",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"access_token\", jsonData.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Create Experience Group",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"experience_group_id\", jsonData.groupId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"groupName\": \"{{experience_group_name}}\",\n    \"groupDescription\": \"This group is used to test the new feature.\",\n    \"groupType\": \"EXPERIENCE_GROUP\",\n    \"groupPlatform\": \"RETAIL_BANKING\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Create Experience Group Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Create Experience Group | Create a new Experience Group with a unique name and optional description for audience segmentation, campaigns, and feature rollouts. |"
+    },
+    {
+      "name": "🔗 List Experience Groups",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"access_token\", jsonData.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. List Experience Groups",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups?page=1&size=10&sort=groupName,asc",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sort",
+                  "value": "groupName,asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 List Experience Groups Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | List Experience Groups | Retrieve a paginated list of active Experience Groups for the authenticated institution, including group metadata and participant counts. |"
+    },
+    {
+      "name": "🔗 Update Experience Group",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"access_token\", jsonData.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Search for Experience Group ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const targetName = (pm.environment.get(\"experience_group_name\") || \"\").trim();",
+                  "const target = targetName.toLowerCase();",
+                  "",
+                  "function normalize(name) {",
+                  "    return (name || \"\").trim().toLowerCase();",
+                  "}",
+                  "",
+                  "function findGroup(body) {",
+                  "    const groups = (body._embedded && body._embedded.groupsWithParticipantsCountList) || [];",
+                  "    return groups.find(g => normalize(g.groupName) === target);",
+                  "}",
+                  "",
+                  "function pageUrl(page) {",
+                  "    const url = pm.request.url.toString();",
+                  "    if (/[?&]page=\\d+/.test(url)) {",
+                  "        return url.replace(/([?&]page=)\\d+/, `$1${page}`);",
+                  "    }",
+                  "    return url + (url.includes(\"?\") ? \"&\" : \"?\") + \"page=\" + page;",
+                  "}",
+                  "",
+                  "function headers() {",
+                  "    return {",
+                  "        Authorization: `Bearer ${pm.environment.get(\"access_token\")}`,",
+                  "        Accept: \"application/json\",",
+                  "        transactionId: pm.variables.replaceIn(\"{{$guid}}\")",
+                  "    };",
+                  "}",
+                  "",
+                  "function setGroupId(group, page) {",
+                  "    pm.environment.set(\"experience_group_id\", group.groupId);",
+                  "    console.log(`Found on page ${page}. experience_group_id set to: ${group.groupId}`);",
+                  "}",
+                  "",
+                  "const body = pm.response.json();",
+                  "const match = findGroup(body);",
+                  "",
+                  "if (match) {",
+                  "    setGroupId(match, 0);",
+                  "    return;",
+                  "}",
+                  "",
+                  "const totalPages = (body.page && body.page.totalPages) || 1;",
+                  "",
+                  "if (totalPages <= 1) {",
+                  "    console.warn(`Experience group '${targetName}' not found.`);",
+                  "    return;",
+                  "}",
+                  "",
+                  "let found = false;",
+                  "let pending = totalPages - 1;",
+                  "",
+                  "for (let page = 1; page < totalPages; page++) {",
+                  "    pm.sendRequest(",
+                  "        { url: pageUrl(page), method: \"GET\", header: headers() },",
+                  "        (function (pageNum) {",
+                  "            return function (err, res) {",
+                  "                pending--;",
+                  "",
+                  "                if (found) {",
+                  "                    return;",
+                  "                }",
+                  "",
+                  "                if (err) {",
+                  "                    console.error(`Error fetching page ${pageNum}:`, err);",
+                  "                } else if (res.code !== 200) {",
+                  "                    console.error(`Page ${pageNum} returned ${res.code}:`, res.text());",
+                  "                } else {",
+                  "                    const group = findGroup(res.json());",
+                  "",
+                  "                    if (group) {",
+                  "                        found = true;",
+                  "                        setGroupId(group, pageNum);",
+                  "                        return;",
+                  "                    }",
+                  "                }",
+                  "",
+                  "                if (pending === 0 && !found) {",
+                  "                    console.warn(`Experience group '${targetName}' not found.`);",
+                  "                }",
+                  "            };",
+                  "        })(page)",
+                  "    );",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups?page=0&size=50&sort=groupName,asc",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "50"
+                },
+                {
+                  "key": "sort",
+                  "value": "groupName,asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Update Experience Group",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"groupName\": \"{{experience_group_name}}\",\n    \"groupDescription\": \"Update description for new feature testing.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups/{{experience_group_id}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups",
+                "{{experience_group_id}}"
+              ]
+            },
+            "description": "Requires `group_id` from Create Experience Group (or set manually in the environment)."
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Update Experience Group Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for Experience Group ID | (Optional) Retrieve active Experience Groups and identify the target groupId required for the update operation. |\n| 3 | Update Experience Group | Update the name and/or description of an existing Experience Group using the specified groupId. |"
+    },
+    {
+      "name": "🔗 Upload Experience Group Participants",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"access_token\", jsonData.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Search for Experience Group ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const targetName = (pm.environment.get(\"experience_group_name\") || \"\").trim();",
+                  "const target = targetName.toLowerCase();",
+                  "",
+                  "function normalize(name) {",
+                  "    return (name || \"\").trim().toLowerCase();",
+                  "}",
+                  "",
+                  "function findGroup(body) {",
+                  "    const groups = (body._embedded && body._embedded.groupsWithParticipantsCountList) || [];",
+                  "    return groups.find(g => normalize(g.groupName) === target);",
+                  "}",
+                  "",
+                  "function pageUrl(page) {",
+                  "    const url = pm.request.url.toString();",
+                  "    if (/[?&]page=\\d+/.test(url)) {",
+                  "        return url.replace(/([?&]page=)\\d+/, `$1${page}`);",
+                  "    }",
+                  "    return url + (url.includes(\"?\") ? \"&\" : \"?\") + \"page=\" + page;",
+                  "}",
+                  "",
+                  "function headers() {",
+                  "    return {",
+                  "        Authorization: `Bearer ${pm.environment.get(\"access_token\")}`,",
+                  "        Accept: \"application/json\",",
+                  "        transactionId: pm.variables.replaceIn(\"{{$guid}}\")",
+                  "    };",
+                  "}",
+                  "",
+                  "function setGroupId(group, page) {",
+                  "    pm.environment.set(\"experience_group_id\", group.groupId);",
+                  "    console.log(`Found on page ${page}. experience_group_id set to: ${group.groupId}`);",
+                  "}",
+                  "",
+                  "const body = pm.response.json();",
+                  "const match = findGroup(body);",
+                  "",
+                  "if (match) {",
+                  "    setGroupId(match, 0);",
+                  "    return;",
+                  "}",
+                  "",
+                  "const totalPages = (body.page && body.page.totalPages) || 1;",
+                  "",
+                  "if (totalPages <= 1) {",
+                  "    console.warn(`Experience group '${targetName}' not found.`);",
+                  "    return;",
+                  "}",
+                  "",
+                  "let found = false;",
+                  "let pending = totalPages - 1;",
+                  "",
+                  "for (let page = 1; page < totalPages; page++) {",
+                  "    pm.sendRequest(",
+                  "        { url: pageUrl(page), method: \"GET\", header: headers() },",
+                  "        (function (pageNum) {",
+                  "            return function (err, res) {",
+                  "                pending--;",
+                  "",
+                  "                if (found) {",
+                  "                    return;",
+                  "                }",
+                  "",
+                  "                if (err) {",
+                  "                    console.error(`Error fetching page ${pageNum}:`, err);",
+                  "                } else if (res.code !== 200) {",
+                  "                    console.error(`Page ${pageNum} returned ${res.code}:`, res.text());",
+                  "                } else {",
+                  "                    const group = findGroup(res.json());",
+                  "",
+                  "                    if (group) {",
+                  "                        found = true;",
+                  "                        setGroupId(group, pageNum);",
+                  "                        return;",
+                  "                    }",
+                  "                }",
+                  "",
+                  "                if (pending === 0 && !found) {",
+                  "                    console.warn(`Experience group '${targetName}' not found.`);",
+                  "                }",
+                  "            };",
+                  "        })(page)",
+                  "    );",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups?page=0&size=50&sort=groupName,asc",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "50"
+                },
+                {
+                  "key": "sort",
+                  "value": "groupName,asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Upload Experience Group Participants",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "(function () {",
+                  "    var participantId = pm.environment.get(\"retail_user_host_user_id\");",
+                  "    var uploadType = pm.environment.get(\"upload_type\");",
+                  "",
+                  "    // Build participants.csv content for the fileName form field",
+                  "    var nl = \"\\r\\n\";",
+                  "    var participantIds = String(participantId)",
+                  "        .split(\",\")",
+                  "        .map(function (id) { return id.trim(); })",
+                  "        .filter(Boolean);",
+                  "    var csvContent = [\"ParticipantId\"].concat(participantIds).join(nl) + nl;",
+                  "    var filename = \"participants.csv\";",
+                  "",
+                  "    var boundary = \"----WebKitFormBoundary\" + Date.now();",
+                  "    var body = \"--\" + boundary + nl",
+                  "        + \"Content-Disposition: form-data; name=\\\"type\\\"\" + nl + nl",
+                  "        + uploadType + nl",
+                  "        + \"--\" + boundary + nl",
+                  "        + \"Content-Disposition: form-data; name=\\\"fileName\\\"; filename=\\\"\" + filename + \"\\\"\" + nl",
+                  "        + \"Content-Type: text/csv\" + nl + nl",
+                  "        + csvContent",
+                  "        + \"--\" + boundary + \"--\" + nl;",
+                  "",
+                  "    pm.request.headers.remove(\"Content-Type\");",
+                  "    pm.request.body.update({",
+                  "        mode: \"raw\",",
+                  "        raw: body,",
+                  "        options: { raw: { language: \"text\" } }",
+                  "    });",
+                  "    pm.request.headers.add({",
+                  "        key: \"Content-Type\",",
+                  "        value: \"multipart/form-data; boundary=\" + boundary",
+                  "    });",
+                  "})();"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups/{{experience_group_id}}/participants",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups",
+                "{{experience_group_id}}",
+                "participants"
+              ]
+            },
+            "description": "Builds multipart/form-data in the pre-request script using `participant_id` or `retail_user_host_user_id` (retail banking member number) with a `ParticipantId` CSV header. Upload type defaults to `ADD`. Requires `group_id` from Create Experience Group."
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Upload Experience Group Participants Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for Experience Group ID | (Optional) Retrieve active Experience Groups and identify the target groupId required for the participant upload operation. |\n| 3 | Upload Experience Group Participants | Upload a CSV file containing retail banking member numbers to add, remove, or replace participants in the specified Experience Group. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "// Pre-request script to check if 'retail_user_host_user_id' environment variable is set",
+              "const hostUserId = pm.environment.get('retail_user_host_user_id');",
+              "",
+              "if (!hostUserId) {",
+              "    throw new Error(\"Environment variable 'retail_user_host_user_id' is not set. Please set it before running requests in this folder.\");",
+              "}"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Delete Experience Group",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"access_token\", jsonData.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Search for Experience Group ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const targetName = (pm.environment.get(\"experience_group_name\") || \"\").trim();",
+                  "const target = targetName.toLowerCase();",
+                  "",
+                  "function normalize(name) {",
+                  "    return (name || \"\").trim().toLowerCase();",
+                  "}",
+                  "",
+                  "function findGroup(body) {",
+                  "    const groups = (body._embedded && body._embedded.groupsWithParticipantsCountList) || [];",
+                  "    return groups.find(g => normalize(g.groupName) === target);",
+                  "}",
+                  "",
+                  "function pageUrl(page) {",
+                  "    const url = pm.request.url.toString();",
+                  "    if (/[?&]page=\\d+/.test(url)) {",
+                  "        return url.replace(/([?&]page=)\\d+/, `$1${page}`);",
+                  "    }",
+                  "    return url + (url.includes(\"?\") ? \"&\" : \"?\") + \"page=\" + page;",
+                  "}",
+                  "",
+                  "function headers() {",
+                  "    return {",
+                  "        Authorization: `Bearer ${pm.environment.get(\"access_token\")}`,",
+                  "        Accept: \"application/json\",",
+                  "        transactionId: pm.variables.replaceIn(\"{{$guid}}\")",
+                  "    };",
+                  "}",
+                  "",
+                  "function setGroupId(group, page) {",
+                  "    pm.environment.set(\"experience_group_id\", group.groupId);",
+                  "    console.log(`Found on page ${page}. experience_group_id set to: ${group.groupId}`);",
+                  "}",
+                  "",
+                  "const body = pm.response.json();",
+                  "const match = findGroup(body);",
+                  "",
+                  "if (match) {",
+                  "    setGroupId(match, 0);",
+                  "    return;",
+                  "}",
+                  "",
+                  "const totalPages = (body.page && body.page.totalPages) || 1;",
+                  "",
+                  "if (totalPages <= 1) {",
+                  "    console.warn(`Experience group '${targetName}' not found.`);",
+                  "    return;",
+                  "}",
+                  "",
+                  "let found = false;",
+                  "let pending = totalPages - 1;",
+                  "",
+                  "for (let page = 1; page < totalPages; page++) {",
+                  "    pm.sendRequest(",
+                  "        { url: pageUrl(page), method: \"GET\", header: headers() },",
+                  "        (function (pageNum) {",
+                  "            return function (err, res) {",
+                  "                pending--;",
+                  "",
+                  "                if (found) {",
+                  "                    return;",
+                  "                }",
+                  "",
+                  "                if (err) {",
+                  "                    console.error(`Error fetching page ${pageNum}:`, err);",
+                  "                } else if (res.code !== 200) {",
+                  "                    console.error(`Page ${pageNum} returned ${res.code}:`, res.text());",
+                  "                } else {",
+                  "                    const group = findGroup(res.json());",
+                  "",
+                  "                    if (group) {",
+                  "                        found = true;",
+                  "                        setGroupId(group, pageNum);",
+                  "                        return;",
+                  "                    }",
+                  "                }",
+                  "",
+                  "                if (pending === 0 && !found) {",
+                  "                    console.warn(`Experience group '${targetName}' not found.`);",
+                  "                }",
+                  "            };",
+                  "        })(page)",
+                  "    );",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups?page=0&size=50&sort=groupName,asc",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "50"
+                },
+                {
+                  "key": "sort",
+                  "value": "groupName,asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Delete Experience Group",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v3/groups/{{experience_group_id}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v3",
+                "groups",
+                "{{experience_group_id}}"
+              ]
+            },
+            "description": "Requires `group_id` from Create Experience Group (or set manually in the environment)."
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Delete Experience Group Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for Experience Group ID | (Optional) Retrieve active Experience Groups and identify the target groupId required for deletion. |\n| 3 | Delete Experience Group | Permanently delete the specified Experience Group and its associated participant memberships and import job data using the provided groupId. |"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\",",
+          "    \"experience_group_name\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
