@@ -54,7 +54,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -183,8 +183,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -278,8 +277,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve transactions for the specified account within the requested date range.\n\n```\nGET /v1/transactions?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -325,7 +323,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -454,8 +452,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
+                    }
                   },
                   "response": []
                 },
@@ -542,8 +539,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve transactions for the specified account within the requested date range.\n\n```\nGET /v1/transactions?accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -655,7 +651,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -755,8 +751,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -845,8 +840,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -943,8 +937,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve transactions for the specified account within the requested date range.\n\n```\nGET /v1/transactions?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -990,7 +983,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1100,8 +1093,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -1185,8 +1177,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -1278,8 +1269,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve transactions for the specified account within the requested date range.\n\n```\nGET /v1/transactions?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
+                    }
                   },
                   "response": []
                 }

@@ -54,7 +54,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -159,8 +159,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -206,7 +205,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -312,8 +311,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts\n```"
+                    }
                   },
                   "response": []
                 }
@@ -382,7 +380,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -506,8 +504,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -586,8 +583,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve details for a single account using its account ID.\n\n```\nGET /v1/accounts/{{account_id}}?hostUserId={{retail_user_host_user_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -633,7 +629,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -762,8 +758,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
+                    }
                   },
                   "response": []
                 },
@@ -818,8 +813,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve details for a single account using its account ID.\n\n```\nGET /v1/accounts/{{account_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -888,7 +882,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -969,7 +963,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1087,8 +1081,7 @@
                           "value": "subUsers"
                         }
                       ]
-                    },
-                    "description": "Retrieve the retail institution user and identify `retail_customer_id` and `retail_subuser_auth_id`.\n\nSaves `retail_customer_id`, `retail_subuser_auth_id` to the environment.\n\n```\nGET /v1/institution-users/{{retail_user_host_user_id}}?userIdType=HOST_USER_ID&$expand=subUsers\n```"
+                    }
                   },
                   "response": []
                 }
@@ -1334,8 +1327,7 @@
                       "disabled": true
                     }
                   ]
-                },
-                "description": "Retrieve the primary retail user's accounts using the legacy banking-services API.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{retail_customer_id}}/accounts?getCrossAccts=true&getExportAcctNum=true\n```"
+                }
               },
               "response": []
             },
@@ -1405,8 +1397,7 @@
                       "disabled": true
                     }
                   ]
-                },
-                "description": "Retrieve a retail sub-user's accounts using the legacy banking-services API.\n\nSends `intuit_IFS_userType=ENTITLED` and `intuit_authid={{retail_subuser_auth_id}}`.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{retail_customer_id}}/accounts?getCrossAccts=true&getExportAcctNum=true\n```"
+                }
               },
               "response": []
             }
@@ -1456,7 +1447,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1555,8 +1546,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the customer record and identify `retail_customer_id` for subsequent requests.\n\nSaves `retail_customer_id` to the environment.\n\n```\nGET /v1/customers/{{retail_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -1603,8 +1593,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the customer's accounts together with recent transaction activity.\n\n```\nGET /v1/customers/{{retail_customer_id}}:accounts?hostUserId={{retail_user_host_user_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -1650,7 +1639,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1759,8 +1748,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the customer record and identify `retail_customer_id` for subsequent requests.\n\nSaves `retail_customer_id` to the environment.\n\n```\nGET /v1/customers/{{retail_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -1795,8 +1783,7 @@
                         "customers",
                         "{{retail_customer_id}}:accounts"
                       ]
-                    },
-                    "description": "Retrieve the customer's accounts together with recent transaction activity.\n\n```\nGET /v1/customers/{{retail_customer_id}}:accounts\n```"
+                    }
                   },
                   "response": []
                 }
@@ -1908,7 +1895,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2023,8 +2010,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `skip_groups`, `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -2104,8 +2090,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve accounts grouped by customer for the business user.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&$apply=groupBy(customer)&$topGroups=1&$skipGroups={{skip_groups}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -2175,8 +2160,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the list of accounts for a specific business location.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -2222,7 +2206,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2347,8 +2331,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `skip_groups`, `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -2423,8 +2406,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve accounts grouped by customer for the business user.\n\n```\nGET /v1/accounts?$apply=groupBy(customer)&$topGroups=1&$skipGroups={{skip_groups}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -2489,8 +2471,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the list of accounts for a specific business location.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -2560,7 +2541,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2660,8 +2641,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -2748,8 +2728,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -2827,8 +2806,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve details for a single account using its account ID.\n\n```\nGET /v1/accounts/{{account_id}}?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -2874,7 +2852,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2984,8 +2962,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 },
@@ -3068,8 +3045,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 },
@@ -3142,8 +3118,7 @@
                           "disabled": true
                         }
                       ]
-                    },
-                    "description": "Retrieve details for a single account using its account ID.\n\n```\nGET /v1/accounts/{{account_id}}?institutionCustomerId={{institution_customer_id}}\n```"
+                    }
                   },
                   "response": []
                 }
@@ -3213,7 +3188,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionId",
+                        "key": "transactionid",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -3314,8 +3289,7 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    },
-                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `business_user_auth_id`, `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                    }
                   },
                   "response": []
                 }
@@ -3466,8 +3440,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve accounts for a business primary admin using the legacy banking-services API.\n\nSends `intuit_IFS_userType=PRIMARY_ADMIN`.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{institution_customer_id}}/accounts?getExportAcctNum=true&validateLocationStatus=true\n```"
+                }
               },
               "response": []
             },
@@ -3532,8 +3505,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve accounts for a business secondary admin using the legacy banking-services API.\n\nSends `intuit_IFS_userType=SECONDARY_ADMIN` and `intuit_authid={{business_user_auth_id}}`.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{institution_customer_id}}/accounts?getExportAcctNum=true&validateLocationStatus=true\n```"
+                }
               },
               "response": []
             },
@@ -3598,8 +3570,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve accounts for a business user using the legacy banking-services API.\n\nSends `intuit_IFS_userType=BUSINESS_USER` and `intuit_authid={{business_user_auth_id}}`.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{institution_customer_id}}/accounts?getExportAcctNum=true&validateLocationStatus=true\n```"
+                }
               },
               "response": []
             }

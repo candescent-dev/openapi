@@ -1,11 +1,11 @@
 {
   "info": {
-    "_postman_id": "80a45833-214b-4b26-a1ef-bfcabf8188a3",
+    "_postman_id": "adaf8f7e-0104-4b09-87be-1da40b607194",
     "name": "Customer Campaigns - Experience Groups",
     "description": "This Postman collection supports API testing of the experience groups operations involving Retail users.\n\n# Quick Links\n\n- [Create Experience Group](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-3033b0d2-3ee7-4671-9610-2ac5eb13d4f4?action=share&source=copy-link&creator=8321995)\n    \n- [List Experience Groups](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-036e475f-2d64-4e4a-8649-bf3436fe78f7?action=share&source=copy-link&creator=8321995)\n    \n- [Update Experience Group](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-d815b17e-7a23-4054-8311-a4f17bb65f5a?action=share&source=copy-link&creator=8321995)\n    \n- [Delete Experience Group](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-dacf3c82-0fd1-47c6-a45d-56e48f1b1ba7?action=share&source=copy-link&creator=8321995)\n    \n- [Upload Experience Group Participants](https://extensibility-api.postman.co/workspace/Apigee-Postman-Collections~68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-8d2f721d-0bb8-46ba-95af-856f43d19706?action=share&source=copy-link&creator=8321995)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "8321995",
-    "_collection_link": "https://go.postman.co/collection/8321995-80a45833-214b-4b26-a1ef-bfcabf8188a3?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/8321995-adaf8f7e-0104-4b09-87be-1da40b607194?source=collection_link"
   },
   "item": [
     {
@@ -148,8 +148,7 @@
                 "v3",
                 "groups"
               ]
-            },
-            "description": "Create a new experience group with a unique name and optional description.\n\nSaves `experience_group_id` to the environment.\n\n```\nPOST /v3/groups\n```"
+            }
           },
           "response": []
         }
@@ -282,8 +281,7 @@
                   "value": "groupName,asc"
                 }
               ]
-            },
-            "description": "Retrieve a paginated list of active experience groups for the authenticated institution.\n\n```\nGET /v3/groups?page=1&size=10&sort=groupName,asc\n```"
+            }
           },
           "response": []
         }
@@ -387,7 +385,7 @@
                   "}",
                   "",
                   "function findGroup(body) {",
-                  "    const groups = body.content || [];",
+                  "    const groups = (body._embedded && body._embedded.groupsWithParticipantsCountList) || [];",
                   "    return groups.find(g => normalize(g.groupName) === target);",
                   "}",
                   "",
@@ -511,8 +509,7 @@
                   "value": "groupName,asc"
                 }
               ]
-            },
-            "description": "Retrieve active experience groups and identify the `experience_group_id` for subsequent requests.\n\nSaves `experience_group_id` to the environment.\n\n```\nGET /v3/groups?page=0&size=50&sort=groupName,asc\n```"
+            }
           },
           "response": []
         },
@@ -562,7 +559,7 @@
                 "{{experience_group_id}}"
               ]
             },
-            "description": "Update the name and/or description of an existing experience group.\n\nRequires `experience_group_id` from Create Experience Group (or set manually in the environment).\n\n```\nPUT /v3/groups/{{experience_group_id}}\n```"
+            "description": "Requires `group_id` from Create Experience Group (or set manually in the environment)."
           },
           "response": []
         }
@@ -666,7 +663,7 @@
                   "}",
                   "",
                   "function findGroup(body) {",
-                  "    const groups = body.content || [];",
+                  "    const groups = (body._embedded && body._embedded.groupsWithParticipantsCountList) || [];",
                   "    return groups.find(g => normalize(g.groupName) === target);",
                   "}",
                   "",
@@ -790,8 +787,7 @@
                   "value": "groupName,asc"
                 }
               ]
-            },
-            "description": "Retrieve active experience groups and identify the `experience_group_id` for subsequent requests.\n\nSaves `experience_group_id` to the environment.\n\n```\nGET /v3/groups?page=0&size=50&sort=groupName,asc\n```"
+            }
           },
           "response": []
         },
@@ -891,7 +887,7 @@
                 "participants"
               ]
             },
-            "description": "Upload a CSV of retail banking member numbers to add, remove, or replace participants in the experience group.\n\nBuilds multipart/form-data in the pre-request script using `participant_id` or `retail_user_host_user_id` (retail banking member number) with a `ParticipantId` CSV header. Upload type defaults to `ADD`. Requires `experience_group_id` from Create Experience Group (or set manually in the environment).\n\n```\nPUT /v3/groups/{{experience_group_id}}/participants\n```"
+            "description": "Builds multipart/form-data in the pre-request script using `participant_id` or `retail_user_host_user_id` (retail banking member number) with a `ParticipantId` CSV header. Upload type defaults to `ADD`. Requires `group_id` from Create Experience Group."
           },
           "response": []
         }
@@ -1024,7 +1020,7 @@
                   "}",
                   "",
                   "function findGroup(body) {",
-                  "    const groups = body.content || [];",
+                  "    const groups = (body._embedded && body._embedded.groupsWithParticipantsCountList) || [];",
                   "    return groups.find(g => normalize(g.groupName) === target);",
                   "}",
                   "",
@@ -1148,8 +1144,7 @@
                   "value": "groupName,asc"
                 }
               ]
-            },
-            "description": "Retrieve active experience groups and identify the `experience_group_id` for subsequent requests.\n\nSaves `experience_group_id` to the environment.\n\n```\nGET /v3/groups?page=0&size=50&sort=groupName,asc\n```"
+            }
           },
           "response": []
         },
@@ -1185,7 +1180,7 @@
                 "{{experience_group_id}}"
               ]
             },
-            "description": "Permanently delete the specified experience group and its associated participant memberships and import job data.\n\nRequires `experience_group_id` from Create Experience Group (or set manually in the environment).\n\n```\nDELETE /v3/groups/{{experience_group_id}}\n```"
+            "description": "Requires `group_id` from Create Experience Group (or set manually in the environment)."
           },
           "response": []
         }

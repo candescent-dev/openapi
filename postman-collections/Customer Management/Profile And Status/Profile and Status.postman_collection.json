@@ -51,7 +51,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionId",
+                    "key": "transactionid",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -140,8 +140,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `INSTITUTION_USER_ID`.\n\n```\nGET /v1/institution-users/{{retail_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true\n```"
+                }
               },
               "response": []
             },
@@ -190,8 +189,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `HOST_USER_ID`.\n\n```\nGET /v1/institution-users/{{retail_user_host_user_id}}?userIdType=HOST_USER_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true\n```"
+                }
               },
               "response": []
             },
@@ -240,8 +238,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `LOGIN_ID`.\n\n```\nGET /v1/institution-users/{{retail_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true\n```"
+                }
               },
               "response": []
             },
@@ -290,8 +287,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `LEGACY_USER_GUID`.\n\n```\nGET /v1/institution-users/{{retail_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true\n```"
+                }
               },
               "response": []
             },
@@ -340,8 +336,7 @@
                       "value": "true"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `USER_ID`.\n\n```\nGET /v1/institution-users/{{retail_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses,subUsers&retrieveBillPayCredentials=true\n```"
+                }
               },
               "response": []
             },
@@ -392,8 +387,7 @@
                       "disabled": true
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nExpands only `contactMethods` in the response.\n\n```\nGET /v1/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods\n```"
+                }
               },
               "response": []
             },
@@ -444,8 +438,7 @@
                       "disabled": true
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nExpands only `postalAddresses` in the response.\n\n```\nGET /v1/institution-users/{{retail_user_institution_user_id}}?$expand=postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -496,8 +489,7 @@
                       "disabled": true
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nExpands only `subUsers` in the response.\n\n```\nGET /v1/institution-users/{{retail_user_institution_user_id}}?$expand=subUsers\n```"
+                }
               },
               "response": []
             },
@@ -548,8 +540,7 @@
                       "disabled": true
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nApplies `$expand` filters to return a subset of contact methods and postal addresses.\n\n```\nGET /v1/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')\n```"
+                }
               },
               "response": []
             }
@@ -596,7 +587,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionId",
+                    "key": "transactionid",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -681,8 +672,7 @@
                       "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `INSTITUTION_USER_ID`.\n\n```\nGET /v2/institution-users/{{retail_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -727,8 +717,7 @@
                       "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `HOST_USER_ID`.\n\n```\nGET /v2/institution-users/{{retail_user_host_user_id}}?userIdType=HOST_USER_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -773,8 +762,7 @@
                       "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `LOGIN_ID`.\n\n```\nGET /v2/institution-users/{{retail_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -819,8 +807,7 @@
                       "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `LEGACY_USER_GUID`.\n\n```\nGET /v2/institution-users/{{retail_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -865,8 +852,7 @@
                       "value": "contactMethods,postalAddresses,subUsers,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `USER_ID`.\n\n```\nGET /v2/institution-users/{{retail_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses,subUsers,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -912,8 +898,7 @@
                       "value": "contactMethods"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nExpands only `contactMethods` in the response.\n\n```\nGET /v2/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods\n```"
+                }
               },
               "response": []
             },
@@ -959,8 +944,7 @@
                       "value": "postalAddresses"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nExpands only `postalAddresses` in the response.\n\n```\nGET /v2/institution-users/{{retail_user_institution_user_id}}?$expand=postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -1006,8 +990,7 @@
                       "value": "subUsers"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nExpands only `subUsers` in the response.\n\n```\nGET /v2/institution-users/{{retail_user_institution_user_id}}?$expand=subUsers\n```"
+                }
               },
               "response": []
             },
@@ -1053,8 +1036,7 @@
                       "value": "identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nExpands only `identificationDocuments` in the response.\n\n```\nGET /v2/institution-users/{{retail_user_institution_user_id}}?$expand=identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -1100,8 +1082,7 @@
                       "value": "contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nApplies `$expand` filters to return a subset of contact methods and postal addresses.\n\n```\nGET /v2/institution-users/{{retail_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')\n```"
+                }
               },
               "response": []
             }
@@ -1148,7 +1129,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionId",
+                    "key": "transactionid",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -1229,8 +1210,7 @@
                       "value": "INSTITUTION_USER_ID"
                     }
                   ]
-                },
-                "description": "Retrieve the user's current status.\n\nLooks up user status by `INSTITUTION_USER_ID`.\n\n```\nGET /v1/user-status/{{retail_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID\n```"
+                }
               },
               "response": []
             },
@@ -1268,8 +1248,7 @@
                       "value": "HOST_USER_ID"
                     }
                   ]
-                },
-                "description": "Retrieve the user's current status.\n\nLooks up user status by `HOST_USER_ID`.\n\n```\nGET /v1/user-status/{{retail_user_host_user_id}}?userIdType=HOST_USER_ID\n```"
+                }
               },
               "response": []
             },
@@ -1307,8 +1286,7 @@
                       "value": "LOGIN_ID"
                     }
                   ]
-                },
-                "description": "Retrieve the user's current status.\n\nLooks up user status by `LOGIN_ID`.\n\n```\nGET /v1/user-status/{{retail_user_login_id}}?userIdType=LOGIN_ID\n```"
+                }
               },
               "response": []
             },
@@ -1346,8 +1324,7 @@
                       "value": "CUSTOMER_ID"
                     }
                   ]
-                },
-                "description": "Retrieve the user's current status.\n\nLooks up user status by `CUSTOMER_ID`.\n\n```\nGET /v1/user-status/{{retail_user_legacy_user_guid}}?userIdType=CUSTOMER_ID\n```"
+                }
               },
               "response": []
             }
@@ -1412,7 +1389,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionId",
+                    "key": "transactionid",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -1497,8 +1474,7 @@
                       "value": "contactMethods,postalAddresses"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `INSTITUTION_USER_ID`.\n\n```\nGET /v1/institution-users/{{business_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -1543,8 +1519,7 @@
                       "value": "contactMethods,postalAddresses"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `LOGIN_ID`.\n\n```\nGET /v1/institution-users/{{business_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -1589,8 +1564,7 @@
                       "value": "contactMethods,postalAddresses"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `LEGACY_USER_GUID`.\n\n```\nGET /v1/institution-users/{{business_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -1635,8 +1609,7 @@
                       "value": "contactMethods,postalAddresses"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nLooks up the user by `USER_ID`.\n\n```\nGET /v1/institution-users/{{business_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -1682,8 +1655,7 @@
                       "value": "contactMethods"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nExpands only `contactMethods` in the response.\n\n```\nGET /v1/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods\n```"
+                }
               },
               "response": []
             },
@@ -1729,8 +1701,7 @@
                       "value": "postalAddresses"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nExpands only `postalAddresses` in the response.\n\n```\nGET /v1/institution-users/{{business_user_institution_user_id}}?$expand=postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -1776,8 +1747,7 @@
                       "value": "contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v1 institution-users API.\n\nApplies `$expand` filters to return a subset of contact methods and postal addresses.\n\n```\nGET /v1/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')\n```"
+                }
               },
               "response": []
             }
@@ -1824,7 +1794,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionId",
+                    "key": "transactionid",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -1909,8 +1879,7 @@
                       "value": "contactMethods,postalAddresses,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `INSTITUTION_USER_ID`.\n\n```\nGET /v2/institution-users/{{business_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID&$expand=contactMethods,postalAddresses,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -1955,8 +1924,7 @@
                       "value": "contactMethods,postalAddresses,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `LOGIN_ID`.\n\n```\nGET /v2/institution-users/{{business_user_login_id}}?userIdType=LOGIN_ID&$expand=contactMethods,postalAddresses,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -2001,8 +1969,7 @@
                       "value": "contactMethods,postalAddresses,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `LEGACY_USER_GUID`.\n\n```\nGET /v2/institution-users/{{business_user_legacy_user_guid}}?userIdType=LEGACY_USER_GUID&$expand=contactMethods,postalAddresses,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -2047,8 +2014,7 @@
                       "value": "contactMethods,postalAddresses,identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nLooks up the user by `USER_ID`.\n\n```\nGET /v2/institution-users/{{business_user_user_id}}?userIdType=USER_ID&$expand=contactMethods,postalAddresses,identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -2094,8 +2060,7 @@
                       "value": "contactMethods"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nExpands only `contactMethods` in the response.\n\n```\nGET /v2/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods\n```"
+                }
               },
               "response": []
             },
@@ -2141,8 +2106,7 @@
                       "value": "postalAddresses"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nExpands only `postalAddresses` in the response.\n\n```\nGET /v2/institution-users/{{business_user_institution_user_id}}?$expand=postalAddresses\n```"
+                }
               },
               "response": []
             },
@@ -2188,8 +2152,7 @@
                       "value": "identificationDocuments"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nExpands only `identificationDocuments` in the response.\n\n```\nGET /v2/institution-users/{{business_user_institution_user_id}}?$expand=identificationDocuments\n```"
+                }
               },
               "response": []
             },
@@ -2235,8 +2198,7 @@
                       "value": "contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')"
                     }
                   ]
-                },
-                "description": "Retrieve institution user details using the v2 institution-users API.\n\nApplies `$expand` filters to return a subset of contact methods and postal addresses.\n\n```\nGET /v2/institution-users/{{business_user_institution_user_id}}?$expand=contactMethods($filter=(validated eq true) and (protocol eq 'VOICE')),postalAddresses($filter=state eq 'CA')\n```"
+                }
               },
               "response": []
             }
@@ -2283,7 +2245,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionId",
+                    "key": "transactionid",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -2364,8 +2326,7 @@
                       "value": "INSTITUTION_USER_ID"
                     }
                   ]
-                },
-                "description": "Retrieve the user's current status.\n\nLooks up user status by `INSTITUTION_USER_ID`.\n\n```\nGET /v1/user-status/{{business_user_institution_user_id}}?userIdType=INSTITUTION_USER_ID\n```"
+                }
               },
               "response": []
             },
@@ -2403,8 +2364,7 @@
                       "value": "LOGIN_ID"
                     }
                   ]
-                },
-                "description": "Retrieve the user's current status.\n\nLooks up user status by `LOGIN_ID`.\n\n```\nGET /v1/user-status/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
+                }
               },
               "response": []
             },
@@ -2442,8 +2402,7 @@
                       "value": "CUSTOMER_ID"
                     }
                   ]
-                },
-                "description": "Retrieve the user's current status.\n\nLooks up user status by `CUSTOMER_ID`.\n\n```\nGET /v1/user-status/{{business_user_legacy_user_guid}}?userIdType=CUSTOMER_ID\n```"
+                }
               },
               "response": []
             }

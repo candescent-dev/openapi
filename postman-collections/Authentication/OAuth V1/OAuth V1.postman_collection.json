@@ -142,8 +142,7 @@
                       "value": "MEMNUMBER"
                     }
                   ]
-                },
-                "description": "Retrieve profile information to confirm the access token is valid.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{retail_user_member_number}}?fiCustomerIdType=MEMNUMBER\n```"
+                }
               },
               "response": []
             }
@@ -287,8 +286,7 @@
                     "fiCustomers",
                     "{{retail_customer_id}}"
                   ]
-                },
-                "description": "Retrieve profile information to confirm the access token is valid.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{retail_customer_id}}\n```"
+                }
               },
               "response": []
             }
@@ -491,8 +489,7 @@
                       "value": "MEMNUMBER"
                     }
                   ]
-                },
-                "description": "Retrieve profile information to confirm the access token is valid.\n\n```\nGET /bankingservices/v2/fis/{{institution_id}}/fiCustomers/{{business_tin}}?fiCustomerIdType=MEMNUMBER\n```"
+                }
               },
               "response": []
             }

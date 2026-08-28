@@ -48,7 +48,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionId",
+                "key": "transactionid",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -175,8 +175,7 @@
                 "{{institution_id}}",
                 "{{mx_real_time_resource_path}}"
               ]
-            },
-            "description": "Forward a create request to the MX API through the Apigee passthrough.\n\nSaves `mx_real_time_resource_path_id` to the environment.\n\n```\nPOST /mx/{{institution_id}}/{{mx_real_time_resource_path}}\n```"
+            }
           },
           "response": []
         }
@@ -236,7 +235,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionId",
+                "key": "transactionid",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -335,8 +334,7 @@
                 "{{institution_id}}",
                 "{{mx_real_time_resource_path_id}}"
               ]
-            },
-            "description": "Forward a read request to the MX API through the Apigee passthrough.\n\n```\nGET /mx/{{institution_id}}/{{mx_real_time_resource_path_id}}\n```"
+            }
           },
           "response": []
         }
@@ -396,7 +394,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionId",
+                "key": "transactionid",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -509,8 +507,7 @@
                 "{{institution_id}}",
                 "{{mx_real_time_resource_path_id}}"
               ]
-            },
-            "description": "Forward an update request to the MX API through the Apigee passthrough.\n\n```\nPUT /mx/{{institution_id}}/{{mx_real_time_resource_path_id}}\n```"
+            }
           },
           "response": []
         }
@@ -570,7 +567,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionId",
+                "key": "transactionid",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -669,8 +666,7 @@
                 "{{institution_id}}",
                 "{{mx_real_time_resource_path_id}}"
               ]
-            },
-            "description": "Forward a delete request to the MX API through the Apigee passthrough.\n\n```\nDELETE /mx/{{institution_id}}/{{mx_real_time_resource_path_id}}\n```"
+            }
           },
           "response": []
         }
