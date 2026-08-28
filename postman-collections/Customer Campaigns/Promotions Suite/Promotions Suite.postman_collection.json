@@ -1,0 +1,398 @@
+{
+  "info": {
+    "_postman_id": "3767eff2-18d0-44ca-8b4c-679af77defe4",
+    "name": "Customer Campaigns - Promotions Suite",
+    "description": "This Postman collection supports API testing of the promotions suite user list upload operations.\n\n# Quick Links\n\n- [Create User List Upload Job](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-86a45eca-bd69-479a-9e69-64422f6e0db5?action=share&source=copy-link&creator=8321995)\n- [Get User List Upload Status](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-1f98de93-65ee-4654-8e78-9906b0253184?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-3767eff2-18d0-44ca-8b4c-679af77defe4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Create User List Upload Job",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const xml2js = require('xml2js');",
+                  "",
+                  "xml2js.parseString(pm.response.text(), function (error, jsonData) {",
+                  "    if (error) {",
+                  "        console.error(\"Error parsing XML:\", error);",
+                  "        return;",
+                  "    }",
+                  "",
+                  "    const accessToken = jsonData.token.access_token[0];",
+                  "",
+                  "    pm.environment.set(\"access_token\", accessToken);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "di_tid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "di_fiid",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/oauth/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "oauth",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Create User List Upload Job",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "di_tid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"{{user_list_name}}\",\n    \"description\": \"{{user_list_description}}\",\n    \"users\": [\n        \"{{member_number}}\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/pss/v1/fis/{{institution_id}}/audiences/userListJobs",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "pss",
+                "v1",
+                "fis",
+                "{{institution_id}}",
+                "audiences",
+                "userListJobs"
+              ]
+            },
+            "description": "Create a promotions suite user list upload job with a name, users, and optional description.\n\n```\nPOST /pss/v1/fis/{{institution_id}}/audiences/userListJobs\n```"
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 **Create User List Upload Job** Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Create User List Upload Job | Create a user list upload job with name, users, and a custom description. |"
+    },
+    {
+      "name": "🔗 Get User List Upload Status",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const xml2js = require('xml2js');",
+                  "",
+                  "xml2js.parseString(pm.response.text(), function (error, jsonData) {",
+                  "    if (error) {",
+                  "        console.error(\"Error parsing XML:\", error);",
+                  "        return;",
+                  "    }",
+                  "",
+                  "    const accessToken = jsonData.token.access_token[0];",
+                  "",
+                  "    pm.environment.set(\"access_token\", accessToken);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "di_tid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "di_fiid",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/xml",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/oauth/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "oauth",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Create User List Upload Job",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"promotions_job_id\", jsonData?.jobId ?? null);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "di_tid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"{{user_list_name}}\",\n    \"description\": \"{{user_list_description}}\",\n    \"users\": [\n        \"{{member_number}}\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/pss/v1/fis/{{institution_id}}/audiences/userListJobs",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "pss",
+                "v1",
+                "fis",
+                "{{institution_id}}",
+                "audiences",
+                "userListJobs"
+              ]
+            },
+            "description": "Create a promotions suite user list upload job with a name, users, and optional description.\n\nSaves `promotions_job_id` to the environment.\n\n```\nPOST /pss/v1/fis/{{institution_id}}/audiences/userListJobs\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get User List Upload Status",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "di_tid",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/pss/v1/fis/{{institution_id}}/audiences/userListJobs/{{promotions_job_id}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "pss",
+                "v1",
+                "fis",
+                "{{institution_id}}",
+                "audiences",
+                "userListJobs",
+                "{{promotions_job_id}}"
+              ]
+            },
+            "description": "Retrieve the status of a user list upload job. Poll this endpoint until the job reaches a terminal state.\n\n```\nGET /pss/v1/fis/{{institution_id}}/audiences/userListJobs/{{promotions_job_id}}\n```"
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Get User List Upload Status Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Create User List Upload Job | (Optional) If a promotions_job_id is unavailable, create a user list upload job with name, users, and an optional custom description. Otherwise, proceed using the existing promotions_job_id. |\n| 3 | Get User List Upload Status | Retrieve the status of a user list upload job using the promotions_job_id. Poll this endpoint until the job reaches a terminal state. |"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

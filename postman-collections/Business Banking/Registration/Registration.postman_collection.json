@@ -1,0 +1,927 @@
+{
+  "info": {
+    "_postman_id": "37a307de-55b1-4778-9ec7-a5c6766088b8",
+    "name": "Business Banking - Registration",
+    "description": "This Postman collection supports API testing of the business registration operations involving Business users.\n\n# Quick Links\n\n- [Get Business Registration Configuration](#b2d5f9a3-4c8e-4b92-af16-7e3a9c5d2e84)\n    \n- [Create Business Registration](#a1c4e8f2-3b7d-4c91-9e05-6d2f8a4b1c73)\n    \n- [Get Business Registration - Confirmation Number](#c3e6a0b4-5d9f-4c03-b027-8f4a0d6e3f95)\n    \n- [Get Business Registration - Registration ID](#d4f7b1c5-6e0a-4d14-c038-9a5b1e7f4a06)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-37a307de-55b1-4778-9ec7-a5c6766088b8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Get Business Registration Configuration",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Business Registration Configuration",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registration-configs",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registration-configs"
+              ]
+            },
+            "description": "Retrieve the institution's available online features and additional services for the registration form.\n\n```\nGET /v1/business-registration-configs\n```"
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Get Business Registration Configuration Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Get Business Registration Configuration | Retrieve the institution's available online features and additional services to be displayed on the business registration form. |"
+    },
+    {
+      "name": "🔗 Create Business Registration",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Get Business Registration Configuration",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseJson = pm.response.json();",
+                  "",
+                  "pm.environment.set(\"online_features\", JSON.stringify(responseJson.onlineFeatures));",
+                  "pm.environment.set(\"additional_services\", JSON.stringify(responseJson.additionalServices));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registration-configs",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registration-configs"
+              ]
+            },
+            "description": "Retrieve the institution's available online features and additional services. Saves `online_features` and `additional_services` as JSON arrays for use in step 3b.\n\n```\nGET /v1/business-registration-configs\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3a. [Option 1] Create Business Registration",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"businessName\": \"{{$randomCompanyName}}\",\n    \"contact\": {\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"email\": \"{{$randomEmail}}\",\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n        \"address\": {\n            \"address1\": \"{{$randomStreetAddress}}\",\n            \"city\": \"{{$randomCity}}\",\n            \"state\": \"GA\",\n            \"zipCode\": \"30328\"\n        }\n    },\n    \"users\": [\n        {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\",\n            \"email\": \"{{$randomEmail}}\",\n            \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n            \"userType\": \"PRIMARY_ADMIN\"\n        }\n    ],\n    \"tins\": [\n        {\n            \"tinNumber\": \"{{primary_tin_number}}\",\n            \"tinName\": \"{{$randomFullName}}\",\n            \"memberNumber\": \"{{primary_member_number}}\",\n            \"hostPassword\": \"{{host_password}}\",\n            \"primary\": true\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations"
+              ]
+            },
+            "description": "Create a business registration with the minimum required fields.\n\nRequired: `primary_tin_number`, `primary_member_number`, and `host_password` in the environment. TIN and member number must exist on the host for this FI. Response `status` may be `PENDING` or `AUTO_ENROLLED` depending on FI auto-enrollment configuration.\n\n```\nPOST /v1/business-registrations\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3b. [Option 2] Create Business Registration - Online Features & Additional Services",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"businessName\": \"{{$randomCompanyName}}\",\n    \"contact\": {\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"email\": \"{{$randomEmail}}\",\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n        \"address\": {\n            \"address1\": \"{{$randomStreetAddress}}\",\n            \"city\": \"{{$randomCity}}\",\n            \"state\": \"GA\",\n            \"zipCode\": \"30328\"\n        }\n    },\n    \"users\": [\n        {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\",\n            \"email\": \"{{$randomEmail}}\",\n            \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n            \"userType\": \"PRIMARY_ADMIN\"\n        }\n    ],\n    \"tins\": [\n        {\n            \"tinNumber\": \"{{primary_tin_number}}\",\n            \"tinName\": \"{{$randomFullName}}\",\n            \"memberNumber\": \"{{primary_member_number}}\",\n            \"hostPassword\": \"{{host_password}}\",\n            \"primary\": true\n        }\n    ],\n    \"onlineFeatures\": {{online_features}},\n    \"additionalServices\": {{additional_services}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations"
+              ]
+            },
+            "description": "Create a business registration with optional online features and additional services. Run step 2 first so `online_features` and `additional_services` are populated from the configuration response. Feature labels must match values returned by step 2 for this FI.\n\n```\nPOST /v1/business-registrations\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3c. [Option 3] Create Business Registration - Secondary Admin",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"businessName\": \"{{$randomCompanyName}}\",\n    \"contact\": {\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"email\": \"{{$randomEmail}}\",\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n        \"address\": {\n            \"address1\": \"{{$randomStreetAddress}}\",\n            \"city\": \"{{$randomCity}}\",\n            \"state\": \"GA\",\n            \"zipCode\": \"30328\"\n        }\n    },\n    \"users\": [\n        {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\",\n            \"email\": \"{{$randomEmail}}\",\n            \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n            \"userType\": \"PRIMARY_ADMIN\"\n        },\n        {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\",\n            \"email\": \"{{$randomEmail}}\",\n            \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n            \"userType\": \"SECONDARY_ADMIN\"\n        }\n    ],\n    \"tins\": [\n        {\n            \"tinNumber\": \"{{primary_tin_number}}\",\n            \"tinName\": \"{{$randomFullName}}\",\n            \"memberNumber\": \"{{primary_member_number}}\",\n            \"hostPassword\": \"{{host_password}}\",\n            \"primary\": true\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations"
+              ]
+            },
+            "description": "Create a business registration with one `PRIMARY_ADMIN` and one optional `SECONDARY_ADMIN`. Only one secondary admin is allowed per registration.\n\n```\nPOST /v1/business-registrations\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3d. [Option 4] Create Business Registration - Multiple TINs",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"businessName\": \"{{$randomCompanyName}}\",\n    \"contact\": {\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"email\": \"{{$randomEmail}}\",\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n        \"address\": {\n            \"address1\": \"{{$randomStreetAddress}}\",\n            \"city\": \"{{$randomCity}}\",\n            \"state\": \"GA\",\n            \"zipCode\": \"30328\"\n        }\n    },\n    \"users\": [\n        {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\",\n            \"email\": \"{{$randomEmail}}\",\n            \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n            \"userType\": \"PRIMARY_ADMIN\"\n        }\n    ],\n    \"tins\": [\n        {\n            \"tinNumber\": \"{{primary_tin_number}}\",\n            \"tinName\": \"{{$randomFullName}}\",\n            \"memberNumber\": \"{{primary_member_number}}\",\n            \"hostPassword\": \"{{host_password}}\",\n            \"primary\": true\n        },\n        {\n            \"tinNumber\": \"{{secondary_tin_number}}\",\n            \"tinName\": \"{{$randomFullName}}\",\n            \"memberNumber\": \"{{secondary_member_number}}\",\n            \"hostPassword\": \"{{host_password}}\",\n            \"primary\": false\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations"
+              ]
+            },
+            "description": "Create a business registration with multiple TINs. Set `secondary_tin_number` and `secondary_member_number` in the environment. Both TIN/member pairs must exist on the host for this FI.\n\n```\nPOST /v1/business-registrations\n```"
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Create Business Registration Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Get Business Registration Configuration | (Optional) Retrieve the institution's available online features and additional services if they are not already known. |\n| 3a | \\[Option 1\\] Create Business Registration | Submit a business registration request containing only the required fields. |\n| 3b | \\[Option 2\\] Create Business Registration - Online Features & Additional Services | Submit a business registration request with optional online features and additional services populated. |\n| 3c | \\[Option 3\\] Create Business Registration - Secondary Admin | Submit a business registration request with one primary admin and one secondary admin. |\n| 3d | \\[Option 4\\] Create Business Registration - Multiple TINs | Submit a business registration request with both primary and secondary TIN values. |",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "const requiredVars = [",
+              "    'primary_tin_number',",
+              "    'primary_member_number',",
+              "    'host_password'",
+              "];",
+              "",
+              "const missingVars = requiredVars.filter((varName) => !pm.environment.get(varName));",
+              "",
+              "if (missingVars.length > 0) {",
+              "    throw new Error(",
+              "        `Missing required environment variables: ${missingVars.join(', ')}. Please set them in the active environment before running requests.`",
+              "    );",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Get Business Registration – Confirmation Number",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Create Business Registration",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"confirmation_number\", jsonData.confirmationNumber ?? null);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"businessName\": \"{{$randomCompanyName}}\",\n    \"contact\": {\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"email\": \"{{$randomEmail}}\",\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n        \"address\": {\n            \"address1\": \"{{$randomStreetAddress}}\",\n            \"city\": \"{{$randomCity}}\",\n            \"state\": \"GA\",\n            \"zipCode\": \"30328\"\n        }\n    },\n    \"users\": [\n        {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\",\n            \"email\": \"{{$randomEmail}}\",\n            \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n            \"userType\": \"PRIMARY_ADMIN\"\n        }\n    ],\n    \"tins\": [\n        {\n            \"tinNumber\": \"{{primary_tin_number}}\",\n            \"tinName\": \"{{$randomFullName}}\",\n            \"memberNumber\": \"{{primary_member_number}}\",\n            \"hostPassword\": \"{{host_password}}\",\n            \"primary\": true\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations"
+              ]
+            },
+            "description": "Create a business registration with the minimum required fields. Saves `confirmation_number` to the environment.\n\nRequired: `primary_tin_number`, `primary_member_number`, and `host_password` in the environment. TIN and member number must exist on the host for this FI. Response `status` may be `PENDING` or `AUTO_ENROLLED` depending on FI auto-enrollment configuration.\n\n```\nPOST /v1/business-registrations\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Business Registration - Confirmation Number",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations?confirmationNumber={{confirmation_number}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations"
+              ],
+              "query": [
+                {
+                  "key": "confirmationNumber",
+                  "value": "{{confirmation_number}}"
+                }
+              ]
+            },
+            "description": "Retrieve a business registration using its 16-character confirmation number.\n\n```\nGET /v1/business-registrations?confirmationNumber={{confirmation_number}}\n```"
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Get Business Registration – Confirmation Number Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Create Business Registration | (Optional) Create a new business registration and obtain a confirmation number if one is not already available. |\n| 3 | Get Business Registration - Confirmation Number | Retrieve the details of an existing business registration using the confirmation number. |"
+    },
+    {
+      "name": "🔗 Get Business Registration – Registration ID",
+      "item": [
+        {
+          "name": "1. Generate Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "const accessToken = jsonData.access_token;",
+                  "",
+                  "pm.environment.set(\"access_token\", accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{client_secret}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{client_id}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "institutionId",
+                "value": "{{institution_id}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/oauth2/v1/token",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "v1",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. [Optional] Create Business Registration",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"registration_id\", jsonData.id ?? null);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"businessName\": \"{{$randomCompanyName}}\",\n    \"contact\": {\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"email\": \"{{$randomEmail}}\",\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n        \"address\": {\n            \"address1\": \"{{$randomStreetAddress}}\",\n            \"city\": \"{{$randomCity}}\",\n            \"state\": \"GA\",\n            \"zipCode\": \"30328\"\n        }\n    },\n    \"users\": [\n        {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\",\n            \"email\": \"{{$randomEmail}}\",\n            \"phoneNumber\": \"{{$randomPhoneNumber}}\",\n            \"userType\": \"PRIMARY_ADMIN\"\n        }\n    ],\n    \"tins\": [\n        {\n            \"tinNumber\": \"{{primary_tin_number}}\",\n            \"tinName\": \"{{$randomFullName}}\",\n            \"memberNumber\": \"{{primary_member_number}}\",\n            \"hostPassword\": \"{{host_password}}\",\n            \"primary\": true\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations"
+              ]
+            },
+            "description": "Create a business registration with the minimum required fields. Saves `registration_id` to the environment.\n\nRequired: `primary_tin_number`, `primary_member_number`, and `host_password` in the environment. TIN and member number must exist on the host for this FI. Response `status` may be `PENDING` or `AUTO_ENROLLED` depending on FI auto-enrollment configuration.\n\n```\nPOST /v1/business-registrations\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Business Registration - Registration ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "transactionId",
+                "value": "{{$guid}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{apigee_base_url}}/v1/business-registrations/{{registration_id}}",
+              "host": [
+                "{{apigee_base_url}}"
+              ],
+              "path": [
+                "v1",
+                "business-registrations",
+                "{{registration_id}}"
+              ]
+            },
+            "description": "Retrieve a business registration using its registration ID.\n\n```\nGET /v1/business-registrations/{{registration_id}}\n```"
+          },
+          "response": []
+        }
+      ],
+      "description": "## 🔄 Get Business Registration – Registration ID Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Create Business Registration | (Optional) Create a new business registration and obtain a registration ID if one is not already available. |\n| 3 | Get Business Registration – Registration ID | Retrieve the details of an existing business registration using the registration ID. |"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    }
+  ]
+}

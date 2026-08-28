@@ -48,7 +48,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -161,7 +161,8 @@
                 "{{institution_id}}",
                 "{{mx_sso_resource_path_post}}"
               ]
-            }
+            },
+            "description": "Forward a create request to the MX API through the Apigee passthrough.\n\n```\nPOST /mx/{{institution_id}}/{{mx_sso_resource_path_post}}\n```"
           },
           "response": []
         }
@@ -221,7 +222,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -320,7 +321,8 @@
                 "{{institution_id}}",
                 "{{mx_sso_resource_path_get}}"
               ]
-            }
+            },
+            "description": "Forward a read request to the MX API through the Apigee passthrough.\n\n```\nGET /mx/{{institution_id}}/{{mx_sso_resource_path_get}}\n```"
           },
           "response": []
         }
@@ -380,7 +382,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -479,7 +481,8 @@
                 "{{institution_id}}",
                 "{{mx_sso_resource_path_delete}}"
               ]
-            }
+            },
+            "description": "Forward a delete request to the MX API through the Apigee passthrough.\n\n```\nDELETE /mx/{{institution_id}}/{{mx_sso_resource_path_delete}}\n```"
           },
           "response": []
         }

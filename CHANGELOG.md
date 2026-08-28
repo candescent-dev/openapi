@@ -1,5 +1,66 @@
 # Changelog
 
+## [1.10.0] - 2026-08-28
+
+### Removed (1 path) ⚠️ Breaking
+- `/v1/customers/{customerId}/contact-methods`
+
+### Breaking changes (9 paths)
+- `/pss/v1/fis/{fiId}/audiences/userListJobs`
+- `/pss/v1/fis/{fiId}/audiences/userListJobs/{jobId}`
+- `/v1/e-statements/preference`
+- `/v1/e-statements/{accountId}/disclosures`
+- `/v1/reports/e-statements`
+- `/v2/e-statements/user/preferences`
+- `/v3/jobs`
+- `/v3/jobs/{jobId}`
+- `/v3/jobs/{jobId}/errors`
+
+### Schemas removed (12) ⚠️ Breaking
+- `BasePageDTOListImportJobDTO`
+- `BasePageDTOListImportJobErrorDTO`
+- `EStatementDisclosure`
+- `EStatementDisclosureResponse`
+- `EStatementPreferencesRequest`
+- `EStatementRequest`
+- `HalLink`
+- `ImportJobDTO`
+- `ImportJobDTOSingle`
+- `ImportJobErrorDTO`
+- `Links`
+- `Pageable`
+
+### Schemas — breaking changes (6)
+- `EStatementReport`
+- `EStatementReportResponse`
+- `Error3`
+- `ExperienceGroupsResponse`
+- `GroupsWithParticipantsCount`
+- `Page1`
+
+### Added (1 path)
+- `/ux-users/v1/customers/{customerId}/contact-methods`
+
+### Schemas added (13)
+- `AccountType3`
+- `EStatementAccountPreference`
+- `EStatementAccountPreferencesRequest`
+- `EStatementAccountPreferencesResponse`
+- `EStatementUserPreferencesRequest`
+- `EStatementUserPreferencesResponse`
+- `Error4`
+- `Job`
+- `JobError`
+- `JobErrorsResponse`
+- `JobsResponse`
+- `Link`
+- `Link1`
+
+### Schemas updated (1)
+- `EStatementReportRequest`
+
+- Documentation updates on 2 paths
+
 ## [1.9.0] - 2026-07-27
 
 ### Breaking changes (3 paths)

@@ -57,7 +57,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -186,7 +186,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                       },
                       "response": []
                     },
@@ -269,7 +270,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -354,7 +356,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     }
@@ -400,7 +403,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -529,7 +532,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                       },
                       "response": []
                     },
@@ -613,7 +617,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -699,7 +704,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -745,7 +751,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -874,7 +880,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                       },
                       "response": []
                     },
@@ -957,7 +964,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     }
@@ -1008,7 +1016,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -1137,7 +1145,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
                       },
                       "response": []
                     },
@@ -1210,7 +1219,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -1290,7 +1300,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     }
@@ -1336,7 +1347,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -1465,7 +1476,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
                       },
                       "response": []
                     },
@@ -1539,7 +1551,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -1615,7 +1628,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -1661,7 +1675,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -1790,7 +1804,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
                       },
                       "response": []
                     },
@@ -1864,7 +1879,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?accountId={{account_id}}&imageType={{statement_image_type}}&transactionDate={{transaction_date}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     }
@@ -1939,7 +1955,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -2068,7 +2084,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                       },
                       "response": []
                     },
@@ -2151,7 +2168,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -2255,7 +2273,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nUses `imageType=CHECK`. Saves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     },
@@ -2324,7 +2343,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -2370,7 +2390,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -2499,7 +2519,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                       },
                       "response": []
                     },
@@ -2583,7 +2604,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -2687,7 +2709,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     },
@@ -2756,7 +2779,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -2802,7 +2826,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -2931,7 +2955,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                       },
                       "response": []
                     },
@@ -3033,7 +3058,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `statement_date` to the environment.\n\n```\nGET /v1/banking-images?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     },
@@ -3102,7 +3128,8 @@
                               "value": "{{statement_date}}"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?hostUserId={{retail_user_host_user_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementDate={{statement_date}}\n```"
                       },
                       "response": []
                     }
@@ -3153,7 +3180,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -3282,7 +3309,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
                       },
                       "response": []
                     },
@@ -3355,7 +3383,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -3449,7 +3478,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nUses `imageType=CHECK`. Saves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     },
@@ -3508,7 +3538,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -3554,7 +3585,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -3683,7 +3714,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
                       },
                       "response": []
                     },
@@ -3757,7 +3789,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -3851,7 +3884,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     },
@@ -3910,7 +3944,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -3956,7 +3991,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -4085,7 +4120,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
                       },
                       "response": []
                     },
@@ -4177,7 +4213,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `statement_date` to the environment.\n\n```\nGET /v1/banking-images?accountId={{account_id}}&imageType={{statement_image_type}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     },
@@ -4236,7 +4273,8 @@
                               "value": "{{statement_date}}"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?accountId={{account_id}}&imageType={{statement_image_type}}&statementDate={{statement_date}}\n```"
                       },
                       "response": []
                     }
@@ -4354,7 +4392,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -4454,7 +4492,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -4543,7 +4582,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -4629,7 +4669,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -4719,7 +4760,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     }
@@ -4765,7 +4807,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -4865,7 +4907,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -4954,7 +4997,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -5041,7 +5085,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -5125,7 +5170,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -5171,7 +5217,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -5271,7 +5317,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -5360,7 +5407,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -5450,7 +5498,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     }
@@ -5501,7 +5550,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -5611,7 +5660,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -5695,7 +5745,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -5776,7 +5827,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -5861,7 +5913,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     }
@@ -5907,7 +5960,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -6017,7 +6070,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -6100,7 +6154,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -6182,7 +6237,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -6267,7 +6323,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -6313,7 +6370,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -6423,7 +6480,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -6506,7 +6564,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -6590,7 +6649,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images for the specified account, filtered by image type.\n\n```\nGET /v1/banking-images?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&transactionDate={{transaction_date}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     }
@@ -6665,7 +6725,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -6765,7 +6825,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -6854,7 +6915,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -6940,7 +7002,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -7049,7 +7112,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nUses `imageType=CHECK`. Saves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     },
@@ -7122,7 +7186,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -7168,7 +7233,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -7268,7 +7333,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -7357,7 +7423,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -7444,7 +7511,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -7553,7 +7621,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     },
@@ -7626,7 +7695,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -7672,7 +7742,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -7772,7 +7842,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -7861,7 +7932,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -7970,7 +8042,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `statement_date` to the environment.\n\n```\nGET /v1/banking-images?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     },
@@ -8044,7 +8117,8 @@
                               "type": "text"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementDate={{statement_date}}\n```"
                       },
                       "response": []
                     }
@@ -8095,7 +8169,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -8205,7 +8279,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -8289,7 +8364,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -8370,7 +8446,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_number` to the environment.\n\n```\nGET /v1/transactions?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -8474,7 +8551,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nUses `imageType=CHECK`. Saves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&transactionImageNumber={{transaction_image_number}}\n```"
                       },
                       "response": []
                     },
@@ -8542,7 +8620,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType=CHECK&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -8588,7 +8667,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -8698,7 +8777,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -8782,7 +8862,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -8864,7 +8945,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve transactions and identify a transaction date (and related image fields) for subsequent requests.\n\nSaves `transaction_date`, `transaction_image_type`, `image_identifier` to the environment.\n\n```\nGET /v1/transactions?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&startDate={{start_date}}&endDate={{end_date}}\n```"
                       },
                       "response": []
                     },
@@ -8968,7 +9050,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `image_identifier` to the environment.\n\n```\nGET /v1/banking-images?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     },
@@ -9036,7 +9119,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{transaction_image_type}}&transactionDate={{transaction_date}}&imageIdentifier={{image_identifier}}\n```"
                       },
                       "response": []
                     }
@@ -9082,7 +9166,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -9192,7 +9276,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -9276,7 +9361,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     },
@@ -9380,7 +9466,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve banking images and identify a `banking_image_id` for subsequent requests.\n\nSaves `banking_image_id`, `statement_date` to the environment.\n\n```\nGET /v1/banking-images?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementStartDate={{statement_start_date}}&statementEndDate={{statement_end_date}}\n```"
                       },
                       "response": []
                     },
@@ -9449,7 +9536,8 @@
                               "type": "text"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve a single banking image using its image ID.\n\n```\nGET /v1/banking-images/{{banking_image_id}}?institutionCustomerId={{institution_customer_id}}&accountId={{account_id}}&imageType={{statement_image_type}}&statementDate={{statement_date}}\n```"
                       },
                       "response": []
                     }

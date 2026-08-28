@@ -54,7 +54,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -159,7 +159,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                   },
                   "response": []
                 },
@@ -184,7 +185,7 @@
                     "method": "DELETE",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -214,7 +215,8 @@
                         "v1",
                         "revoke"
                       ]
-                    }
+                    },
+                    "description": "Revoke the current access token so it can no longer authorize API requests.\n\n```\nDELETE /oauth2/v1/revoke\n```"
                   },
                   "response": []
                 },
@@ -279,7 +281,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Call a protected endpoint with the revoked token to confirm it is no longer valid.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                   },
                   "response": []
                 }
@@ -328,7 +331,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -438,7 +441,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts\n```"
                   },
                   "response": []
                 },
@@ -479,7 +483,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -519,7 +523,8 @@
                         "v1",
                         "token"
                       ]
-                    }
+                    },
+                    "description": "Exchange a refresh token for a new access token.\n\nSaves `access_token_refresh` to the environment.\n\n```\nPOST /oauth2/v1/token\n```"
                   },
                   "response": []
                 },
@@ -579,7 +584,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Call a protected endpoint with the refreshed access token to confirm it is valid.\n\n```\nGET /v1/accounts\n```"
                   },
                   "response": []
                 },
@@ -604,7 +610,7 @@
                     "method": "DELETE",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -634,7 +640,8 @@
                         "v1",
                         "revoke"
                       ]
-                    }
+                    },
+                    "description": "Revoke the refreshed access token so it can no longer authorize API requests.\n\n```\nDELETE /oauth2/v1/revoke\n```"
                   },
                   "response": []
                 },
@@ -694,7 +701,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Call a protected endpoint with the revoked token to confirm it is no longer valid.\n\n```\nGET /v1/accounts\n```"
                   },
                   "response": []
                 }
@@ -798,7 +806,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -895,7 +903,8 @@
                       "value": "LOGIN_ID"
                     }
                   ]
-                }
+                },
+                "description": "Retrieve the retail customer record and identify `retail_user_institution_user_id`.\n\nSaves `retail_user_institution_user_id` to the environment.\n\n```\nGET /v1/customers/{{retail_user_login_id}}?userIdType=LOGIN_ID\n```"
               },
               "response": []
             },
@@ -921,7 +930,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -965,7 +974,8 @@
                     "v1",
                     "client-authorization"
                   ]
-                }
+                },
+                "description": "Authorize the client for the OIDC flow and obtain the scopes required to generate an authorization code.\n\nSaves `scopes` to the environment.\n\n```\nPOST /v1/client-authorization\n```"
               },
               "response": []
             },
@@ -991,7 +1001,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -1055,7 +1065,8 @@
                     "v1",
                     "auth-code"
                   ]
-                }
+                },
+                "description": "Generate an OIDC authorization code for the authenticated user.\n\nSaves `authorization_code` to the environment.\n\n```\nPOST /v1/auth-code\n```"
               },
               "response": []
             },
@@ -1098,7 +1109,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -1138,7 +1149,8 @@
                     "v1",
                     "token"
                   ]
-                }
+                },
+                "description": "Exchange the authorization code for access and refresh tokens.\n\nSaves `access_token` and `refresh_token` to the environment.\n\n```\nPOST /oauth2/v1/token\n```"
               },
               "response": []
             },
@@ -1198,7 +1210,8 @@
                       "disabled": true
                     }
                   ]
-                }
+                },
+                "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts\n```"
               },
               "response": []
             },
@@ -1239,7 +1252,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -1279,7 +1292,8 @@
                     "v1",
                     "token"
                   ]
-                }
+                },
+                "description": "Exchange a refresh token for a new access token.\n\nSaves `access_token_refresh` to the environment.\n\n```\nPOST /oauth2/v1/token\n```"
               },
               "response": []
             },
@@ -1339,7 +1353,8 @@
                       "disabled": true
                     }
                   ]
-                }
+                },
+                "description": "Call a protected endpoint with the refreshed access token to confirm it is valid.\n\n```\nGET /v1/accounts\n```"
               },
               "response": []
             },
@@ -1364,7 +1379,7 @@
                 "method": "DELETE",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -1394,7 +1409,8 @@
                     "v1",
                     "revoke"
                   ]
-                }
+                },
+                "description": "Revoke the refreshed access token so it can no longer authorize API requests.\n\n```\nDELETE /oauth2/v1/revoke\n```"
               },
               "response": []
             },
@@ -1454,7 +1470,8 @@
                       "disabled": true
                     }
                   ]
-                }
+                },
+                "description": "Call a protected endpoint with the revoked token to confirm it is no longer valid.\n\n```\nGET /v1/accounts\n```"
               },
               "response": []
             }
@@ -1552,7 +1569,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1652,7 +1669,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -1722,7 +1740,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 },
@@ -1747,7 +1766,7 @@
                     "method": "DELETE",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1777,7 +1796,8 @@
                         "v1",
                         "revoke"
                       ]
-                    }
+                    },
+                    "description": "Revoke the current access token so it can no longer authorize API requests.\n\n```\nDELETE /oauth2/v1/revoke\n```"
                   },
                   "response": []
                 },
@@ -1845,7 +1865,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Call a protected endpoint with the revoked token to confirm it is no longer valid.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 }
@@ -1894,7 +1915,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2004,7 +2025,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -2069,7 +2091,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 },
@@ -2110,7 +2133,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2150,7 +2173,8 @@
                         "v1",
                         "token"
                       ]
-                    }
+                    },
+                    "description": "Exchange a refresh token for a new access token.\n\nSaves `access_token_refresh` to the environment.\n\n```\nPOST /oauth2/v1/token\n```"
                   },
                   "response": []
                 },
@@ -2214,7 +2238,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Call a protected endpoint with the refreshed access token to confirm it is valid.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 },
@@ -2239,7 +2264,7 @@
                     "method": "DELETE",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2269,7 +2294,8 @@
                         "v1",
                         "revoke"
                       ]
-                    }
+                    },
+                    "description": "Revoke the refreshed access token so it can no longer authorize API requests.\n\n```\nDELETE /oauth2/v1/revoke\n```"
                   },
                   "response": []
                 },
@@ -2333,7 +2359,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Call a protected endpoint with the revoked token to confirm it is no longer valid.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 }
@@ -2429,7 +2456,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -2531,7 +2558,8 @@
                       "value": "LOGIN_ID"
                     }
                   ]
-                }
+                },
+                "description": "Retrieve the business customer record and identify `business_user_institution_user_id` and `institution_customer_id`.\n\nSaves `business_user_institution_user_id`, `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
               },
               "response": []
             },
@@ -2557,7 +2585,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -2601,7 +2629,8 @@
                     "v1",
                     "client-authorization"
                   ]
-                }
+                },
+                "description": "Authorize the client for the OIDC flow and obtain the scopes required to generate an authorization code.\n\nSaves `scopes` to the environment.\n\n```\nPOST /v1/client-authorization\n```"
               },
               "response": []
             },
@@ -2627,7 +2656,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -2692,7 +2721,8 @@
                     "v1",
                     "auth-code"
                   ]
-                }
+                },
+                "description": "Generate an OIDC authorization code for the authenticated user.\n\nSaves `authorization_code` to the environment.\n\n```\nPOST /v1/auth-code\n```"
               },
               "response": []
             },
@@ -2735,7 +2765,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -2775,7 +2805,8 @@
                     "v1",
                     "token"
                   ]
-                }
+                },
+                "description": "Exchange the authorization code for access and refresh tokens.\n\nSaves `access_token` and `refresh_token` to the environment.\n\n```\nPOST /oauth2/v1/token\n```"
               },
               "response": []
             },
@@ -2840,7 +2871,8 @@
                       "disabled": true
                     }
                   ]
-                }
+                },
+                "description": "Retrieve the list of accounts for the authenticated user.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
               },
               "response": []
             },
@@ -2881,7 +2913,7 @@
                 "method": "POST",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -2921,7 +2953,8 @@
                     "v1",
                     "token"
                   ]
-                }
+                },
+                "description": "Exchange a refresh token for a new access token.\n\nSaves `access_token_refresh` to the environment.\n\n```\nPOST /oauth2/v1/token\n```"
               },
               "response": []
             },
@@ -2986,7 +3019,8 @@
                       "disabled": true
                     }
                   ]
-                }
+                },
+                "description": "Call a protected endpoint with the refreshed access token to confirm it is valid.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
               },
               "response": []
             },
@@ -3011,7 +3045,7 @@
                 "method": "DELETE",
                 "header": [
                   {
-                    "key": "transactionid",
+                    "key": "transactionId",
                     "value": "{{$guid}}",
                     "type": "text"
                   },
@@ -3041,7 +3075,8 @@
                     "v1",
                     "revoke"
                   ]
-                }
+                },
+                "description": "Revoke the refreshed access token so it can no longer authorize API requests.\n\n```\nDELETE /oauth2/v1/revoke\n```"
               },
               "response": []
             },
@@ -3106,7 +3141,8 @@
                       "disabled": true
                     }
                   ]
-                }
+                },
+                "description": "Call a protected endpoint with the revoked token to confirm it is no longer valid.\n\n```\nGET /v1/accounts?institutionCustomerId={{institution_customer_id}}\n```"
               },
               "response": []
             }
