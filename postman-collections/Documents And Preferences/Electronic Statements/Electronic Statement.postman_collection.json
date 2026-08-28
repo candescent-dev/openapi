@@ -1,0 +1,1755 @@
+{
+  "info": {
+    "_postman_id": "670d7155-b27c-404d-af55-62e574d25842",
+    "name": "Documents And Preferences - Electronic Statement",
+    "description": "This Postman collection supports API testing of the electronic statement preferences operations for retail users at both the account and user levels.\n\n# Quick Links\n\n- [Get E-Statement Account Preferences](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-c214627a-7976-4771-abad-7fb45f90df2e?action=share&source=copy-link&creator=8321995)\n    \n- [Update E-Statement Account Preferences](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-785a9dbe-4e61-47bd-949e-612f800522a7?action=share&source=copy-link&creator=8321995)\n    \n- [Update E-Statement User Preferences](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-d8968590-7e36-4307-8621-9704414751b4?action=share&source=copy-link&creator=8321995)\n    \n- Get E‑Statement Accounts Opt‑In Report\n    \n    - [Single Customer](https://extensibility-api.postman.co/workspace/68b02a61-3965-420f-b3b8-3bd911f20b6a/folder/8321995-46664363-3221-4efe-a911-b29c243af6ac?action=share&source=copy-link&creator=8321995)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "8321995",
+    "_collection_link": "https://go.postman.co/collection/8321995-670d7155-b27c-404d-af55-62e574d25842?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔗 Get E-Statement Account Preferences",
+      "item": [
+        {
+          "name": "Client Credential",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. [Optional] Search For Account ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accountNumber = pm.environment.get(\"retail_user_account_number\");",
+                      "const account = Array.isArray(jsonData.accounts)",
+                      "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                      "    : null;",
+                      "",
+                      "pm.environment.set(\"account_id\", account?.id ?? null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/accounts?hostUserId={{retail_user_host_user_id}}",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "hostUserId",
+                      "value": "{{retail_user_host_user_id}}"
+                    },
+                    {
+                      "key": "loginId",
+                      "value": "{{retail_user_login_id}}",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "viewName",
+                      "value": "m",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "crossAccount",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "category eq 'DEPOSIT'",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "additionalFields",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
+              },
+              "response": []
+            },
+            {
+              "name": "3. Get E-Statement Account Preferences",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/e-statements/{{account_id}}/disclosures?hostUserId={{retail_user_host_user_id}}",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "e-statements",
+                    "{{account_id}}",
+                    "disclosures"
+                  ],
+                  "query": [
+                    {
+                      "key": "hostUserId",
+                      "value": "{{retail_user_host_user_id}}"
+                    },
+                    {
+                      "key": "loginId",
+                      "value": "{{retail_user_login_id}}",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Retrieve e-statement disclosure preferences for the specified account.\n\n```\nGET /v1/e-statements/{{account_id}}/disclosures?hostUserId={{retail_user_host_user_id}}\n```"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Password",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{retail_user_login_id}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "{{retail_user_password}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. [Optional] Search For Account ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accountNumber = pm.environment.get(\"retail_user_account_number\");",
+                      "const account = Array.isArray(jsonData.accounts)",
+                      "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                      "    : null;",
+                      "",
+                      "pm.environment.set(\"account_id\", account?.id ?? null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/accounts",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "viewName",
+                      "value": "m",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "crossAccount",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "category eq 'DEPOSIT'",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "additionalFields",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
+              },
+              "response": []
+            },
+            {
+              "name": "3. Get E-Statement Account Preferences",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/e-statements/{{account_id}}/disclosures",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "e-statements",
+                    "{{account_id}}",
+                    "disclosures"
+                  ]
+                },
+                "description": "Retrieve e-statement disclosure preferences for the specified account.\n\n```\nGET /v1/e-statements/{{account_id}}/disclosures\n```"
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "// Pre-request script to check if 'retail_user_password' environment variable is set",
+                  "const password = pm.environment.get('retail_user_password');",
+                  "",
+                  "if (!password) {",
+                  "    throw new Error(\"Environment variable 'retail_user_password' is not set. Please set it before running requests in this folder.\");",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "description": "## 🔄 Retail User – Get E-Statement Account Preferences Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client or user credentials to authorize API requests. |\n| 2 | Search For Account ID | (Optional) Use this step to find the account ID if it is not already known. |\n| 3 | Get E-Statement Account Preferences | Retrieve the E-Statement preferences settings for the identified account. |"
+    },
+    {
+      "name": "🔗 Update E-Statement Account Preferences",
+      "item": [
+        {
+          "name": "Client Credential",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. [Optional] Search For Account ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accountNumber = pm.environment.get(\"retail_user_account_number\");",
+                      "const account = Array.isArray(jsonData.accounts)",
+                      "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                      "    : null;",
+                      "",
+                      "pm.environment.set(\"account_id\", account?.id ?? null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/accounts?hostUserId={{retail_user_host_user_id}}",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "hostUserId",
+                      "value": "{{retail_user_host_user_id}}"
+                    },
+                    {
+                      "key": "loginId",
+                      "value": "{{retail_user_login_id}}",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "viewName",
+                      "value": "m",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "crossAccount",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "category eq 'DEPOSIT'",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "additionalFields",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
+              },
+              "response": []
+            },
+            {
+              "name": "3. Update E-Statement Account Preferences",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"activateEstatement\": true,\n    \"accountId\": \"{{account_id}}\",\n    \"disclosureStatusUpdatedAt\": \"2026-07-09T13:30:40-08:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/e-statements/preference?hostUserId={{retail_user_host_user_id}}",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "e-statements",
+                    "preference"
+                  ],
+                  "query": [
+                    {
+                      "key": "hostUserId",
+                      "value": "{{retail_user_host_user_id}}"
+                    },
+                    {
+                      "key": "loginId",
+                      "value": "{{retail_user_login_id}}",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Update e-statement preferences for the specified account.\n\n```\nPUT /v1/e-statements/preference?hostUserId={{retail_user_host_user_id}}\n```"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Password",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{retail_user_login_id}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "{{retail_user_password}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. [Optional] Search For Account ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accountNumber = pm.environment.get(\"retail_user_account_number\");",
+                      "const account = Array.isArray(jsonData.accounts)",
+                      "    ? jsonData.accounts.find(acc => acc.accountNumber === accountNumber)",
+                      "    : null;",
+                      "",
+                      "pm.environment.set(\"account_id\", account?.id ?? null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/accounts",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "viewName",
+                      "value": "m",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "crossAccount",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "category eq 'DEPOSIT'",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "additionalFields",
+                      "value": "true",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id` to the environment.\n\n```\nGET /v1/accounts\n```"
+              },
+              "response": []
+            },
+            {
+              "name": "3. Update E-Statement Account Preferences",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"activateEstatement\": true,\n    \"accountId\": \"{{account_id}}\",\n    \"disclosureStatusUpdatedAt\": \"2026-07-09T13:30:40-08:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/e-statements/preference",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "e-statements",
+                    "preference"
+                  ]
+                },
+                "description": "Update e-statement preferences for the specified account.\n\n```\nPUT /v1/e-statements/preference\n```"
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "// Pre-request script to check if 'retail_user_password' environment variable is set",
+                  "const password = pm.environment.get('retail_user_password');",
+                  "",
+                  "if (!password) {",
+                  "    throw new Error(\"Environment variable 'retail_user_password' is not set. Please set it before running requests in this folder.\");",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "description": "## 🔄 Retail User – Update E-Statement Account Preferences Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client or user credentials to authorize API requests. |\n| 2 | Search For Account ID | (Optional) Use this step to find the account ID if it is not already known. |\n| 3 | Update E-Statement Account Preferences | Modify the E-Statement preference settings for the identified account. |"
+    },
+    {
+      "name": "🔗 Update E-Statement User Preferences",
+      "item": [
+        {
+          "name": "Client Credential",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Update E-Statement User Preferences",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"activateEstatement\": true,\n    \"disclosureStatusUpdatedAt\": \"2026-07-09T13:30:40-08:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/e-statements/user/preferences?hostUserId={{retail_user_host_user_id}}",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "e-statements",
+                    "user",
+                    "preferences"
+                  ],
+                  "query": [
+                    {
+                      "key": "hostUserId",
+                      "value": "{{retail_user_host_user_id}}"
+                    },
+                    {
+                      "key": "loginId",
+                      "value": "{{retail_user_login_id}}",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Update e-statement preferences at the user level.\n\n```\nPUT /v2/e-statements/user/preferences?hostUserId={{retail_user_host_user_id}}\n```"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Password",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{retail_user_login_id}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "{{retail_user_password}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Update E-Statement User Preferences",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"activateEstatement\": true,\n    \"disclosureStatusUpdatedAt\": \"2026-07-09T13:30:40-08:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v2/e-statements/user/preferences",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "e-statements",
+                    "user",
+                    "preferences"
+                  ]
+                },
+                "description": "Update e-statement preferences at the user level.\n\n```\nPUT /v2/e-statements/user/preferences\n```"
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "// Pre-request script to check if 'retail_user_password' environment variable is set",
+                  "const password = pm.environment.get('retail_user_password');",
+                  "",
+                  "if (!password) {",
+                  "    throw new Error(\"Environment variable 'retail_user_password' is not set. Please set it before running requests in this folder.\");",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "description": "## 🔄 Retail User – Update E-Statement User Preferences Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client or user credentials to authorize API requests. |\n| 2 | Update E-Statement User Preferences | Update the E-Statement preference settings across all accounts associated with the user. |"
+    },
+    {
+      "name": "🔗  Get E‑Statement Accounts Opt‑In Report",
+      "item": [
+        {
+          "name": "Single Customer",
+          "item": [
+            {
+              "name": "1. Generate Access Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const accessToken = jsonData.access_token;",
+                      "",
+                      "pm.environment.set(\"access_token\", accessToken);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{client_secret}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{client_id}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "transactionId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "institutionId",
+                    "value": "{{institution_id}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/oauth2/v1/token",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "oauth2",
+                    "v1",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. [Optional] Search for Customer ID",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const loginId = pm.environment.get('retail_user_login_id');",
+                      "",
+                      "if (!loginId) {",
+                      "    throw new Error(\"Environment variable 'retail_user_login_id' is not set. This request looks up the customer by LOGIN_ID.\");",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "const customer = Array.isArray(jsonData.customers)",
+                      "    ? jsonData.customers[0]",
+                      "    : null;",
+                      "",
+                      "pm.environment.set(\"retail_customer_id\", customer?.customerId ?? null);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/customers/{{retail_user_login_id}}?userIdType=LOGIN_ID",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "customers",
+                    "{{retail_user_login_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIdType",
+                      "value": "LOGIN_ID"
+                    }
+                  ]
+                },
+                "description": "Retrieve the customer record and identify `retail_customer_id` for subsequent requests.\n\nSaves `retail_customer_id` to the environment.\n\n```\nGET /v1/customers/{{retail_user_login_id}}?userIdType=LOGIN_ID\n```"
+              },
+              "response": []
+            },
+            {
+              "name": "3a. [Option 1] Get E-Statement Accounts Opt-In Report",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"customerId\": \"{{retail_customer_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/reports/e-statements",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "reports",
+                    "e-statements"
+                  ]
+                },
+                "description": "Retrieve the e-statement accounts opt-in report for a single customer.\n\n```\nPOST /v1/reports/e-statements\n```"
+              },
+              "response": []
+            },
+            {
+              "name": "3b. [Option 2] Get E-Statement Accounts Opt-In Report - Account Type Filter",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "correlationId",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"customerId\": \"{{retail_customer_id}}\",\n    \"accountType\": \"CHECKING\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{apigee_base_url}}/v1/reports/e-statements",
+                  "host": [
+                    "{{apigee_base_url}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "reports",
+                    "e-statements"
+                  ]
+                },
+                "description": "Retrieve the e-statement accounts opt-in report for a single customer, filtered by account type.\n\n```\nPOST /v1/reports/e-statements\n```"
+              },
+              "response": []
+            }
+          ],
+          "description": "## 🔄 Retail User – Get E-Statement Accounts Opt-In Report - Single Customer Flow\n\n| **Step** | Request Name | **Description** |\n| --- | --- | --- |\n| 1 | Generate Access Token | Obtain an access token using client credentials to authorize API requests. |\n| 2 | Search for Retail Customer ID | (Optional) Retrieve the Retail Customer ID if it is not already known. The ID is available in the customers array as customerId. |\n| 3a | \\[Option 1\\] Get E-Statement Accounts Opt-In Report | Retrieve E‑Statement opt‑in and statement delivery preferences for all accounts associated with the specified customer. |\n| 3b | \\[Option 2\\] Get E-Statement Accounts Opt-In Report - Account Type Filter | Retrieve E‑Statement opt‑in and statement delivery preferences for the specified customer, filtered by account type. |"
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Pre-request script to check for required environment variables at the collection level",
+          "const requiredVars = [",
+          "    \"apigee_base_url\",",
+          "    \"client_id\",",
+          "    \"client_secret\",",
+          "    \"institution_id\"",
+          "];",
+          "",
+          "const mutuallyExclusiveVars = [",
+          "    \"retail_user_host_user_id\",",
+          "    \"retail_user_login_id\"",
+          "];",
+          "",
+          "const missingVars = requiredVars.filter(varName => !pm.environment.get(varName));",
+          "const hasAtLeastOne = mutuallyExclusiveVars.some(varName => pm.environment.get(varName));",
+          "",
+          "if (!hasAtLeastOne) {",
+          "    missingVars.push(\"retail_user_host_user_id or retail_user_login_id (at least one required)\");",
+          "}",
+          "",
+          "if (missingVars.length > 0) {",
+          "    throw new Error(",
+          "        `Missing required environment variables: ${missingVars.join(\", \")}. Please set them in the active environment before running requests.`",
+          "    );",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

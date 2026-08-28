@@ -48,7 +48,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -136,7 +136,8 @@
                 "v1",
                 "institution-disclosures"
               ]
-            }
+            },
+            "description": "Create a custom institution disclosure identified by name.\n\n```\nPOST /v1/institution-disclosures\n```"
           },
           "response": []
         },
@@ -184,7 +185,8 @@
                 "v1",
                 "institution-disclosures"
               ]
-            }
+            },
+            "description": "Create a custom institution disclosure that references an external URL.\n\n```\nPOST /v1/institution-disclosures\n```"
           },
           "response": []
         },
@@ -232,7 +234,8 @@
                 "v1",
                 "institution-disclosures"
               ]
-            }
+            },
+            "description": "Create an online-statement institution disclosure.\n\n```\nPOST /v1/institution-disclosures\n```"
           },
           "response": []
         }
@@ -279,7 +282,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -365,7 +368,8 @@
                 "v1",
                 "institution-disclosures"
               ]
-            }
+            },
+            "description": "Retrieve the list of institution disclosures for the authenticated institution.\n\n```\nGET /v1/institution-disclosures\n```"
           },
           "response": []
         }
@@ -412,7 +416,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -529,7 +533,8 @@
                 "v1",
                 "institution-disclosures"
               ]
-            }
+            },
+            "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
           },
           "response": []
         },
@@ -578,7 +583,8 @@
                 "institution-disclosures",
                 "{{institution_disclosure_id}}"
               ]
-            }
+            },
+            "description": "Update an existing institution disclosure using its disclosure ID.\n\n```\nPUT /v1/institution-disclosures/{{institution_disclosure_id}}\n```"
           },
           "response": []
         }

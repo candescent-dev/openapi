@@ -48,7 +48,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -167,7 +167,8 @@
                 "mx",
                 "{{mx_platform_resource_path}}"
               ]
-            }
+            },
+            "description": "Forward a create request to the MX API through the Apigee passthrough.\n\nSaves `mx_platform_resource_path_guid` to the environment.\n\n```\nPOST /mx/{{mx_platform_resource_path}}\n```"
           },
           "response": []
         }
@@ -227,7 +228,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -349,7 +350,8 @@
                 "mx",
                 "{{mx_platform_resource_path_user_lookup}}"
               ]
-            }
+            },
+            "description": "Look up the MX user GUID required by subsequent passthrough requests.\n\nSaves `mx_platform_resource_path_guid` to the environment.\n\n```\nGET /mx/{{mx_platform_resource_path_user_lookup}}\n```"
           },
           "response": []
         },
@@ -396,7 +398,8 @@
                 "mx",
                 "{{mx_platform_resource_path_guid}}"
               ]
-            }
+            },
+            "description": "Forward a read request to the MX API through the Apigee passthrough.\n\n```\nGET /mx/{{mx_platform_resource_path_guid}}\n```"
           },
           "response": []
         }
@@ -456,7 +459,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -578,7 +581,8 @@
                 "mx",
                 "{{mx_platform_resource_path_user_lookup}}"
               ]
-            }
+            },
+            "description": "Look up the MX user GUID required by subsequent passthrough requests.\n\nSaves `mx_platform_resource_path_guid` to the environment.\n\n```\nGET /mx/{{mx_platform_resource_path_user_lookup}}\n```"
           },
           "response": []
         },
@@ -639,7 +643,8 @@
                 "mx",
                 "{{mx_platform_resource_path_guid}}"
               ]
-            }
+            },
+            "description": "Forward an update request to the MX API through the Apigee passthrough.\n\n```\nPUT /mx/{{mx_platform_resource_path_guid}}\n```"
           },
           "response": []
         }
@@ -699,7 +704,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -821,7 +826,8 @@
                 "mx",
                 "{{mx_platform_resource_path_user_lookup}}"
               ]
-            }
+            },
+            "description": "Look up the MX user GUID required by subsequent passthrough requests.\n\nSaves `mx_platform_resource_path_guid` to the environment.\n\n```\nGET /mx/{{mx_platform_resource_path_user_lookup}}\n```"
           },
           "response": []
         },
@@ -868,7 +874,8 @@
                 "mx",
                 "{{mx_platform_resource_path_guid}}"
               ]
-            }
+            },
+            "description": "Forward a delete request to the MX API through the Apigee passthrough.\n\n```\nDELETE /mx/{{mx_platform_resource_path_guid}}\n```"
           },
           "response": []
         }

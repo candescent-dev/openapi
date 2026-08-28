@@ -57,7 +57,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -174,7 +174,8 @@
                             "v1",
                             "institution-disclosures"
                           ]
-                        }
+                        },
+                        "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                       },
                       "response": []
                     },
@@ -234,7 +235,8 @@
                               "disabled": true
                             }
                           ]
-                        }
+                        },
+                        "description": "Create a custom user disclosure linked to an institution disclosure.\n\n```\nPOST /v1/institution-user-disclosures?hostUserId={{retail_user_host_user_id}}\n```"
                       },
                       "response": []
                     }
@@ -280,7 +282,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -407,7 +409,8 @@
                             "v1",
                             "institution-disclosures"
                           ]
-                        }
+                        },
+                        "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                       },
                       "response": []
                     },
@@ -455,7 +458,8 @@
                             "v1",
                             "institution-user-disclosures"
                           ]
-                        }
+                        },
+                        "description": "Create a custom user disclosure linked to an institution disclosure.\n\n```\nPOST /v1/institution-user-disclosures\n```"
                       },
                       "response": []
                     }
@@ -527,7 +531,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -627,7 +631,8 @@
                                   "disabled": true
                                 }
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure at the user level.\n\n```\nPOST /v1/institution-user-disclosures?hostUserId={{retail_user_host_user_id}}\n```"
                           },
                           "response": []
                         }
@@ -673,7 +678,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -771,7 +776,8 @@
                                 "v1",
                                 "institution-user-disclosures"
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure at the user level.\n\n```\nPOST /v1/institution-user-disclosures\n```"
                           },
                           "response": []
                         }
@@ -840,7 +846,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -970,7 +976,8 @@
                                   "disabled": true
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                           },
                           "response": []
                         },
@@ -1034,7 +1041,8 @@
                                   "value": "{{account_type}}"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure for a specific account.\n\n```\nPOST /v1/institution-user-disclosures?hostUserId={{retail_user_host_user_id}}&accountType={{account_type}}\n```"
                           },
                           "response": []
                         }
@@ -1080,7 +1088,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -1220,7 +1228,8 @@
                                   "disabled": true
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                           },
                           "response": []
                         },
@@ -1274,7 +1283,8 @@
                                   "value": "{{account_type}}"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure for a specific account.\n\n```\nPOST /v1/institution-user-disclosures?accountType={{account_type}}\n```"
                           },
                           "response": []
                         }
@@ -1360,7 +1370,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1446,7 +1456,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of user disclosures for the authenticated user.\n\n```\nGET /v1/institution-user-disclosures?hostUserId={{retail_user_host_user_id}}\n```"
                   },
                   "response": []
                 }
@@ -1492,7 +1503,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1601,7 +1612,8 @@
                         "v1",
                         "institution-user-disclosures"
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of user disclosures for the authenticated user.\n\n```\nGET /v1/institution-user-disclosures\n```"
                   },
                   "response": []
                 }
@@ -1670,7 +1682,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -1787,7 +1799,8 @@
                         "v1",
                         "institution-disclosures"
                       ]
-                    }
+                    },
+                    "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                   },
                   "response": []
                 },
@@ -1847,7 +1860,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Update an existing custom user disclosure.\n\n```\nPUT /v1/institution-user-disclosures?hostUserId={{retail_user_host_user_id}}\n```"
                   },
                   "response": []
                 }
@@ -1893,7 +1907,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2020,7 +2034,8 @@
                         "v1",
                         "institution-disclosures"
                       ]
-                    }
+                    },
+                    "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                   },
                   "response": []
                 },
@@ -2068,7 +2083,8 @@
                         "v1",
                         "institution-user-disclosures"
                       ]
-                    }
+                    },
+                    "description": "Update an existing custom user disclosure.\n\n```\nPUT /v1/institution-user-disclosures\n```"
                   },
                   "response": []
                 }
@@ -2137,7 +2153,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2267,7 +2283,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts?hostUserId={{retail_user_host_user_id}}\n```"
                   },
                   "response": []
                 },
@@ -2331,7 +2348,8 @@
                           "value": "{{account_type}}"
                         }
                       ]
-                    }
+                    },
+                    "description": "Delete the user's online-statement disclosure.\n\n```\nDELETE /v1/institution-user-disclosures?hostUserId={{retail_user_host_user_id}}&accountType={{account_type}}\n```"
                   },
                   "response": []
                 }
@@ -2377,7 +2395,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -2481,7 +2499,8 @@
                         "v1",
                         "accounts"
                       ]
-                    }
+                    },
+                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts\n```"
                   },
                   "response": []
                 },
@@ -2536,7 +2555,8 @@
                           "type": "text"
                         }
                       ]
-                    }
+                    },
+                    "description": "Delete the user's online-statement disclosure.\n\n```\nDELETE /v1/institution-user-disclosures?accountType={{account_type}}\n```"
                   },
                   "response": []
                 }
@@ -2651,7 +2671,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -2751,7 +2771,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -2828,7 +2849,8 @@
                             "v1",
                             "institution-disclosures"
                           ]
-                        }
+                        },
+                        "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                       },
                       "response": []
                     },
@@ -2888,7 +2910,8 @@
                               "type": "text"
                             }
                           ]
-                        }
+                        },
+                        "description": "Create a custom user disclosure linked to an institution disclosure.\n\n```\nPOST /v1/institution-user-disclosures?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     }
@@ -2934,7 +2957,7 @@
                         "method": "POST",
                         "header": [
                           {
-                            "key": "transactionid",
+                            "key": "transactionId",
                             "value": "{{$guid}}",
                             "type": "text"
                           },
@@ -3044,7 +3067,8 @@
                               "value": "LOGIN_ID"
                             }
                           ]
-                        }
+                        },
+                        "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                       },
                       "response": []
                     },
@@ -3121,7 +3145,8 @@
                             "v1",
                             "institution-disclosures"
                           ]
-                        }
+                        },
+                        "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                       },
                       "response": []
                     },
@@ -3175,7 +3200,8 @@
                               "value": "{{institution_customer_id}}"
                             }
                           ]
-                        }
+                        },
+                        "description": "Create a custom user disclosure linked to an institution disclosure.\n\n```\nPOST /v1/institution-user-disclosures?institutionCustomerId={{institution_customer_id}}\n```"
                       },
                       "response": []
                     }
@@ -3247,7 +3273,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -3347,7 +3373,8 @@
                                   "value": "LOGIN_ID"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                           },
                           "response": []
                         },
@@ -3407,7 +3434,8 @@
                                   "type": "text"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure at the user level.\n\n```\nPOST /v1/institution-user-disclosures?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                           },
                           "response": []
                         }
@@ -3453,7 +3481,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -3563,7 +3591,8 @@
                                   "value": "LOGIN_ID"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                           },
                           "response": []
                         },
@@ -3617,7 +3646,8 @@
                                   "value": "{{institution_customer_id}}"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure at the user level.\n\n```\nPOST /v1/institution-user-disclosures?institutionCustomerId={{institution_customer_id}}\n```"
                           },
                           "response": []
                         }
@@ -3686,7 +3716,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -3786,7 +3816,8 @@
                                   "value": "LOGIN_ID"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                           },
                           "response": []
                         },
@@ -3874,7 +3905,8 @@
                                   "disabled": true
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                           },
                           "response": []
                         },
@@ -3936,7 +3968,8 @@
                                   "value": "{{account_type}}"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure for a specific account.\n\n```\nPOST /v1/institution-user-disclosures?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountType={{account_type}}\n```"
                           },
                           "response": []
                         }
@@ -3982,7 +4015,7 @@
                             "method": "POST",
                             "header": [
                               {
-                                "key": "transactionid",
+                                "key": "transactionId",
                                 "value": "{{$guid}}",
                                 "type": "text"
                               },
@@ -4092,7 +4125,8 @@
                                   "value": "LOGIN_ID"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                           },
                           "response": []
                         },
@@ -4180,7 +4214,8 @@
                                   "disabled": true
                                 }
                               ]
-                            }
+                            },
+                            "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                           },
                           "response": []
                         },
@@ -4238,7 +4273,8 @@
                                   "value": "{{account_type}}"
                                 }
                               ]
-                            }
+                            },
+                            "description": "Create or update the user's online-statement disclosure for a specific account.\n\n```\nPOST /v1/institution-user-disclosures?institutionCustomerId={{institution_customer_id}}&accountType={{account_type}}\n```"
                           },
                           "response": []
                         }
@@ -4311,7 +4347,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -4411,7 +4447,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -4457,7 +4494,8 @@
                           "type": "text"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of user disclosures for the authenticated user.\n\n```\nGET /v1/institution-user-disclosures?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 }
@@ -4503,7 +4541,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -4613,7 +4651,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -4678,7 +4717,8 @@
                           "value": "{{institution_customer_id}}"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the list of user disclosures for the authenticated user.\n\n```\nGET /v1/institution-user-disclosures?institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 }
@@ -4747,7 +4787,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -4847,7 +4887,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -4924,7 +4965,8 @@
                         "v1",
                         "institution-disclosures"
                       ]
-                    }
+                    },
+                    "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                   },
                   "response": []
                 },
@@ -4984,7 +5026,8 @@
                           "type": "text"
                         }
                       ]
-                    }
+                    },
+                    "description": "Update an existing custom user disclosure.\n\n```\nPUT /v1/institution-user-disclosures?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 }
@@ -5030,7 +5073,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -5140,7 +5183,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -5217,7 +5261,8 @@
                         "v1",
                         "institution-disclosures"
                       ]
-                    }
+                    },
+                    "description": "Retrieve institution disclosures and identify a disclosure ID for subsequent requests.\n\nSaves `institution_disclosure_id`, `institution_disclosure_name` to the environment.\n\n```\nGET /v1/institution-disclosures\n```"
                   },
                   "response": []
                 },
@@ -5272,7 +5317,8 @@
                           "type": "text"
                         }
                       ]
-                    }
+                    },
+                    "description": "Update an existing custom user disclosure.\n\n```\nPUT /v1/institution-user-disclosures?institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 }
@@ -5341,7 +5387,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -5441,7 +5487,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -5529,7 +5576,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 },
@@ -5594,7 +5642,8 @@
                           "type": "text"
                         }
                       ]
-                    }
+                    },
+                    "description": "Delete the user's online-statement disclosure.\n\n```\nDELETE /v1/institution-user-disclosures?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}&accountType={{account_type}}\n```"
                   },
                   "response": []
                 }
@@ -5640,7 +5689,7 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "transactionid",
+                        "key": "transactionId",
                         "value": "{{$guid}}",
                         "type": "text"
                       },
@@ -5750,7 +5799,8 @@
                           "value": "LOGIN_ID"
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the business customer record and identify `institution_customer_id` for subsequent requests.\n\nSaves `institution_customer_id` to the environment.\n\n```\nGET /v1/customers/{{business_user_login_id}}?userIdType=LOGIN_ID\n```"
                   },
                   "response": []
                 },
@@ -5838,7 +5888,8 @@
                           "disabled": true
                         }
                       ]
-                    }
+                    },
+                    "description": "Retrieve the user's accounts and identify an account ID for subsequent requests.\n\nSaves `account_id`, `account_type` to the environment.\n\n```\nGET /v1/accounts?loginId={{business_user_login_id}}&institutionCustomerId={{institution_customer_id}}\n```"
                   },
                   "response": []
                 },
@@ -5898,7 +5949,8 @@
                           "type": "text"
                         }
                       ]
-                    }
+                    },
+                    "description": "Delete the user's online-statement disclosure.\n\n```\nDELETE /v1/institution-user-disclosures?institutionCustomerId={{institution_customer_id}}&accountType={{account_type}}\n```"
                   },
                   "response": []
                 }

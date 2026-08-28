@@ -48,7 +48,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -130,7 +130,8 @@
                 "mx",
                 "{{mx_reporting_resource_path}}"
               ]
-            }
+            },
+            "description": "Forward a read request to the MX API through the Apigee passthrough.\n\n```\nGET /mx/{{mx_reporting_resource_path}}\n```"
           },
           "response": []
         }

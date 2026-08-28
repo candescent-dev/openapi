@@ -48,7 +48,7 @@
             "method": "POST",
             "header": [
               {
-                "key": "transactionid",
+                "key": "transactionId",
                 "value": "{{$guid}}",
                 "type": "text"
               },
@@ -139,7 +139,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities using a start and end time.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -250,7 +251,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities and request the next page of results using `nextPageToken`.\n\nRequired: `start_date` and `end_date` in the environment. Also requires `next_page_token` from a previous search response.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -301,7 +303,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities filtered by one or more event IDs.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -352,7 +355,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities filtered by event type.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -422,7 +426,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities for a specific retail user.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -492,7 +497,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities filtered by company ID.\n\nRequired: `start_date` and `end_date` in the environment. Also requires `company_id`.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -562,7 +568,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities for a specific business user.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -613,7 +620,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities using additional attribute filters.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -664,7 +672,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities using nested filters and sub-filters.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         },
@@ -715,7 +724,8 @@
                 "v1",
                 "banking-activities"
               ]
-            }
+            },
+            "description": "Search banking activities and limit the response to the requested attributes.\n\nRequired: `start_date` and `end_date` in the environment.\n\n```\nPOST /v1/banking-activities\n```"
           },
           "response": []
         }
